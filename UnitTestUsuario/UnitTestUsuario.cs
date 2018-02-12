@@ -82,7 +82,7 @@ namespace UnitTestUsuario
 
             UsuarioPersistence up = new UsuarioPersistence();
 
-            Usuario u = up.ObterLoginSenha("B9GY", "ABC123");
+            Usuario u = up.ObterLoginSenha("JSTS", "ABC123");
 
             Assert.IsTrue(u != null);
 
