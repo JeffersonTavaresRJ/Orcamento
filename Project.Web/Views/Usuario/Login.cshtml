@@ -1,55 +1,48 @@
 ﻿@model Project.Web.Models.Usuario.UsuarioViewModelLogin
-    @{
-        ViewBag.Title = "Login";
-        Layout = "~/Views/_layout.cshtml";
-    }
- <div class="row justify-content-center"> 
-     <div class="col-2">
-     </div>
-     <div class="col-6 col-auto">
-         <div class="card" style="border-color:gray">                 
-             <div class="card-body">      
-                 <h3 class="card-title" style="text-align:center">Acesso</h3>
-                 <hr />
-                 <div class="row justify-content-center">
-                     <div class="col-1">
-                     </div>
-                     <div class=" col-9 col-auto">                     
-                         @using (Html.BeginForm("AcessarSistema", "Usuario")){
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/_layout.cshtml";
+}
+<!--Combinar o row justify-content-center com o col-auto para centralizar-->
+<div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8 col-sm-12 col-xl-6 col-auto">
+        <div class="card mb-2" style="border-color:gray">
+            <div class="card-body">
+                <h3 class="card-title text-center">Acesso</h3>
+                <hr />
+                <!--Combinar o row justify-content-center com o col-auto para centralizar-->
+                <div class="row justify-content-center">
+                    <div class=" col-9 col-auto">
+                        @using (Html.BeginForm("AcessarSistema", "Usuario"))
+                        {
 
-                             @Html.LabelFor(model => model.Login)
-                             @Html.TextBoxFor(model => model.Login, new { @class = "form-control", @placeholder = "Informe seu usuário" })
-                             <span class="text-danger">
-                                 @Html.ValidationMessageFor(model => model.Login)
-                             </span>
-                             <br />
-                             @Html.LabelFor(model => model.Senha)
-                             @Html.TextBoxFor(model => model.Senha, new { @class = "form-control", @placeholder = "Informe sua senha" })
-                             <span class="text-danger">
-                                 @Html.ValidationMessageFor(model => model.Senha)
-                             </span>
-                             <br />
-                             <br />
-                             <input type="submit" class="btn btn-outline-dark btn-block" value="Entrar" />
-                           }
-                         <a href="#">Cadastrar Usuário</a>
-                     </div>
-                     <div class="col-1">
-                     </div>
-                  </div>                 
-             </div>
-         </div>
-         <br />
-         @if(ViewBag.Mensagem != null)
-         {
-             <div class="alert alert-danger">
+                            @Html.LabelFor(model => model.Login)
+                            @Html.TextBoxFor(model => model.Login, new { @class = "form-control", @placeholder = "Informe seu usuário" })
+                            <span class="text-danger">
+                                @Html.ValidationMessageFor(model => model.Login)
+                            </span>
+                            <br />
+                            @Html.LabelFor(model => model.Senha)
+                            @Html.TextBoxFor(model => model.Senha, new { @class = "form-control", @placeholder = "Informe sua senha" })
+                            <span class="text-danger">
+                                @Html.ValidationMessageFor(model => model.Senha)
+                            </span>
+                            <br />
+                            <br />
+                            <input type="submit" class="btn btn-outline-dark btn-block" value="Entrar" />
+                        }
+                        <a href="@Url.Action("Cadastro", "Usuario")">Cadastrar Usuário</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        @if (ViewBag.Mensagem != null)
+        {
+            <div class="alert alert-danger">
                 @ViewBag.Mensagem
             </div>
-         }
-         
-     </div>
-     <div class="col-2">
-     </div>
-     
-   
- </div> 
+        }
+
+    </div>
+</div> 

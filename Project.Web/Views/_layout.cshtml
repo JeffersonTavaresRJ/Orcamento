@@ -6,27 +6,58 @@
     <title>@ViewBag.Title - Conta Fácil</title>
 
     <link href="~/css/bootstrap.min.css" rel="stylesheet" />
-
+    <link href="~/css/font-awesome.min.css" rel="stylesheet" />
     <script src="~/js/jquery-3.0.0.min.js"></script>
     <script src="~/js/bootstrap.min.js"></script>
 
 </head>
     <body>
-        <nav class="navbar navbar-dark bg-dark justify-content-between" role="navigation" @*style="background-color:gray"*@>
-            <a class="navbar-brand" href="#">
-                <strong>Conta Fácil</strong>
-            </a>
+        <nav class="navbar navbar-dark bg-dark navbar-expand-lg mb-4" @*style="background-color:gray"*@>
+            <div class="container">
+                <a class="navbar-brand" href="#">
+                    <strong>Conta Fácil</strong>
+                </a>
 
-            @if (TempData["Usuario"] != null)
+                @if (TempData["Usuario"] != null)
+                {
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSite">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSite">
+                        <div class="dropdown ml-auto">
+                            <button class="btn btn-dark bg-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @TempData["Usuario"]
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#">
+                                    Sair  
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+
+                @*@if (TempData["Usuario"] != null)
             {
-                <div class="navbar-brand" style="font-size:small">
-                    @TempData["Usuario"]
-                </div>               
-            }
-        </nav>
-        <br />
-        <div class="container">
-            @RenderBody()
+                <div class="collapse navbar-collapse">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown">
+                            <a class="navbar-link dropdown-toggle ml-auto" id="dropdownUsuario" data-toggle="dropdown" style="font-size:small; color:white">
+                                @TempData["Usuario"]
+                            </a>
+                            <div class="dropdown-menu" style="font-size:small">
+                                <a class="dropdown-item" href="#">Sair</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            }*@
         </div>
+     </nav>
+    
+    <div class="container">
+         @RenderBody()
+    </div>
     </body>
 </html>

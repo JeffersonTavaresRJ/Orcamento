@@ -1,0 +1,75 @@
+﻿@model Project.Web.Models.Usuario.UsuarioViewModelCadastro
+@{
+    ViewBag.Title = "Cadastro de Usuário";
+    Layout = "~/Views/_layout.cshtml";
+}
+<div class="row justify-content-center">
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xl-6 col-auto">
+        <div class="card" style="border-color:gray">
+            <div class="card-body pl-1">
+                <h4 class="card-title text-center">Cadastro de Usuário</h4>
+                <hr />
+                @using (Html.BeginForm("Novo", "Usuario", FormMethod.Post,
+                new { @enctype = "multipart/form-data" }))
+                {
+                    foreach (var property in ViewData.ModelMetadata.Properties)
+                    {
+                        if (property.PropertyName != "Status")
+                        {
+
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12">
+                                <div class="form-group mb-1">
+                                    @Html.Label(property.DisplayName ?? property.PropertyName)
+                                    @Html.TextBox(property.PropertyName, null, new { @class = "form-control" })
+                                    <span style="font-size:small" class="text-danger">
+                                        @Html.ValidationMessage(property.PropertyName)
+                                    </span>
+                                </div>
+                            </div>
+
+                        }
+                    }
+                    <div class="col-4 offset-8">
+                        <button type="submit" class="btn btn-outline-dark btn-block mt-2">
+                            <i class="fa fa-save"></i> Salvar
+                        </button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (ViewBag.Mensagem != null)
+{
+
+    @Html.Raw("<script>$('#modalMensagem').show();</script>")
+    @*@Html.Raw("<script>alert('" + ViewBag.Mensagem as string + "');</script>")*@
+
+}
+
+
+<div class="modal" role="dialog" id="modalMensagem">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Sr. Usuário</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>@ViewBag.Mensagem</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+</div>
+
+
+
+
+
+

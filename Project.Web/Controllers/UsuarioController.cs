@@ -17,6 +17,11 @@ namespace Project.Web.Controllers
             return View();
         }
 
+        public ActionResult Cadastro()
+        {
+            return View();
+        }
+
         [HttpPost]
         public ActionResult AcessarSistema(UsuarioViewModelLogin usuarioModel)
         {
@@ -45,6 +50,40 @@ namespace Project.Web.Controllers
             return View("Login");
 
             
+        }
+
+        [HttpPost]
+        public ActionResult Novo(UsuarioViewModelCadastro usuarioModel)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    UsuarioPersistence up = new UsuarioPersistence();
+                    Usuario u = new Usuario
+                    {
+                        IdUsuario = usuarioModel.Id_Usuario,
+                        Nome = usuarioModel.Nome,
+                        Senha = usuarioModel.Senha
+                    };
+
+                    if (up.LoginExistente(u.IdUsuario) > 0)
+                    {
+                        throw new Exception("Login já existe!");
+                    }
+
+                    up.Inserir(u);
+
+                    ViewBag.Mensagem = String.Format("O usuário {0} foi cadastrado com sucesso!", u.Nome);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.Mensagem = "Erro: " + ex.Message.ToString();
+            }
+
+            return View("Cadastro");
         }
     }
 }
