@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Project.Entity;
 using Project.Repository.Persistence;
 using Project.Web;
+using Project.Util;
 
 namespace UnitTestUsuario
 {
@@ -18,7 +19,7 @@ namespace UnitTestUsuario
                 Usuario u = new Usuario();
                 u.IdUsuario = "B9GY";
                 u.Nome = "Jefferson Silva Tavares";
-                u.Senha = "ABC123";
+                u.Senha = Criptografia.EncriptarSenha("ABC123");
 
                 UsuarioPersistence up = new UsuarioPersistence();
 
@@ -36,9 +37,9 @@ namespace UnitTestUsuario
 
             UsuarioPersistence up = new UsuarioPersistence();
 
-            Usuario u = up.ObterLoginSenha("B9GY", "ABC123");
+            Usuario u = up.ObterLoginSenha("B9GY", Criptografia.EncriptarSenha("ABC123"));
 
-            u.Senha = "FGH456";
+            u.Nome = "Jefferson Petrobras";
 
             int i = up.Atualizar(u);
 
@@ -82,7 +83,7 @@ namespace UnitTestUsuario
 
             UsuarioPersistence up = new UsuarioPersistence();
 
-            Usuario u = up.ObterLoginSenha("JSTS", "ABC123");
+            Usuario u = up.ObterLoginSenha("B9GY", Criptografia.EncriptarSenha("ABC123"));
 
             Assert.IsTrue(u != null);
 

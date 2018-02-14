@@ -97,6 +97,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\Banco.mdf" />
+    <Content Include="App_Data\Banco_log.ldf">
+      <DependentUpon>Banco.mdf</DependentUpon>
+    </Content>
     <Content Include="assets\icons\glyph-iconset-master\si-glyph-abacus.svg" />
     <Content Include="assets\icons\glyph-iconset-master\si-glyph-adjustment-horizon.svg" />
     <Content Include="assets\icons\glyph-iconset-master\si-glyph-adjustment-vertical.svg" />
@@ -1114,6 +1118,8 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="Areas\AreaIndex\Views\web.config" />
+    <Content Include="Areas\AreaIndex\Views\Lancamento\Consulta.cshtml" />
     <None Include="js\jquery-3.0.0-vsdoc.js" />
     <Content Include="js\jquery-3.0.0.js" />
     <Content Include="js\jquery-3.0.0.min.js" />
@@ -1128,13 +1134,22 @@
     <Content Include="js\umd\popper-utils.min.js" />
     <Content Include="js\umd\popper.js" />
     <Content Include="js\umd\popper.min.js" />
+    <Content Include="js\js_views\usuario\cadastro.js" />
+    <None Include="js\jquery.validate-vsdoc.js" />
+    <Content Include="js\jquery.validate.js" />
+    <Content Include="js\jquery.validate.min.js" />
+    <Content Include="js\jquery.validate.unobtrusive.js" />
+    <Content Include="js\jquery.validate.unobtrusive.min.js" />
+    <Content Include="js\jquery.unobtrusive-ajax.js" />
+    <Content Include="js\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\IndexController.cs" />
+    <Compile Include="Areas\AreaIndex\AreaIndexAreaRegistration.cs" />
+    <Compile Include="Areas\AreaIndex\Controllers\LancamentoController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1159,7 +1174,6 @@
     <Content Include="js\popper-utils.js.map" />
     <Content Include="Views\_layout.cshtml" />
     <Content Include="Views\Usuario\Login.cshtml" />
-    <Content Include="Views\Index\Consulta.cshtml" />
     <Content Include="Views\Usuario\Cadastro.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1169,7 +1183,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="Areas\AreaIndex\Models\" />
+    <Folder Include="Areas\AreaIndex\Views\Shared\" />
     <Folder Include="Content\" />
   </ItemGroup>
   <ItemGroup>
@@ -1186,6 +1201,10 @@
     <ProjectReference Include="..\Project.Repository\Project.Repository.csproj">
       <Project>{54a31312-57d5-4671-8f2a-8f899d8c43c6}</Project>
       <Name>Project.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Project.Util\Project.Util.csproj">
+      <Project>{c40e4ef8-16a5-4642-b0d6-476ea872a048}</Project>
+      <Name>Project.Util</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

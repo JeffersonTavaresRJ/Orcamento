@@ -71,6 +71,10 @@
       <Project>{54a31312-57d5-4671-8f2a-8f899d8c43c6}</Project>
       <Name>Project.Repository</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Project.Util\Project.Util.csproj">
+      <Project>{c40e4ef8-16a5-4642-b0d6-476ea872a048}</Project>
+      <Name>Project.Util</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Project.Web\Project.Web.csproj">
       <Project>{c8151148-6c1f-435c-bb92-3af75a9eccc9}</Project>
       <Name>Project.Web</Name>

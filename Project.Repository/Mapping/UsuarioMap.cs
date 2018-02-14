@@ -31,7 +31,7 @@ namespace Project.Repository.Mapping
 
             Property(u => u.Senha)
                 .HasColumnName("Senha")
-                .HasMaxLength(10)
+                .HasMaxLength(50)
                 .IsRequired();
 
             Property(u => u.Status)

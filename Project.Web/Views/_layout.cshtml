@@ -7,57 +7,72 @@
 
     <link href="~/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/css/Site.css" rel="stylesheet" />
+
     <script src="~/js/jquery-3.0.0.min.js"></script>
+    <!--js para realizar validação no AjaxBeginForm-->
+    <script src="~/js/jquery.validate.min.js"></script>
+    <script src="~/js/jquery.validate.unobtrusive.js"></script>
+    <!--js para realizar execução do evento no javascritp OnSuccess no AjaxBeginForm-->
+    <script src="~/js/jquery.unobtrusive-ajax.min.js"></script>
+
     <script src="~/js/bootstrap.min.js"></script>
 
 </head>
     <body>
-        <nav class="navbar navbar-dark bg-dark navbar-expand-lg mb-4" @*style="background-color:gray"*@>
+        <nav class="navbar navbar-dark bg-dark navbar-expand-lg mb-2" @*style="background-color:gray"*@>
             <div class="container">
                 <a class="navbar-brand" href="#">
                     <strong>Conta Fácil</strong>
                 </a>
-
-                @if (TempData["Usuario"] != null)
+                @using Project.Entity
+                @{ 
+                    Usuario u = (Usuario) Session["Usuario"];
+                }
+                @if (u != null)
                 {
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSite">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSite">
-                        <div class="dropdown ml-auto">
+                         
+                        <div class="dropdown ml-auto">                            
                             <button class="btn btn-dark bg-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                @TempData["Usuario"]
-                            </button>
+                                @u.Nome
+                            </button>                            
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="/Usuario/Logout">
                                     Sair  
                                 </a>
                             </div>
                         </div>
                     </div>
-                }
-
-
-                @*@if (TempData["Usuario"] != null)
-            {
-                <div class="collapse navbar-collapse">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item dropdown">
-                            <a class="navbar-link dropdown-toggle ml-auto" id="dropdownUsuario" data-toggle="dropdown" style="font-size:small; color:white">
-                                @TempData["Usuario"]
-                            </a>
-                            <div class="dropdown-menu" style="font-size:small">
-                                <a class="dropdown-item" href="#">Sair</a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            }*@
+                }          
         </div>
      </nav>
     
     <div class="container">
          @RenderBody()
     </div>
+
+    <div class="modal" role="dialog" id="modalMensagem">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title text-sm-center">Sr. Usuário</h5>
+                    <button type="button" class="close btn-sm" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p><span id="modalMensagemId"></span></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-dark btn-sm" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     </body>
 </html>

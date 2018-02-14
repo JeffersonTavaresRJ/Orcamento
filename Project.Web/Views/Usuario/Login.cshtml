@@ -6,7 +6,7 @@
 <!--Combinar o row justify-content-center com o col-auto para centralizar-->
 <div class="row justify-content-center">
     <div class="col-lg-6 col-md-8 col-sm-12 col-xl-6 col-auto">
-        <div class="card mb-2" style="border-color:gray">
+        <div class="card mt-4" style="border-color:gray">
             <div class="card-body">
                 <h3 class="card-title text-center">Acesso</h3>
                 <hr />
@@ -23,7 +23,7 @@
                             </span>
                             <br />
                             @Html.LabelFor(model => model.Senha)
-                            @Html.TextBoxFor(model => model.Senha, new { @class = "form-control", @placeholder = "Informe sua senha" })
+                            @Html.PasswordFor(model => model.Senha, new { @class = "form-control", @placeholder = "Informe sua senha" })
                             <span class="text-danger">
                                 @Html.ValidationMessageFor(model => model.Senha)
                             </span>

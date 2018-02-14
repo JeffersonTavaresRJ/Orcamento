@@ -3,15 +3,26 @@
     ViewBag.Title = "Cadastro de Usuário";
     Layout = "~/Views/_layout.cshtml";
 }
+<script src="~/js/js_views/usuario/cadastro.js"></script>
+<script type="text/javascript">
+
+    function SaveCatalogComplete(result) {
+        alert("Olá");
+    }
+
+
+
+</script>
+
 <div class="row justify-content-center">
     <div class="col-lg-6 col-md-6 col-sm-12 col-xl-6 col-auto">
-        <div class="card" style="border-color:gray">
+        <div class="card mt-4" style="border-color:gray">
             <div class="card-body pl-1">
                 <h4 class="card-title text-center">Cadastro de Usuário</h4>
                 <hr />
-                @using (Html.BeginForm("Novo", "Usuario", FormMethod.Post,
-                new { @enctype = "multipart/form-data" }))
+                @using (Ajax.BeginForm("Novo", "Usuario", new AjaxOptions { HttpMethod = "POST", OnSuccess = "AjaxMensagem" }))
                 {
+
                     foreach (var property in ViewData.ModelMetadata.Properties)
                     {
                         if (property.PropertyName != "Status")
@@ -20,56 +31,31 @@
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12">
                                 <div class="form-group mb-1">
                                     @Html.Label(property.DisplayName ?? property.PropertyName)
-                                    @Html.TextBox(property.PropertyName, null, new { @class = "form-control" })
-                                    <span style="font-size:small" class="text-danger">
-                                        @Html.ValidationMessage(property.PropertyName)
-                                    </span>
+
+                                    @if (property.PropertyName == "Senha" || property.PropertyName == "ConfirmaSenha")
+                                    {
+                                        @Html.Password(property.PropertyName, null, new { @class = "form-control" })
+                                    }
+                                    else
+                                    {
+                                        @Html.TextBox(property.PropertyName, null, new { @class = "form-control" })
+                                    }
                                 </div>
+                                <span style="font-size:small" class="text-danger">
+                                    @Html.ValidationMessage(property.PropertyName)
+                                </span>
                             </div>
 
                         }
                     }
-                    <div class="col-4 offset-8">
-                        <button type="submit" class="btn btn-outline-dark btn-block mt-2">
-                            <i class="fa fa-save"></i> Salvar
+                    <br />
+                    <div class="col-2 offset-10">
+                        <button id="btnSalvar" type="submit" class="btn btn-outline-dark btn-block mt-2">
+                            <i class="fa fa-save"></i>
                         </button>
-                    </div>
+                    </div>                  
                 }
             </div>
         </div>
     </div>
 </div>
-
-@if (ViewBag.Mensagem != null)
-{
-
-    @Html.Raw("<script>$('#modalMensagem').show();</script>")
-    @*@Html.Raw("<script>alert('" + ViewBag.Mensagem as string + "');</script>")*@
-
-}
-
-
-<div class="modal" role="dialog" id="modalMensagem">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Sr. Usuário</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>@ViewBag.Mensagem</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Fechar</button>
-                </div>
-            </div>
-        </div>
-</div>
-
-
-
-
-
-

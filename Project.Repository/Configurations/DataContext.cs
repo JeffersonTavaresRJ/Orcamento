@@ -18,8 +18,8 @@ namespace Project.Repository.Configurations
         //Regra 2) Construtor que envie para o DbContext a connectionstring 
 
         public DataContextOrcamento() 
-            : base (/*@"Data Source=LAPTOP-A2L56V3Q\SQLEXPRESS;Initial Catalog=Orcamento;Integrated Security=True"*/
-                  ConfigurationManager.ConnectionStrings["Orcamento"].ConnectionString)
+            : base (@"Data Source=LAPTOP-A2L56V3Q\SQLEXPRESS;Initial Catalog=Orcamento;Integrated Security=True"
+                  /*ConfigurationManager.ConnectionStrings["Orcamento"].ConnectionString*/)
         {
 
         }

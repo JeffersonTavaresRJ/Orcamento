@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01-Entity", "01-Entity", "{E164EA69-286B-420B-B78B-5CE864B2BDC4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02-Database", "02-Database", "{98ACC318-9B78-4B0A-9608-E4E5A726E635}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\orcamento.sql = ..\..\..\orcamento.sql
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03-Web", "03-Web", "{99557DEC-EE6C-4664-8457-B2BA2430F20A}"
 EndProject
@@ -18,6 +21,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestUsuario", "UnitTestUsuario\UnitTestUsuario.csproj", "{E4DD534C-BD6E-4807-9F2B-51D9345AEF10}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.Web", "Project.Web\Project.Web.csproj", "{C8151148-6C1F-435C-BB92-3AF75A9ECCC9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "05-Util", "05-Util", "{691903E0-D606-44E4-8C53-74F0AB69B5F3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.Util", "Project.Util\Project.Util.csproj", "{C40E4EF8-16A5-4642-B0D6-476EA872A048}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +48,10 @@ Global
 		{C8151148-6C1F-435C-BB92-3AF75A9ECCC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8151148-6C1F-435C-BB92-3AF75A9ECCC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8151148-6C1F-435C-BB92-3AF75A9ECCC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C40E4EF8-16A5-4642-B0D6-476EA872A048}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C40E4EF8-16A5-4642-B0D6-476EA872A048}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C40E4EF8-16A5-4642-B0D6-476EA872A048}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C40E4EF8-16A5-4642-B0D6-476EA872A048}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +61,7 @@ Global
 		{54A31312-57D5-4671-8F2A-8F899D8C43C6} = {98ACC318-9B78-4B0A-9608-E4E5A726E635}
 		{E4DD534C-BD6E-4807-9F2B-51D9345AEF10} = {193FC543-E8D4-406B-A0A2-47DD776C9A67}
 		{C8151148-6C1F-435C-BB92-3AF75A9ECCC9} = {99557DEC-EE6C-4664-8457-B2BA2430F20A}
+		{C40E4EF8-16A5-4642-B0D6-476EA872A048} = {691903E0-D606-44E4-8C53-74F0AB69B5F3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A9C28098-1A2E-43C1-86D1-6627356456E2}

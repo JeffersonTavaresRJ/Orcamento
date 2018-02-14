@@ -4,11 +4,12 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Project.Web.Controllers
+namespace Project.Web.Areas.AreaIndex.Controllers
 {
-    public class IndexController : Controller
+    [Authorize]
+    public class LancamentoController : Controller
     {
-        // GET: Index
+        // GET: AreaIndex/Lancamento
         public ActionResult Consulta()
         {
             return View();
