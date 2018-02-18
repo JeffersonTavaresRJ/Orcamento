@@ -3,57 +3,74 @@
     ViewBag.Title = "Cadastro de Usuário";
     Layout = "~/Views/_layout.cshtml";
 }
-<script src="~/js/js_views/usuario/cadastro.js"></script>
-<script type="text/javascript">
-
-    function SaveCatalogComplete(result) {
-        alert("Olá");
-    }
-
-
-
-</script>
 
 <div class="row justify-content-center">
     <div class="col-lg-6 col-md-6 col-sm-12 col-xl-6 col-auto">
         <div class="card mt-4" style="border-color:gray">
-            <div class="card-body pl-1">
+            <div class="card-body">
                 <h4 class="card-title text-center">Cadastro de Usuário</h4>
                 <hr />
-                @using (Ajax.BeginForm("Novo", "Usuario", new AjaxOptions { HttpMethod = "POST", OnSuccess = "AjaxMensagem" }))
+                @using (Ajax.BeginForm("Novo", "Usuario", new AjaxOptions
                 {
-
-                    foreach (var property in ViewData.ModelMetadata.Properties)
-                    {
-                        if (property.PropertyName != "Status")
+                    HttpMethod = "POST",
+                    OnSuccess = "AjaxMensagem",
+                    LoadingElementId = "divCarregando"
+                }))
+                {
+                    <div class="row px-3">
+                        @foreach (var property in ViewData.ModelMetadata.Properties)
                         {
+                            if (property.PropertyName != "Status")
+                            {
 
-                            <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12">
-                                <div class="form-group mb-1">
-                                    @Html.Label(property.DisplayName ?? property.PropertyName)
+                                if (property.PropertyName == "Senha" || property.PropertyName == "ConfirmaSenha")
+                                {
+                                    <div class="col-lg-6 col-md-6 col-sm-6 col-xl-6 mb-1">
+                                        <div class="form-group mb-1">
+                                            @Html.Label(property.DisplayName ?? property.PropertyName)
+                                            @Html.Password(property.PropertyName, null, new { @class = "form-control" })
+                                        </div>
+                                        <span style="font-size:small" class="text-danger">
+                                            @Html.ValidationMessage(property.PropertyName)
+                                        </span>
+                                    </div>
+                                }
+                                else if (property.PropertyName != "IdPerfil")
+                                {
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12 mb-1">
+                                        <div class="form-group mb-1">
+                                            @Html.Label(property.DisplayName ?? property.PropertyName)
+                                            @Html.TextBox(property.PropertyName, null, new { @class = "form-control" })
+                                        </div>
+                                        <span style="font-size:small" class="text-danger">
+                                            @Html.ValidationMessage(property.PropertyName)
+                                        </span>
+                                    </div>
+                                }
+                                else 
+                                {
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xl-12 mb-1">
+                                        <div class="form-group mb-1">
+                                            @Html.Label(property.DisplayName ?? property.PropertyName)
+                                            @Html.DropDownListFor(model=>model.IdPerfil,
+                                                                new SelectList(ViewBag.ListaPerfis, "IdPerfil", "Descricao"), "--Selecione--", new { @class = "form-control" })
+                                        </div>
+                                        <span style="font-size:small" class="text-danger">
+                                            @Html.ValidationMessage(property.PropertyName)
+                                        </span>
+                                    </div>
+                                }
 
-                                    @if (property.PropertyName == "Senha" || property.PropertyName == "ConfirmaSenha")
-                                    {
-                                        @Html.Password(property.PropertyName, null, new { @class = "form-control" })
-                                    }
-                                    else
-                                    {
-                                        @Html.TextBox(property.PropertyName, null, new { @class = "form-control" })
-                                    }
-                                </div>
-                                <span style="font-size:small" class="text-danger">
-                                    @Html.ValidationMessage(property.PropertyName)
-                                </span>
-                            </div>
+                            }
 
                         }
-                    }
+                    </div>
                     <br />
                     <div class="col-2 offset-10">
                         <button id="btnSalvar" type="submit" class="btn btn-outline-dark btn-block mt-2">
                             <i class="fa fa-save"></i>
                         </button>
-                    </div>                  
+                    </div>
                 }
             </div>
         </div>

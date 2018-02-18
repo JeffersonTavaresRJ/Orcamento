@@ -2,7 +2,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Project.Util
+namespace Project.Utility.UtilString
 {
     public class Criptografia
     {

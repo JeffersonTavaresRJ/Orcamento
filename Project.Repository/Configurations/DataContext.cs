@@ -30,11 +30,13 @@ namespace Project.Repository.Configurations
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Configurations.Add(new UsuarioMap());
+            modelBuilder.Configurations.Add(new PerfilMap());
         }
 
         //Regra 4) Declarar um DbSet para cada entidade..         
         //permitir a realizar as operações de CRUD no banco de dados 
 
         public DbSet<Usuario> Usuario { get; set; }
+        public DbSet<Perfil> Perfil { get; set; }
     }
 }

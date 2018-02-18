@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using Project.Entity;
 
 namespace Project.Web.Models.Usuario
 {
@@ -20,6 +21,10 @@ namespace Project.Web.Models.Usuario
         [Display(Name = "Nome:")]
         public string Nome { get; set; }
 
+        [Required(ErrorMessage = "O perfil é obrigatório")]
+        [Display(Name = "Perfil:")]
+        public int IdPerfil { get; set; }
+
         [RegularExpression("^[A-Za-z0-9]{6,10}$",
            ErrorMessage = "A senha deve possuir entre 6 a 10 caracteres, com letras e números")]
         [Required(ErrorMessage = "Informe a Senha")]
@@ -30,6 +35,8 @@ namespace Project.Web.Models.Usuario
         [Required(ErrorMessage = "Confirme a senha de acesso")]
         [Display(Name = "Confirme a Senha:")]
         public string ConfirmaSenha { get; set; }
+
+
 
     }
 }

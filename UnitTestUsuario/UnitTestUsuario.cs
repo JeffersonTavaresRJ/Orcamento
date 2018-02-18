@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Project.Entity;
 using Project.Repository.Persistence;
 using Project.Web;
-using Project.Util;
+using Project.Utility.UtilString;
 
 namespace UnitTestUsuario
 {

@@ -7,62 +7,91 @@
 
     <link href="~/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="~/css/Site.css" rel="stylesheet" />
+    @*<link href="~/css/Site.css" rel="stylesheet" />*@
 
     <script src="~/js/jquery-3.0.0.min.js"></script>
     <!--js para realizar validação no AjaxBeginForm-->
     <script src="~/js/jquery.validate.min.js"></script>
     <script src="~/js/jquery.validate.unobtrusive.js"></script>
-    <!--js para realizar execução do evento no javascritp OnSuccess no AjaxBeginForm-->
+
+    <!--js para realizar execução do evento no javascritp OnSuccess no AjaxBeginForm e capturar a mensagem no js-->
     <script src="~/js/jquery.unobtrusive-ajax.min.js"></script>
 
     <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/site.js"></script>
+
+    <style type="text/css">
+
+        .progresso {
+            display: none;
+            position: fixed;
+            top: 360px;
+            left: 50%;
+            margin-top: -50px;
+            margin-left: -100px;
+            vertical-align: middle;
+            text-align: center;
+            font-size: 16px;
+            background-color: white;
+            border: 1px solid black;
+            height: 90px;
+            width: 120px;
+        }
+    </style>
+
 
 </head>
-    <body>
-        <nav class="navbar navbar-dark bg-dark navbar-expand-lg mb-2" @*style="background-color:gray"*@>
-            <div class="container">
-                <a class="navbar-brand" href="#">
-                    <strong>Conta Fácil</strong>
-                </a>
-                @using Project.Entity
-                @{ 
-                    Usuario u = (Usuario) Session["Usuario"];
-                }
-                @if (u != null)
-                {
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSite">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarSite">
-                         
-                        <div class="dropdown ml-auto">                            
-                            <button class="btn btn-dark bg-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                @u.Nome
-                            </button>                            
+<body>
+    <nav class="navbar navbar-dark bg-dark navbar-expand-lg mb-2" @*style="background-color:gray"*@>
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <strong>Conta Fácil</strong>
+            </a>
+            @using Project.Entity
+            @{
+                Usuario u = (Usuario)Session["Usuario"];
+            }
+            @if (u != null)
+            {
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSite">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSite">
+
+                    <div class="dropdown ml-auto">
+                        <button class="btn btn-dark bg-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            @u.Nome
+                        </button>
+                        @if (@u.Status.Equals("A"))
+                        {
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item" href="/Usuario/Logout">
-                                    Sair  
+                                    Controle de Usuários
                                 </a>
                             </div>
+                        }
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="/Usuario/Logout">
+                                Sair
+                            </a>
                         </div>
                     </div>
-                }          
+                </div>
+            }
         </div>
-     </nav>
-    
+    </nav>
+
     <div class="container">
-         @RenderBody()
+        @RenderBody()
+
     </div>
 
-    <div class="modal" role="dialog" id="modalMensagem">
+    <div class="modal fade" role="dialog" id="modalMensagem" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title text-sm-center">Sr. Usuário</h5>
-                    <button type="button" class="close btn-sm" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Sr. Usuário</h4>
+                    <span style="font-size:xx-large"><i class="fa fa-info-circle"></i></span>
                 </div>
                 <div class="modal-body">
                     <p><span id="modalMensagemId"></span></p>
@@ -74,5 +103,14 @@
         </div>
     </div>
 
-    </body>
+    <div id="divCarregando" class="progresso">
+        <br />
+        <img src="~/assets/gifs/ajax-loader.gif" />
+        <br />
+        Carregando...
+    </div>
+
+
+
+</body>
 </html>

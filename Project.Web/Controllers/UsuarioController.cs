@@ -7,7 +7,7 @@ using Project.Web.Models.Usuario;
 using Project.Entity;
 using Project.Repository.Persistence;
 using System.Web.Security;
-using Project.Util;
+using Project.Utility.UtilString;
 
 namespace Project.Web.Controllers
 {
@@ -21,6 +21,9 @@ namespace Project.Web.Controllers
 
         public ActionResult Cadastro()
         {
+            PerfilPersistence pp = new PerfilPersistence();
+
+            ViewBag.ListaPerfis = pp.ListarTodos();
             return View();
         }
 
@@ -33,23 +36,24 @@ namespace Project.Web.Controllers
                 {
                     UsuarioPersistence up = new UsuarioPersistence();
                     Usuario u = new Usuario();
-                    u = up.ObterLoginSenha(usuarioModel.Login, 
-                                        Criptografia.EncriptarSenha(usuarioModel.Senha));                   
+                    u = up.ObterLoginSenha(usuarioModel.Login,
+                                        Criptografia.EncriptarSenha(usuarioModel.Senha));
 
-                    if(u != null)
+                    if (u != null)
                     {
                         if (u.Status.Equals("I"))
                         {
                             throw new Exception("Usuário Inativado." + "\n" + "Procure o Administrador do Sistema");
+
                         }
 
                         //criando o tícket para dar acesso a aplicação..
-                        FormsAuthenticationTicket ticket = 
+                        FormsAuthenticationTicket ticket =
                             new FormsAuthenticationTicket(u.IdUsuario, false, 5);//cinco minutos de inatividade, retorna ao login..
 
                         //gravando o ticket em cookie do navegador..
                         HttpCookie cookie =
-                            new HttpCookie( FormsAuthentication.FormsCookieName,
+                            new HttpCookie(FormsAuthentication.FormsCookieName,
                                             FormsAuthentication.Encrypt(ticket));
 
                         //Gravando o cookie no navegador..
@@ -58,12 +62,12 @@ namespace Project.Web.Controllers
                         //gravando o objeto Usuario em sessão..
                         Session.Add("Usuario", u);
 
-                       
+
                         return RedirectToAction("Consulta", "Lancamento",
                             new { area = "AreaIndex" });
                     }
 
-                    ViewBag.Mensagem = "Usuário/Senha Inválido";      
+                    ViewBag.Mensagem = "Usuário/Senha Inválido";
                 }
             }
             catch (Exception ex)
@@ -74,11 +78,11 @@ namespace Project.Web.Controllers
 
             return View("Login");
 
-            
+
         }
 
-        
-        public JsonResult Novo(UsuarioViewModelCadastro usuarioModel)
+        [HttpPost]
+        public ActionResult Novo(UsuarioViewModelCadastro usuarioModel)
         {
             try
             {
@@ -89,31 +93,31 @@ namespace Project.Web.Controllers
                     {
                         IdUsuario = usuarioModel.Id_Usuario,
                         Nome = usuarioModel.Nome,
-                        Senha = Criptografia.EncriptarSenha(usuarioModel.Senha)
+                        Senha = Criptografia.EncriptarSenha(usuarioModel.Senha),
+                        IdPerfil = usuarioModel.IdPerfil
+
                     };
-                    usuarioModel.Nome = "Novo Nome";
+
                     if (up.LoginExistente(u.IdUsuario) > 0)
                     {
-                        throw new Exception("Login já existe!");
+                        return Json(new { mensagem = "O Login informado já existe" }, JsonRequestBehavior.AllowGet);
                     }
 
                     up.Inserir(u);
                     ModelState.Clear();//limpa os campos da tela
-                    ViewBag.Mensagem = $"Usuário {u.Nome} cadastrado com sucesso.";
 
-                    return Json(true);                   
+                    return Json(new { mensagem = $"Usuário {u.Nome} cadastrado com sucesso." });
                 }
             }
             catch (Exception ex)
             {
-                ViewBag.Mensagem = $"Erro: {ex.Message}";
-                return Json(true);
+                return Json(new { mensagem = ex.Message.ToString() });
             }
 
-            return Json(true);
+            return Json(null);
         }
 
-        
+
         public ActionResult Logout()
         {
             //destrói o tícket de acesso do usuário..

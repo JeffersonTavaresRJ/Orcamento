@@ -20,7 +20,7 @@ namespace Project.Repository.Mapping
 
             //propriedades..
             Property(u => u.IdUsuario)
-                .HasColumnName("Id_Usuario")
+                .HasColumnName("IdUsuario")
                 .HasMaxLength(4)
                 .IsRequired();
 
@@ -33,6 +33,14 @@ namespace Project.Repository.Mapping
                 .HasColumnName("Senha")
                 .HasMaxLength(50)
                 .IsRequired();
+
+            Property(u => u.IdPerfil)
+                .HasColumnName("IdPerfil")
+                .IsRequired();
+
+            HasRequired(u => u.Perfil)
+                .WithMany(p => p.Usuarios)
+                .HasForeignKey(u => u.IdPerfil);
 
             Property(u => u.Status)
                 .HasColumnName("Status")

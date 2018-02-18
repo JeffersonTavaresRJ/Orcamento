@@ -101,6 +101,7 @@
     <Content Include="App_Data\Banco_log.ldf">
       <DependentUpon>Banco.mdf</DependentUpon>
     </Content>
+    <Content Include="assets\gifs\ajax-loader.gif" />
     <Content Include="assets\icons\glyph-iconset-master\si-glyph-abacus.svg" />
     <Content Include="assets\icons\glyph-iconset-master\si-glyph-adjustment-horizon.svg" />
     <Content Include="assets\icons\glyph-iconset-master\si-glyph-adjustment-vertical.svg" />
@@ -1130,11 +1131,11 @@
     <Content Include="js\popper-utils.min.js" />
     <Content Include="js\popper.js" />
     <Content Include="js\popper.min.js" />
+    <Content Include="js\site.js" />
     <Content Include="js\umd\popper-utils.js" />
     <Content Include="js\umd\popper-utils.min.js" />
     <Content Include="js\umd\popper.js" />
     <Content Include="js\umd\popper.min.js" />
-    <Content Include="js\js_views\usuario\cadastro.js" />
     <None Include="js\jquery.validate-vsdoc.js" />
     <Content Include="js\jquery.validate.js" />
     <Content Include="js\jquery.validate.min.js" />
@@ -1185,7 +1186,6 @@
   <ItemGroup>
     <Folder Include="Areas\AreaIndex\Models\" />
     <Folder Include="Areas\AreaIndex\Views\Shared\" />
-    <Folder Include="Content\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="js\index.d.ts" />
@@ -1202,9 +1202,9 @@
       <Project>{54a31312-57d5-4671-8f2a-8f899d8c43c6}</Project>
       <Name>Project.Repository</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Project.Util\Project.Util.csproj">
-      <Project>{c40e4ef8-16a5-4642-b0d6-476ea872a048}</Project>
-      <Name>Project.Util</Name>
+    <ProjectReference Include="..\Project.Utility\Project.Utility.csproj">
+      <Project>{83d75b61-e4fd-4a42-8504-8f1d30a2154e}</Project>
+      <Name>Project.Utility</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
