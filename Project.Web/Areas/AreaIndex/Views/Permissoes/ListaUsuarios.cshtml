@@ -1,0 +1,27 @@
+﻿@using PagedList.Mvc
+@model PagedList.IPagedList<Project.Entity.Usuario>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Usuário</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Perfil</th>
+            <th scope="col">Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th scope="row">@Html.DisplayFor(modelItem => item.IdUsuario)</th>
+                <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                <td>@Html.DisplayFor(modelItem => item.Perfil.Descricao)</td>
+                <td>@Html.DisplayFor(modelItem => item.Status.ToUpper())</td>
+            </tr>
+
+        }
+    </tbody>
+</table>
+<hr />
+@Html.PagedListPager(Model, pagina => Url.Action("ListaUsuarios", new { pagina, busca = ViewBag.UsuarioBusca, perfil=ViewBag.UsuarioPerfil, status = ViewBag.UsuarioStatus }))

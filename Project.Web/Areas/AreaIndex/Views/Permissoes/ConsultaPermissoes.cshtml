@@ -1,0 +1,29 @@
+﻿@{
+    ViewBag.Title = "Consulta Permissões";
+    Layout = "~/Views/_layout.cshtml";
+}
+<br />
+<h5>Consulta de Usuários</h5>
+<hr />
+<div class="row">
+    <div class="col-4">
+        Login ou Nome:
+        <div class="input-group">
+            <input type="text" id="txtBusca" class="form-control" placeholder="Informe o Usuário" />
+            <button id="btnBusca" type="submit" class="btn btn-outline-dark">
+                <i class="fa fa-search"></i>
+            </button>
+        </div>
+    </div>
+    <div class="col-4">
+        Perfil:
+        @{Html.RenderAction("DropDownPerfil", "Perfil");}
+    </div>
+    <div class="col-4">
+        Status:
+        @{Html.RenderAction("DropDownStatus", "Status");}
+    </div>
+</div>
+
+
+
