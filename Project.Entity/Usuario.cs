@@ -22,8 +22,8 @@ namespace Project.Entity
                    return status;
             }
             set {
-                if (!value.Equals(Convert.ToString((char)Project.Entity.Enuns.Status.Ativo)) &&
-                    !value.Equals(Convert.ToString((char)Project.Entity.Enuns.Status.Inativo))
+                if (!value.Equals(Convert.ToString((char)Project.Entity.Enuns.Status.A)) &&
+                    !value.Equals(Convert.ToString((char)Project.Entity.Enuns.Status.I))
                    ){
                     throw new Exception("Os valores válidos são Ativo (A) e Inativo (I)");
                 }

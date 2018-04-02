@@ -1085,7 +1085,7 @@
     <Content Include="assets\icons\octicons-6.0.1\watch.svg" />
     <Content Include="assets\icons\octicons-6.0.1\x.svg" />
     <Content Include="assets\icons\octicons-6.0.1\zap.svg" />
-    <Content Include="Content\PagedList.css" />
+    <Content Include="css\PagedList.css" />
     <Content Include="css\font-awesome.css" />
     <Content Include="css\font-awesome.min.css" />
     <Content Include="css\bootstrap-grid.css" />
@@ -1099,12 +1099,11 @@
     <Content Include="Global.asax" />
     <Content Include="assets\img\logo-navbar.jpg" />
     <Content Include="assets\img\logo.jpg" />
-    <Content Include="js\Areas\AreaIndex\consultaPermissoes.js" />
     <Content Include="js\bootstrap.bundle.js" />
     <Content Include="js\bootstrap.bundle.min.js" />
     <Content Include="js\bootstrap.js" />
     <Content Include="js\bootstrap.min.js" />
-    <Content Include="js\Componentes\componente_dropdown.js" />
+    <Content Include="js\Areas\AreaIndex\DropDown\componente_dropdown.js" />
     <Content Include="js\esm\popper-utils.js" />
     <Content Include="js\esm\popper-utils.min.js" />
     <Content Include="js\esm\popper.js" />
@@ -1132,7 +1131,8 @@
     <Content Include="Areas\AreaIndex\Views\Lancamento\Consulta.cshtml" />
     <Content Include="Areas\AreaIndex\Views\Permissoes\ListaUsuarios.cshtml" />
     <Content Include="Areas\AreaIndex\Views\Permissoes\ConsultaPermissoes.cshtml" />
-    <Content Include="Areas\AreaIndex\Views\Status\DropDownStatus.cshtml" />
+    <Content Include="Areas\AreaIndex\Views\DropDown\Status.cshtml" />
+    <Content Include="Areas\AreaIndex\Views\DropDown\Perfil.cshtml" />
     <None Include="js\jquery-3.0.0-vsdoc.js" />
     <Content Include="js\jquery-3.0.0.js" />
     <Content Include="js\jquery-3.0.0.min.js" />
@@ -1164,8 +1164,7 @@
     <Compile Include="Areas\AreaIndex\AreaIndexAreaRegistration.cs" />
     <Compile Include="Areas\AreaIndex\Controllers\LancamentoController.cs" />
     <Compile Include="Areas\AreaIndex\Controllers\PermissoesController.cs" />
-    <Compile Include="Areas\AreaIndex\Controllers\PerfilController.cs" />
-    <Compile Include="Areas\AreaIndex\Controllers\StatusController.cs" />
+    <Compile Include="Areas\AreaIndex\Controllers\DropDownController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1191,7 +1190,6 @@
     <Content Include="Views\_layout.cshtml" />
     <Content Include="Views\Usuario\Login.cshtml" />
     <Content Include="Views\Usuario\Cadastro.cshtml" />
-    <Content Include="Areas\AreaIndex\Views\Perfil\DropDownPerfil.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1200,8 +1198,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\AreaIndex\Models\Permissoes\" />
-    <Folder Include="Areas\AreaIndex\Views\Shared\" />
+    <Folder Include="Areas\AreaIndex\Models\" />
+    <Folder Include="js\Areas\AreaIndex\Lancamento\" />
+    <Folder Include="js\Areas\AreaIndex\Permissoes\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="js\index.d.ts" />
