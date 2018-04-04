@@ -14,6 +14,7 @@
 
     <link href="~/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/css/jquery.dataTables.min.css" rel="stylesheet" />
     @*<link href="~/css/Site.css" rel="stylesheet" />*@
 
     <script src="~/js/jquery-3.0.0.min.js"></script>
@@ -26,6 +27,9 @@
 
     <!--js do Bootstrap para corrigir o erro no dropdown-->
     <script src="~/js/bootstrap.bundle.min.js"></script>
+
+    <!--js do DataTable JQuery para paginação-->
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
 
     <script src="~/js/site.js"></script>
 
@@ -75,7 +79,7 @@
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             @if (u.IdPerfil.Equals(1))
                             {
-                                <a class="dropdown-item" href="/AreaIndex/Permissoes/ConsultaPermissoes">
+                                <a class="dropdown-item" href="/AreaIndex/Permissoes/Consulta">
                                     Controle de Usuários
                                 </a>
                             }
@@ -91,7 +95,6 @@
 
     <div class="container">
         @RenderBody()
-
     </div>
 
     <div class="modal fade" role="dialog" id="modalMensagem" aria-labelledby="myModalLabel">

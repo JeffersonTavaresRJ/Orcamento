@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Project.Entity.Usuario>
+<script src="~/js/Areas/AreaIndex/Table/TablePaged.js"></script>
+@if (Model != null)
+{
+    <div class="row">
+        <div class="col-12">
+            <table class="table stripe hover tabelaPaginada" data-page-length="5">
+                <thead>
+                    <tr>
+                        <th scope="col">Usuário</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Perfil</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <th scope="row">@Html.DisplayFor(modelItem => item.IdUsuario)</th>
+                            <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                            <td>@Html.DisplayFor(modelItem => item.IdPerfil)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+

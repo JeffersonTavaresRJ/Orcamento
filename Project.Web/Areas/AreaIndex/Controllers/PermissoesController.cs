@@ -3,33 +3,51 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using PagedList;
 using Project.Entity;
 using Project.Repository.Persistence;
 using Project.Entity.Enuns;
+using Project.Utility.UtilTables;
 
 namespace Project.Web.Areas.AreaIndex.Controllers
 {
     public class PermissoesController : Controller
     {
-        
-        public ActionResult ConsultaPermissoes()
+        public ActionResult Consulta()
         {
             return View();
         }
-        
-        
-        // GET: AreaIndex/Permissoes
-        public ActionResult ListaUsuarios(int pagina=1, string busca = null, string perfil=null, string status=null)
+
+        public ActionResult Listar(string parBusca = "", string parPerfil = "-1", string parStatus = "-1")
         {
             UsuarioPersistence up = new UsuarioPersistence();
 
-            return View(up.ListarTodos().Where(u=>u.IdUsuario.Contains(busca) || 
-                                                  u.Nome.Contains(busca) ||
-                                                  u.Perfil.Descricao.Equals(perfil) ||
-                                                  u.Status.Equals(status))
-                                        .OrderBy(u=>u.Nome)
-                                        .ToPagedList(pagina,5));
+            //IEnumerable<Usuario> usuarios = null;
+
+            //if (parBusca != null)
+            //{
+            //    usuarios = up.ListarTodos().Where(u => u.IdUsuario.Contains(parBusca) || u.Nome.Contains(parBusca));
+            //}
+
+            //if (parPerfil != "-1")
+            //{
+            //    usuarios = usuarios.Where(u => u.Perfil.IdPerfil.Equals(parPerfil));
+            //}
+
+            //if (parStatus != "-1")
+            //{
+            //    usuarios = usuarios.Where(u => u.Status.Equals(parStatus == Convert.ToString(-1) ? "" : parStatus));
+            //}
+
+            //if (usuarios != null)
+            //{
+            //    usuarios = usuarios.OrderBy(u => u.IdUsuario);
+            //}
+
+            var usuarios = up.ListarTodos().Where(u => u.IdUsuario.Contains(parBusca) || u.Nome.Contains(parBusca));
+            return PartialView("Usuarios", usuarios);
         }
+
+
+
     }
 }

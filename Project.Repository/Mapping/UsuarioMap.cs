@@ -38,6 +38,7 @@ namespace Project.Repository.Mapping
                 .HasColumnName("IdPerfil")
                 .IsRequired();
 
+
             HasRequired(u => u.Perfil)
                 .WithMany(p => p.Usuarios)
                 .HasForeignKey(u => u.IdPerfil);

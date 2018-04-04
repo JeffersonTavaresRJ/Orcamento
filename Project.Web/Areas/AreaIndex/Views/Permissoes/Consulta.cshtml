@@ -1,0 +1,75 @@
+﻿@*@model IEnumerable<Project.Entity.Usuario>*@
+
+@{
+    ViewBag.Title = "Consulta Permissões";
+    Layout = "~/Views/_layout.cshtml";
+}
+
+<h5>Consulta de Usuários</h5>
+<hr />
+@using (Ajax.BeginForm("Listar", "Permissoes",
+    new AjaxOptions
+    {
+        UpdateTargetId = "TabelaUsuarios", // <-- ID do elemento DOM a atualizar
+        InsertionMode = InsertionMode.Replace, // <-- Substituir o conteúdo do elemento DOM
+        HttpMethod = "POST"
+    }))
+{
+    <div class="row">
+        <div class="col-4">
+            Login ou Nome:
+            <div class="input-group">
+                <!--pela propriedade 'name', a action 'Listar' reconhece os parâmetros. O Name deve estar igual aos parâmetros da Action..-->
+                <input type="text" name="parBusca" id="txtBusca" class="form-control" placeholder="Informe o Usuário" />
+            </div>
+        </div>
+        <div class="col-3">
+            Perfil:
+            @{Html.RenderAction("Perfil", "DropDown");}
+        </div>
+        <div class="col-3">
+            Status:
+            @{Html.RenderAction("Status", "DropDown");}
+        </div>
+        <div class="col-2 text-right">
+            <br />
+
+            <button id="btnBusca" class="btn btn-outline-dark">
+                <i class="fa fa-search"></i> Pesquisar
+            </button>
+
+
+        </div>
+    </div>
+}
+<div id="TabelaUsuarios" class="mt-5">
+        @{ Html.RenderAction("Listar");}
+</div>
+
+
+@*<div class="row mt-5">
+        <div class="col-12">
+            <table class="table stripe hover tabelaPaginada" data-page-length="5">
+                <thead>
+                    <tr>
+                        <th scope="col">Usuário</th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Perfil</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <th scope="row">@Html.DisplayFor(modelItem => item.IdUsuario)</th>
+                            <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Perfil.Descricao)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>*@

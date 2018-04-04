@@ -13,7 +13,7 @@ namespace Project.Entity
         public string Nome { get; set; }
         public string Senha { get; set; }
         public int IdPerfil { get; set; }
-        public Perfil Perfil { get; set; }
+        public virtual Perfil Perfil { get; set; }
 
         private string status = "A";
         public  string Status

@@ -89,14 +89,13 @@ namespace Project.Web.Controllers
                 if (ModelState.IsValid)
                 {
                     UsuarioPersistence up = new UsuarioPersistence();
-                    Usuario u = new Usuario
-                    {
-                        IdUsuario = usuarioModel.Id_Usuario,
-                        Nome = usuarioModel.Nome,
-                        Senha = Criptografia.EncriptarSenha(usuarioModel.Senha),
-                        IdPerfil = usuarioModel.IdPerfil
+                    PerfilPersistence pp = new PerfilPersistence();
 
-                    };
+                    Usuario u = new Usuario();
+                    u.IdUsuario = usuarioModel.Id_Usuario;
+                    u.Nome = usuarioModel.Nome;
+                    u.Senha = Criptografia.EncriptarSenha(usuarioModel.Senha);
+                    u.Perfil = pp.ObterPorId(usuarioModel.IdPerfil);
 
                     if (up.LoginExistente(u.IdUsuario) > 0)
                     {
