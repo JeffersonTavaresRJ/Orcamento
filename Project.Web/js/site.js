@@ -4,5 +4,6 @@
                 $('#modalMensagemId').html(result.mensagem);
                 $('#modalMensagem').modal();
             }
-        }
+    }
+
     };
