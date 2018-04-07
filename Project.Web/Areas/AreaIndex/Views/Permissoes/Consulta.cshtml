@@ -1,4 +1,5 @@
-﻿@*@model IEnumerable<Project.Entity.Usuario>*@
+﻿@model Project.Web.Areas.AreaIndex.Models.PermissoesViewModelFiltro
+@using Project.Entity
 
 @{
     ViewBag.Title = "Consulta Permissões";
@@ -8,68 +9,75 @@
 <h5>Consulta de Usuários</h5>
 <hr />
 @using (Ajax.BeginForm("Listar", "Permissoes",
-    new AjaxOptions
-    {
-        UpdateTargetId = "TabelaUsuarios", // <-- ID do elemento DOM a atualizar
-        InsertionMode = InsertionMode.Replace, // <-- Substituir o conteúdo do elemento DOM
-        HttpMethod = "POST"
-    }))
+        new AjaxOptions
+        {
+            UpdateTargetId = "TabelaUsuarios", // <-- ID do elemento DOM a atualizar
+            InsertionMode = InsertionMode.Replace, // <-- Substituir o conteúdo do elemento DOM
+            HttpMethod = "POST"
+        }))
 {
-    <div class="row">
-        <div class="col-4">
-            Login ou Nome:
-            <div class="input-group">
-                <!--pela propriedade 'name', a action 'Listar' reconhece os parâmetros. O Name deve estar igual aos parâmetros da Action..-->
-                <input type="text" name="parBusca" id="txtBusca" class="form-control" placeholder="Informe o Usuário" />
+        <div class="row">
+            <div class="col-4">
+                @Html.LabelFor(model => model.Busca)
+                @Html.TextBoxFor(model => model.Busca, new { @class = "form-control", @placehoder = "Informe o login ou nome" })
+            </div>
+            <div class="col-3">
+                @Html.LabelFor(model => model.IdPerfil)
+                @Html.DropDownListFor(model => model.IdPerfil, (SelectList)ViewBag.ListaPerfis, new { @class = "form-control "})
+            </div>
+            <div class="col-3">
+                @Html.LabelFor(model => model.IdStatus)
+                @Html.DropDownListFor(model => model.IdStatus, (SelectList)ViewBag.ListaStatus, new { @class = "form-control "})
+            </div>
+            <div class="col-2 text-right mt-4">
+                <button id="btnBusca" type="submit" class="btn btn-outline-dark">
+                    <i class="fa fa-search"></i> Pesquisar
+                </button>
             </div>
         </div>
-        <div class="col-3">
-            Perfil:
-            @{Html.RenderAction("Perfil", "DropDown");}
+
+        }
+        <div id="TabelaUsuarios" class="mt-5">
+            @{Html.RenderAction("Listar");}
         </div>
-        <div class="col-3">
-            Status:
-            @{Html.RenderAction("Status", "DropDown");}
-        </div>
-        <div class="col-2 text-right">
-            <br />
 
-            <button id="btnBusca" class="btn btn-outline-dark">
-                <i class="fa fa-search"></i> Pesquisar
-            </button>
+    @*<script>
+            $(document).ready(function () {
 
+                $("#btnBusca").click(function () {
 
-        </div>
-    </div>
-}
-<div id="TabelaUsuarios" class="mt-5">
-        @{ Html.RenderAction("Listar");}
-</div>
+                    console.log($("#formConsultaUsuario").serializeArray());
+                    $.get("/Permissoes/Listar/", {
+                        model: $("#formConsultaUsuario").serializeArray()
+                    }, function (data) { $("#TabelaUsuarios").load('@Url.Action("Listar", "Permissoes");') });
 
+                })
+            })
+        </script>*@
 
-@*<div class="row mt-5">
-        <div class="col-12">
-            <table class="table stripe hover tabelaPaginada" data-page-length="5">
-                <thead>
-                    <tr>
-                        <th scope="col">Usuário</th>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Perfil</th>
-                        <th scope="col">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
+    @*<div class="row mt-5">
+            <div class="col-12">
+                <table class="table stripe hover tabelaPaginada" data-page-length="5">
+                    <thead>
                         <tr>
-                            <th scope="row">@Html.DisplayFor(modelItem => item.IdUsuario)</th>
-                            <td>@Html.DisplayFor(modelItem => item.Nome)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Perfil.Descricao)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                            <th scope="col">Usuário</th>
+                            <th scope="col">Nome</th>
+                            <th scope="col">Perfil</th>
+                            <th scope="col">Status</th>
                         </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <th scope="row">@Html.DisplayFor(modelItem => item.IdUsuario)</th>
+                                <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Perfil.Descricao)</td>
+                                <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                            </tr>
 
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>*@
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>*@

@@ -1244,6 +1244,7 @@
     <Compile Include="Areas\AreaIndex\Controllers\LancamentoController.cs" />
     <Compile Include="Areas\AreaIndex\Controllers\PermissoesController.cs" />
     <Compile Include="Areas\AreaIndex\Controllers\DropDownController.cs" />
+    <Compile Include="Areas\AreaIndex\Models\PermissoesViewModelFiltro.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1278,7 +1279,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\AreaIndex\Models\" />
+    <Folder Include="Areas\AreaIndex\Views\Perfil\" />
     <Folder Include="js\Areas\AreaIndex\Lancamento\" />
     <Folder Include="js\Areas\AreaIndex\Permissoes\" />
   </ItemGroup>
@@ -1318,7 +1319,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>51167</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:51167/</IISUrl>
+          <IISUrl>http://localhost:51169</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -21,7 +21,7 @@ namespace Project.Repository.Configurations
             : base (@"Data Source=LAPTOP-A2L56V3Q\SQLEXPRESS;Initial Catalog=Orcamento;Integrated Security=True"
                   /*ConfigurationManager.ConnectionStrings["Orcamento"].ConnectionString*/)
         {
-
+            Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
         }
 
         //Regra 3) Sobrescrever o método OnModelCreating        
