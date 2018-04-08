@@ -10,6 +10,8 @@ using Project.Utility.UtilTables;
 using Project.Utility.UtilComboBox;
 using Project.Web.Areas.AreaIndex.Models;
 using System.Collections;
+using Project.Web.Areas.AreaIndex.Models;
+using Project.Repository.Configurations;
 
 namespace Project.Web.Areas.AreaIndex.Controllers
 {
@@ -21,9 +23,10 @@ namespace Project.Web.Areas.AreaIndex.Controllers
 
             List<Perfil> listPerfil = pp.ListarTodos().ToList();
             listPerfil.Add(new Perfil { IdPerfil = -1, Descricao = "--Selecione--" });
-            ViewBag.ListaPerfis = new SelectList(listPerfil.OrderBy(p=>p.IdPerfil), "IdPerfil", "Descricao", -1);
 
+            ViewBag.ListaPerfis = new SelectList(listPerfil.OrderBy(p => p.IdPerfil), "IdPerfil", "Descricao", -1);
             ViewBag.ListaStatus = new SelectList(Combobox.Listar(typeof(Status)), "Key", "Value");
+
             return View();
         }
 

@@ -6,9 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01-Entity", "01-Entity", "{E164EA69-286B-420B-B78B-5CE864B2BDC4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02-Database", "02-Database", "{98ACC318-9B78-4B0A-9608-E4E5A726E635}"
-	ProjectSection(SolutionItems) = preProject
-		..\Scripts\BD_Orcamento.sql = ..\Scripts\BD_Orcamento.sql
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03-Web", "03-Web", "{99557DEC-EE6C-4664-8457-B2BA2430F20A}"
 EndProject

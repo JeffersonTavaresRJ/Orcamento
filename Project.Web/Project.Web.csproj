@@ -97,9 +97,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\Banco.mdf" />
-    <Content Include="App_Data\Banco_log.ldf">
-      <DependentUpon>Banco.mdf</DependentUpon>
+    <Content Include="App_Data\OrcamentoLocal.mdf" />
+    <Content Include="App_Data\OrcamentoLocal_log.ldf">
+      <DependentUpon>OrcamentoLocal.mdf</DependentUpon>
     </Content>
     <Content Include="assets\gifs\ajax-loader.gif" />
     <Content Include="assets\icons\glyph-iconset-master\si-glyph-abacus.svg" />

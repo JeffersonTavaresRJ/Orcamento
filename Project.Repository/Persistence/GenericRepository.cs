@@ -43,6 +43,7 @@ namespace Project.Repository.Persistence
         {
             using (DataContextOrcamento conn = new DataContextOrcamento())
             {
+                conn.Database.Log = Console.WriteLine;
                 return conn.Set<TEntity>().ToList();
             }
                 

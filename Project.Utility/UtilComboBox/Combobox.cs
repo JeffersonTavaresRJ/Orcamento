@@ -20,6 +20,8 @@ namespace Project.Utility.UtilComboBox
         public static IList Listar(Type tipo)
         {
             ArrayList lista = new ArrayList();
+            lista.Add(new KeyValuePair<string, string>("-1", "--Selecione--"));
+
             if (tipo != null)
             {
                 Array enumValores = Enum.GetValues(tipo);
