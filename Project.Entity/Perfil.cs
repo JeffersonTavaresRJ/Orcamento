@@ -8,7 +8,7 @@ namespace Project.Entity
 {
     public class Perfil
     {
-        public int IdPerfil { get; set; }
+        public virtual int IdPerfil { get; set; }
         public string Descricao { get; set; }
         public virtual List<Usuario> Usuarios { get; set; }
     }
