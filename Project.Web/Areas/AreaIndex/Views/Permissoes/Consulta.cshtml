@@ -12,72 +12,31 @@
         new AjaxOptions
         {
             UpdateTargetId = "TabelaUsuarios", // <-- ID do elemento DOM a atualizar
-            InsertionMode = InsertionMode.Replace, // <-- Substituir o conteúdo do elemento DOM
-            HttpMethod = "POST"
+InsertionMode = InsertionMode.Replace, // <-- Substituir o conteúdo do elemento DOM
+HttpMethod = "POST"
         }))
 {
-        <div class="row">
-            <div class="col-4">
-                @Html.LabelFor(model => model.Busca)
-                @Html.TextBoxFor(model => model.Busca, new { @class = "form-control", @placehoder = "Informe o login ou nome" })
-            </div>
-            <div class="col-3">
-                @Html.LabelFor(model => model.IdPerfil)
-                @Html.DropDownListFor(model => model.IdPerfil, (SelectList)ViewBag.ListaPerfis, new { @class = "form-control "})
-            </div>
-            <div class="col-3">
-                @Html.LabelFor(model => model.IdStatus)
-                @Html.DropDownListFor(model => model.IdStatus, (SelectList)ViewBag.ListaStatus, new { @class = "form-control "})
-            </div>
-            <div class="col-2 text-right mt-4">
-                <button id="btnBusca" type="submit" class="btn btn-outline-dark">
-                    <i class="fa fa-search"></i> Pesquisar
-                </button>
-            </div>
+    <div class="row">
+        <div class="col-4">
+            @Html.LabelFor(model => model.Busca)
+            @Html.TextBoxFor(model => model.Busca, new { @class = "form-control", @placehoder = "Informe o login ou nome" })
         </div>
-
-        }
-        <div id="TabelaUsuarios" class="mt-5">
-            @{Html.RenderAction("Listar");}
+        <div class="col-3">
+            @Html.LabelFor(model => model.IdPerfil)
+            @Html.DropDownListFor(model => model.IdPerfil, (SelectList)ViewBag.ListaPerfis, new { @class = "form-control " })
         </div>
+        <div class="col-3">
+            @Html.LabelFor(model => model.IdStatus)
+            @Html.DropDownListFor(model => model.IdStatus, (SelectList)ViewBag.ListaStatus, new { @class = "form-control " })
+        </div>
+        <div class="col-2 text-right mt-4">
+            <button id="btnBusca" type="submit" class="btn btn-outline-dark">
+                <i class="fa fa-search"></i> Pesquisar
+            </button>
+        </div>
+    </div>
 
-    @*<script>
-            $(document).ready(function () {
-
-                $("#btnBusca").click(function () {
-
-                    console.log($("#formConsultaUsuario").serializeArray());
-                    $.get("/Permissoes/Listar/", {
-                        model: $("#formConsultaUsuario").serializeArray()
-                    }, function (data) { $("#TabelaUsuarios").load('@Url.Action("Listar", "Permissoes");') });
-
-                })
-            })
-        </script>*@
-
-    @*<div class="row mt-5">
-            <div class="col-12">
-                <table class="table stripe hover tabelaPaginada" data-page-length="5">
-                    <thead>
-                        <tr>
-                            <th scope="col">Usuário</th>
-                            <th scope="col">Nome</th>
-                            <th scope="col">Perfil</th>
-                            <th scope="col">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <th scope="row">@Html.DisplayFor(modelItem => item.IdUsuario)</th>
-                                <td>@Html.DisplayFor(modelItem => item.Nome)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Perfil.Descricao)</td>
-                                <td>@Html.DisplayFor(modelItem => item.Status)</td>
-                            </tr>
-
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>*@
+}
+    <div id="TabelaUsuarios" class="row mt-5">
+        @{Html.RenderAction("Listar");}
+    </div>

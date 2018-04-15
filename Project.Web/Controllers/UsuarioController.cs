@@ -19,13 +19,7 @@ namespace Project.Web.Controllers
             return View();
         }
 
-        public ActionResult Cadastro()
-        {
-            PerfilPersistence pp = new PerfilPersistence();
 
-            ViewBag.ListaPerfis = pp.ListarTodos();
-            return View();
-        }
 
         [HttpPost]
         public ActionResult AcessarSistema(UsuarioViewModelLogin usuarioModel)

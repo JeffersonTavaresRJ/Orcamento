@@ -31,24 +31,25 @@
     <!--js do DataTable JQuery para paginação-->
     <script src="~/Scripts/jquery.dataTables.min.js"></script>
 
+
     <script src="~/js/site.js"></script>
+
 
     <style type="text/css">
 
         .progresso {
             display: none;
             position: fixed;
-            top: 360px;
-            left: 50%;
-            margin-top: -50px;
-            margin-left: -100px;
+            padding-top: 50%;
+            padding-left: 50%;
             vertical-align: middle;
             text-align: center;
             font-size: 16px;
             background-color: white;
-            border: 1px solid black;
-            height: 90px;
-            width: 120px;
+            height: 100%;
+            width: 100%;
+            filter: alpha(opacity=70);
+            opacity: 0.7;
         }
     </style>
 
@@ -95,6 +96,8 @@
 
     <div class="container">
         @RenderBody()
+
+
     </div>
 
     <div class="modal fade" role="dialog" id="modalMensagem" aria-labelledby="myModalLabel">

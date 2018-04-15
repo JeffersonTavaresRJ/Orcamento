@@ -12,7 +12,7 @@ namespace Project.Repository.Persistence
     public abstract class GenericRepository<TEntity>
         where TEntity:class
     {
-        private DataContextOrcamento _conn { get; set; }
+        protected DataContextOrcamento _conn { get; set; }
 
         public GenericRepository()
         {

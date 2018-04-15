@@ -1,0 +1,86 @@
+﻿@model Project.Web.Models.Usuario.UsuarioViewModelCadastro
+@{
+    ViewBag.Title = "Usuário";
+}
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        @using (Ajax.BeginForm("Salvar", "Permissoes", new AjaxOptions
+        {
+            HttpMethod = "POST",
+            OnSuccess = "AjaxMensagem",
+            LoadingElementId = "divCarregando"
+        }))
+        {
+            <div class="modal-header">
+                <h4 class="modal-title">Detalhes do Usuário</h4>
+
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                </button>
+
+            </div>
+            <div class="modal-body">
+
+                @Html.ValidationSummary(true)
+
+
+                @Html.TextBoxFor(model=>model.Acao, new { @type="hidden"})
+
+                <div class="row">
+                    <div class="form-group mb-1 col-12">
+                        @Html.LabelFor(model => model.Id_Usuario)
+
+                        @Html.TextBoxFor(model => model.Id_Usuario, new { @class = "form-control", @placehoder = "Informe a chave" })
+                        @Html.ValidationMessageFor(model => model.Id_Usuario)
+
+                    </div>
+
+                    <div class="form-group mb-1 col-12">
+                        @Html.LabelFor(model => model.Nome)
+
+                        @Html.TextBoxFor(model => model.Nome, new { @class = "form-control", @placehoder = "Informe o nome" })
+                        @Html.ValidationMessageFor(model => model.Nome)
+
+                    </div>
+
+                    <div class="form-group mb-1 col-12">
+                        @Html.LabelFor(model => model.IdPerfil)
+
+                        @Html.DropDownListFor(model => model.IdPerfil, new SelectList(ViewBag.ListaPerfis, "IdPerfil", "Descricao"), "--Selecione--", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.IdPerfil)
+
+                    </div>
+
+                    <div class="form-group mb-1 col-6">
+                        @Html.LabelFor(model => model.Senha)
+
+                        @Html.PasswordFor(model => model.Senha, new { @class = "form-control", @placehoder = "Informe a senha" })
+                        @Html.ValidationMessageFor(model => model.Senha)
+
+                    </div>
+
+                    <div class="form-group mb-1 col-6">
+                        @Html.LabelFor(model => model.ConfirmaSenha)
+
+                        @Html.PasswordFor(model => model.ConfirmaSenha, new { @class = "form-control", @placehoder = "Confirme a senha" })
+                        @Html.ValidationMessageFor(model => model.ConfirmaSenha)
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+
+                <input type="submit" value="Salvar" class="btn btn-outline-dark" />
+                <input type="button" value="Cancelar" class="btn btn-outline-dark" data-dismiss="modal" />
+
+
+               
+            </div>
+
+        }
+
+    </div>
+</div>

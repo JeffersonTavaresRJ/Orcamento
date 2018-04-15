@@ -9,6 +9,8 @@ namespace Project.Web.Models.Usuario
 {
     public class UsuarioViewModelCadastro
     {
+        public string  Acao { get; set; }
+
         [RegularExpression("^[A-Z0-9]{4,4}$", 
             ErrorMessage = "O login do Usuário só pode ter 4 caracteres")]
         [Required(ErrorMessage ="Informe o Login")]
@@ -35,6 +37,8 @@ namespace Project.Web.Models.Usuario
         [Required(ErrorMessage = "Confirme a senha de acesso")]
         [Display(Name = "Confirme a Senha:")]
         public string ConfirmaSenha { get; set; }
+
+
 
 
 

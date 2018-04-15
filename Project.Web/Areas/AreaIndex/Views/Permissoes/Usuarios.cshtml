@@ -1,31 +1,53 @@
 ﻿@model IEnumerable<Project.Entity.Usuario>
 <script src="~/js/Areas/AreaIndex/Table/TablePaged.js"></script>
+
+<script type="text/javascript">
+    $(".edit").click(function () {
+        var id = $(this).attr('data-id');
+        $("#modal").load("Cadastro?id=" + id, function () {
+            $("#modal").modal();
+        });
+    });
+</script>
+
+
 @if (Model != null)
 {
-    <div class="row">
-        <div class="col-12">
-            <table class="table stripe hover tabelaPaginada" data-page-length="5">
-                <thead>
+    <div class="col-12">
+        <table class="table stripe hover tabelaPaginada" data-page-length="5">
+            <thead>
+                <tr>
+                    <th scope="col">Usuário</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Perfil</th>
+                    <th scope="col">Status</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
                     <tr>
-                        <th scope="col">Usuário</th>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Perfil</th>
-                        <th scope="col">Status</th>
+                        <th scope="row">@Html.DisplayFor(modelItem => item.IdUsuario)</th>
+                        <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Perfil.Descricao)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Status)</td>
+                        <td class="text-center">
+                            <button id="btnEditar" data-id="@item.IdUsuario" class="btn btn-primary edit">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            &nbsp;
+                            <button id="btnExcluir" data-id="@item.IdUsuario" class="btn btn-danger delete">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <th scope="row">@Html.DisplayFor(modelItem => item.IdUsuario)</th>
-                            <td>@Html.DisplayFor(modelItem => item.Nome)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Perfil.Descricao)</td>
-                            <td>@Html.DisplayFor(modelItem => item.Status)</td>
-                        </tr>
 
-                    }
-                </tbody>
-            </table>
+                }
+            </tbody>
+        </table>
+        <div class="modal" id="modal">
+
         </div>
     </div>
 }

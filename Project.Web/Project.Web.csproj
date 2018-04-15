@@ -1249,7 +1249,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Usuario\UsuarioViewModelCadastro.cs" />
+    <Compile Include="Areas\AreaIndex\Models\UsuarioViewModelCadastro.cs" />
     <Compile Include="Models\Usuario\UsuarioViewModelLogin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -1269,7 +1269,7 @@
     <Content Include="js\popper-utils.js.map" />
     <Content Include="Views\_layout.cshtml" />
     <Content Include="Views\Usuario\Login.cshtml" />
-    <Content Include="Views\Usuario\Cadastro.cshtml" />
+    <Content Include="Areas\AreaIndex\Views\Permissoes\Cadastro.cshtml" />
     <Content Include="Scripts\datatables.extensions\Responsive\Readme.md" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
