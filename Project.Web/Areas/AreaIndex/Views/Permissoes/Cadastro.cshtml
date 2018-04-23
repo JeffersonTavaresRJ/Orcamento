@@ -2,15 +2,15 @@
 @{
     ViewBag.Title = "Usuário";
 }
+<script src="~/js/jquery.validate.unobtrusive.min.js"></script>
 
 <div class="modal-dialog">
     <div class="modal-content">
-        @using (Ajax.BeginForm("Salvar", "Permissoes", new AjaxOptions
+        @using (Ajax.BeginForm("Cadastro", "Permissoes", new AjaxOptions()
         {
-            HttpMethod = "POST",
-            OnSuccess = "AjaxMensagem",
-            LoadingElementId = "divCarregando"
-        }))
+            HttpMethod = "POST"
+        })
+               )
         {
             <div class="modal-header">
                 <h4 class="modal-title">Detalhes do Usuário</h4>
@@ -23,10 +23,12 @@
             </div>
             <div class="modal-body">
 
+                <p>@ViewBag.Mensagem</p>
+
                 @Html.ValidationSummary(true)
 
 
-                @Html.TextBoxFor(model=>model.Acao, new { @type="hidden"})
+                @Html.TextBoxFor(model => model.Acao, new { @type = "hidden" })
 
                 <div class="row">
                     <div class="form-group mb-1 col-12">
@@ -46,10 +48,10 @@
                     </div>
 
                     <div class="form-group mb-1 col-12">
-                        @Html.LabelFor(model => model.IdPerfil)
+                        @Html.LabelFor(model => model.Id_Perfil)
 
-                        @Html.DropDownListFor(model => model.IdPerfil, new SelectList(ViewBag.ListaPerfis, "IdPerfil", "Descricao"), "--Selecione--", new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.IdPerfil)
+                        @Html.DropDownListFor(model => model.Id_Perfil, (SelectList)ViewBag.ListaPerfis, new { @class = "form-control " })
+                        @Html.ValidationMessageFor(model => model.Id_Perfil)
 
                     </div>
 
@@ -72,12 +74,8 @@
 
             </div>
             <div class="modal-footer">
-
                 <input type="submit" value="Salvar" class="btn btn-outline-dark" />
                 <input type="button" value="Cancelar" class="btn btn-outline-dark" data-dismiss="modal" />
-
-
-               
             </div>
 
         }

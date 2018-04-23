@@ -12,7 +12,7 @@ namespace Project.Web.Areas.AreaIndex.Models
         [Display(Name ="Login ou Nome:")]
         public string Busca { get; set; }
         [Display(Name ="Perfil:")]
-        public int IdPerfil { get; set; }
+        public int Id_Perfil { get; set; }
         [Display(Name ="Status:")]
         public string IdStatus { get; set; }
     }

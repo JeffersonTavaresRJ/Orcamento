@@ -89,7 +89,7 @@ namespace Project.Web.Controllers
                     u.IdUsuario = usuarioModel.Id_Usuario;
                     u.Nome = usuarioModel.Nome;
                     u.Senha = Criptografia.EncriptarSenha(usuarioModel.Senha);
-                    u.IdPerfil = usuarioModel.IdPerfil;
+                    u.IdPerfil = usuarioModel.Id_Perfil;
 
                     if (up.LoginExistente(u.IdUsuario) > 0)
                     {

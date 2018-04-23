@@ -20,7 +20,7 @@ namespace Project.Repository.Mapping
 
             //propriedades..
             Property(u => u.IdUsuario)
-                .HasColumnName("IdUsuario")
+                .HasColumnName("Id")
                 .HasMaxLength(4)
                 .IsRequired();
 
@@ -35,7 +35,7 @@ namespace Project.Repository.Mapping
                 .IsRequired();
 
             Property(u => u.IdPerfil)
-                .HasColumnName("IdPerfil")
+                .HasColumnName("Id_Perfil")
                 .IsRequired();
 
 

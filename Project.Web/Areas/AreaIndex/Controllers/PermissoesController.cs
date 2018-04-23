@@ -14,17 +14,33 @@ namespace Project.Web.Areas.AreaIndex.Controllers
 {
     public class PermissoesController : Controller
     {
+        SelectList listaPerfil;
+        SelectList listaStatus;
+
         public ActionResult Consulta()
         {
-            PerfilPersistence pp = new PerfilPersistence();
-
-            List<Perfil> listPerfil = pp.ListarTodos().ToList();
-            listPerfil.Add(new Perfil { IdPerfil = -1, Descricao = "--Selecione--" });
-
-            ViewBag.ListaPerfis = new SelectList(listPerfil.OrderBy(p => p.IdPerfil), "IdPerfil", "Descricao", -1);
-            ViewBag.ListaStatus = new SelectList(Combobox.Listar(typeof(Status)), "Key", "Value");
+            fPopulaCombos();
 
             return View();
+        }
+
+        private void fPopulaCombos()
+        {
+            if (listaPerfil == null)
+            {
+                PerfilPersistence pp = new PerfilPersistence();
+                List<Perfil> listPerfil = pp.ListarTodos().ToList();
+                listPerfil.Add(new Perfil { Id = -1, Descricao = "--Selecione--" });
+                listaPerfil = new SelectList(listPerfil.OrderBy(p => p.Id), "Id", "Descricao", -1);
+            }           
+
+            if (listaStatus == null)
+            {
+                listaStatus = new SelectList(Combobox.Listar(typeof(Status)), "Key", "Value");
+            }
+
+            ViewBag.ListaPerfis = listaPerfil;
+            ViewBag.ListaStatus = listaStatus;
         }
 
         public ActionResult Listar(PermissoesViewModelFiltro model)
@@ -40,13 +56,13 @@ namespace Project.Web.Areas.AreaIndex.Controllers
                                            .OrderBy(u => u.IdUsuario);
             }
 
-            if (model.IdPerfil > 0)
+            if (model.Id_Perfil > 0)
             {
                 if (usuarios == null)
                 {
                     usuarios = up.ListarTodos().OrderBy(u => u.IdUsuario);
                 }
-                usuarios = usuarios.Where(u => u.IdPerfil.Equals(model.IdPerfil));
+                usuarios = usuarios.Where(u => u.IdPerfil.Equals(model.Id_Perfil));
             }
 
             if (model.IdStatus != "-1" && model.IdStatus != null)
@@ -63,8 +79,7 @@ namespace Project.Web.Areas.AreaIndex.Controllers
 
         public ActionResult Cadastro(string id)
         {
-            PerfilPersistence pp = new PerfilPersistence();
-            ViewBag.ListaPerfis = pp.ListarTodos();
+            fPopulaCombos();
 
             UsuarioPersistence up = new UsuarioPersistence();
             UsuarioViewModelCadastro model = new UsuarioViewModelCadastro();
@@ -79,7 +94,7 @@ namespace Project.Web.Areas.AreaIndex.Controllers
                 model.Acao = "E";
                 model.Id_Usuario = usuario.IdUsuario;
                 model.Nome = usuario.Nome;
-                model.IdPerfil = usuario.IdPerfil;
+                model.Id_Perfil = usuario.IdPerfil;
                 model.Senha = usuario.Senha;
                 model.ConfirmaSenha = usuario.Senha;
             }
@@ -87,10 +102,13 @@ namespace Project.Web.Areas.AreaIndex.Controllers
             return View(model);
         }
 
-        public ActionResult Salvar(UsuarioViewModelCadastro usuarioModel)
+        [HttpPost]
+        public ActionResult Cadastro(UsuarioViewModelCadastro usuarioModel)
         {
             try
             {
+                fPopulaCombos();
+
                 if (ModelState.IsValid)
                 {
                     UsuarioPersistence up = new UsuarioPersistence();
@@ -100,32 +118,35 @@ namespace Project.Web.Areas.AreaIndex.Controllers
                     u.IdUsuario = usuarioModel.Id_Usuario;
                     u.Nome = usuarioModel.Nome;
                     u.Senha = Criptografia.EncriptarSenha(usuarioModel.Senha);
-                    u.IdPerfil = usuarioModel.IdPerfil;
+                    u.IdPerfil = usuarioModel.Id_Perfil;
 
                     if (usuarioModel.Acao.Equals("I"))
                     {
                         if (up.LoginExistente(u.IdUsuario) > 0)
                         {
-                            return Json(new { mensagem = "O Login informado já existe" }, JsonRequestBehavior.AllowGet);
+                            ViewBag.Mensagem = "O Login informado já existe";
                         }
-                        up.Inserir(u);
-
-                        //após inserir, a tela deve ser fechada
-                        ModelState.Clear();//limpa os campos da tela
+                        else
+                        {
+                            up.Inserir(u);
+                            //após inserir, a tela deve ser fechada
+                            ModelState.Clear();//limpa os campos da tela
+                        }
+                        
                     }
                     else
                     {
                         up.Atualizar(u);
                     }
-                    return Json(new { mensagem = $"Os dados do Usuário {u.Nome} foram salvos com sucesso." });
+                    ViewBag.Mensagem = "Operação realizada com sucesso!";
                 }
             }
             catch (Exception ex)
             {
-                return Json(new { mensagem = ex.Message.ToString() });
+                ViewBag.Mensagem = ex.Message.ToString();
             }
 
-            return Json(null);
+            return PartialView(usuarioModel);
         }
 
 

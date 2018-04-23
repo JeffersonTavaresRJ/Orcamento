@@ -12,8 +12,8 @@
         new AjaxOptions
         {
             UpdateTargetId = "TabelaUsuarios", // <-- ID do elemento DOM a atualizar
-InsertionMode = InsertionMode.Replace, // <-- Substituir o conteúdo do elemento DOM
-HttpMethod = "POST"
+            InsertionMode = InsertionMode.Replace, // <-- Substituir o conteúdo do elemento DOM
+            HttpMethod = "POST"
         }))
 {
     <div class="row">
@@ -22,8 +22,8 @@ HttpMethod = "POST"
             @Html.TextBoxFor(model => model.Busca, new { @class = "form-control", @placehoder = "Informe o login ou nome" })
         </div>
         <div class="col-3">
-            @Html.LabelFor(model => model.IdPerfil)
-            @Html.DropDownListFor(model => model.IdPerfil, (SelectList)ViewBag.ListaPerfis, new { @class = "form-control " })
+            @Html.LabelFor(model => model.Id_Perfil)
+            @Html.DropDownListFor(model => model.Id_Perfil, (SelectList)ViewBag.ListaPerfis, new { @class = "form-control " })
         </div>
         <div class="col-3">
             @Html.LabelFor(model => model.IdStatus)
@@ -37,6 +37,6 @@ HttpMethod = "POST"
     </div>
 
 }
-    <div id="TabelaUsuarios" class="row mt-5">
-        @{Html.RenderAction("Listar");}
-    </div>
+<div id="TabelaUsuarios" class="row mt-5">
+    @{Html.RenderAction("Listar");}
+</div>

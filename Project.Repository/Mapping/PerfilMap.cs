@@ -14,9 +14,9 @@ namespace Project.Repository.Mapping
         {
             ToTable("Perfil");
 
-            HasKey(p=>p.IdPerfil);
+            HasKey(p=>p.Id);
 
-            Property(p => p.IdPerfil)
+            Property(p => p.Id)
                 .HasColumnName("Id")
                 .IsRequired();
 
