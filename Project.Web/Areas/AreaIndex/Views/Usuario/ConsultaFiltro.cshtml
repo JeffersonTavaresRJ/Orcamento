@@ -6,7 +6,7 @@
     Layout = "~/Views/_layout.cshtml";
 }
 <script src="~/Scripts/jquery.dataTables.min.js"></script>
-<script src="~/js/Areas/AreaIndex/Table/TablePaged.js"></script>
+<link href="~/Content/css/jquery.dataTables.min.css" rel="stylesheet" />
 
 <script type="text/javascript">
 
@@ -28,7 +28,7 @@
             error: function (e) {
                 console.log("Erro: " + e.status);
             }
-        })
+        });
 
         $.ajax({
             type: "POST",
@@ -46,7 +46,7 @@
             error: function (e) {
                 console.log("Erro: " + e.status);
             }
-        })
+        });
 
         function Pesquisar() {
 
@@ -76,10 +76,10 @@
                             conteudo += "<td>" + obj.Perfil + "</td>";
                             conteudo += "<td>" + obj.Status + "</td>";
 
-                            conteudo += "<td class='text - center'>";
-                            conteudo += "<button data-id='" + obj.IdUsuario + "' class='btn btn-primary edit'><i class='fa fa - edit'></i></button>";
+                            conteudo += "<td class='text-center'>";
+                            conteudo += "<button data-id='" + obj.IdUsuario + "' class='btn btn-primary edit'><i class='fa fa-edit'></i></button>";
                             conteudo += "&nbsp;";
-                            conteudo += "<button data-id='" + obj.IdUsuario + "' class='btn btn-danger delete'><i class='fa fa - trash'></i></button>";
+                            conteudo += "<button data-id='" + obj.IdUsuario + "' class='btn btn-danger delete'><i class='fa fa-trash'></i></button>";
                             conteudo += "</td>";
 
                             conteudo += "</tr>";
@@ -92,9 +92,39 @@
                 });
         }
 
+        $('.tabelaPaginada').DataTable({
+            "bLengthChange": false, /*tornar invisível combo para visualizar a quantidade de registros */
+            "bFilter": false, /*tornar invisível o campo de busca do resultado da tabela */
+            "pagingType": "full_numbers",
+            "language": {
+                "sEmptyTable": "Nenhum registro encontrado",
+                "sInfo": "De _START_ até _END_ de um total de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sInfoThousands": ".",
+                "sLengthMenu": "_MENU_ resultados por página",
+                "sLoadingRecords": "Carregando...",
+                "sProcessing": "Processando...",
+                "sZeroRecords": "Nenhum registro encontrado",
+                "sSearch": "Busca:",
+                "oPaginate": {
+                    "sNext": ">",
+                    "sPrevious": "<",
+                    "sFirst": "<<",
+                    "sLast": ">>"
+                },
+                "oAria": {
+                    "sSortAscending": ": Ordenar colunas de forma ascendente",
+                    "sSortDescending": ": Ordenar colunas de forma descendente"
+                }
+            }
+
+        });
+
         $("#btnBusca").click(function () {
             Pesquisar();
-        })
+        });
 
         $(".edit").click(function () {
             var id = $(this).attr('data-id');
