@@ -1,4 +1,4 @@
-﻿@model Project.Web.Models.Usuario.UsuarioViewModelLogin
+﻿@model Project.Web.Models.Login.LoginViewModel
 @{
     ViewBag.Title = "Login";
     Layout = "~/Views/_layout.cshtml";
@@ -10,10 +10,16 @@
             <div class="card-body">
                 <h3 class="card-title text-center">Acesso</h3>
                 <hr />
+                @if (ViewBag.Mensagem != null)
+                {
+                    <div class="alert alert-danger">
+                        @ViewBag.Mensagem
+                    </div>
+                }
                 <!--Combinar o row justify-content-center com o col-auto para centralizar-->
                 <div class="row justify-content-center">
                     <div class=" col-9 col-auto">
-                        @using (Html.BeginForm("AcessarSistema", "Usuario"))
+                        @using (Html.BeginForm("AcessarSistema", "Login"))
                         {
 
                             @Html.LabelFor(model => model.Login)
@@ -35,13 +41,8 @@
                 </div>
             </div>
         </div>
-        
-        @if (ViewBag.Mensagem != null)
-        {
-            <div class="alert alert-danger">
-                @ViewBag.Mensagem
-            </div>
-        }
+
+
 
     </div>
 </div> 

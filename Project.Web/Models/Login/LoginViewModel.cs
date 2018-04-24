@@ -4,9 +4,9 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 
-namespace Project.Web.Models.Usuario
+namespace Project.Web.Models.Login
 {
-    public class UsuarioViewModelLogin
+    public class LoginViewModel
     {
         [Display(Name ="Login:")]
         [Required(ErrorMessage ="Informe o Login")]

@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Project.Web.Models.Usuario;
 using Project.Entity;
 using Project.Repository.Persistence;
 using System.Web.Security;
 using Project.Utility.UtilString;
+using Project.Web.Models.Login;
 
 namespace Project.Web.Controllers
 {
-    public class UsuarioController : Controller
+    public class LoginController : Controller
     {
         // GET: Usuario
         public ActionResult Login()
@@ -22,7 +22,7 @@ namespace Project.Web.Controllers
 
 
         [HttpPost]
-        public ActionResult AcessarSistema(UsuarioViewModelLogin usuarioModel)
+        public ActionResult AcessarSistema(LoginViewModel loginModel)
         {
             try
             {
@@ -30,8 +30,8 @@ namespace Project.Web.Controllers
                 {
                     UsuarioPersistence up = new UsuarioPersistence();
                     Usuario u = new Usuario();
-                    u = up.ObterLoginSenha(usuarioModel.Login,
-                                        Criptografia.EncriptarSenha(usuarioModel.Senha));
+                    u = up.ObterLoginSenha(loginModel.Login,
+                                        Criptografia.EncriptarSenha(loginModel.Senha));
 
                     if (u != null)
                     {
@@ -75,41 +75,6 @@ namespace Project.Web.Controllers
 
         }
 
-        [HttpPost]
-        public ActionResult Novo(UsuarioViewModelCadastro usuarioModel)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    UsuarioPersistence up = new UsuarioPersistence();
-                    PerfilPersistence pp = new PerfilPersistence();
-
-                    Usuario u = new Usuario();
-                    u.IdUsuario = usuarioModel.Id_Usuario;
-                    u.Nome = usuarioModel.Nome;
-                    u.Senha = Criptografia.EncriptarSenha(usuarioModel.Senha);
-                    u.IdPerfil = usuarioModel.Id_Perfil;
-
-                    if (up.LoginExistente(u.IdUsuario) > 0)
-                    {
-                        return Json(new { mensagem = "O Login informado já existe" }, JsonRequestBehavior.AllowGet);
-                    }
-
-                    up.Inserir(u);
-                    ModelState.Clear();//limpa os campos da tela
-
-                    return Json(new { mensagem = $"Usuário {u.Nome} cadastrado com sucesso." });
-                }
-            }
-            catch (Exception ex)
-            {
-                return Json(new { mensagem = ex.Message.ToString() });
-            }
-
-            return Json(null);
-        }
-
 
         public ActionResult Logout()
         {
@@ -119,7 +84,7 @@ namespace Project.Web.Controllers
             //apaga a sessão do usuário..
             Session.Remove("Usuario");
 
-            return RedirectToAction("Login", "Usuario", new { area = "" });
+            return RedirectToAction("Login", "Login", new { area = "" });
 
         }
     }

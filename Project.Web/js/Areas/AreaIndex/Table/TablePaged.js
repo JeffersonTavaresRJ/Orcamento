@@ -1,4 +1,17 @@
 ﻿$(document).ready(function () {
+
+     //selecionar linhas..
+    //$('.tabelaPaginada tbody').on('click', 'tr', function () {
+    //    $(this).toggleClass('selected');
+
+    //});
+
+    //exibir a quantidade de linhas selecionadas..
+    //$('#button').click(function () {
+    //    alert(table.rows('.selected').data().length + ' row(s) selected');
+    //});
+
+
     $('.tabelaPaginada').DataTable({
         "bLengthChange": false, /*tornar invisível combo para visualizar a quantidade de registros */
         "bFilter": false, /*tornar invisível o campo de busca do resultado da tabela */
@@ -29,12 +42,5 @@
 
     });
 
-    $('.tabelaPaginada tbody').on('click', 'tr', function () {
-        $(this).toggleClass('selected');
 
-    });
-
-    $('#button').click(function () {
-        alert(table.rows('.selected').data().length + ' row(s) selected');
-    });
 });

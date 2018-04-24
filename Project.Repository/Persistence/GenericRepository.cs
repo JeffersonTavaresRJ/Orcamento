@@ -10,22 +10,22 @@ using Project.Repository.Configurations;
 namespace Project.Repository.Persistence
 {
     public abstract class GenericRepository<TEntity>
-        where TEntity:class
+        where TEntity : class
     {
         protected DataContextOrcamento _conn { get; set; }
 
         public GenericRepository()
         {
             _conn = new DataContextOrcamento();
-        }    
+        }
 
 
         public virtual int Inserir(TEntity obj)
         {
             //using (DataContextOrcamento conn = new DataContextOrcamento())
             //{
-                _conn.Entry(obj).State = EntityState.Added;
-                return _conn.SaveChanges();
+            _conn.Entry(obj).State = EntityState.Added;
+            return _conn.SaveChanges();
             //}
         }
 
@@ -33,8 +33,11 @@ namespace Project.Repository.Persistence
         {
             //using(DataContextOrcamento conn = new DataContextOrcamento())
             //{
-                _conn.Entry(obj).State = EntityState.Modified;
-                return _conn.SaveChanges();
+
+             //o uso do Modified altera todos os atributos de um objeto
+             //por isso que foi comentado para salvar somente os atributos alterados..
+            _conn.Entry(obj).State = EntityState.Unchanged;
+            return _conn.SaveChanges();
             //}
         }
 
@@ -42,8 +45,8 @@ namespace Project.Repository.Persistence
         {
             //using (DataContextOrcamento conn = new DataContextOrcamento())
             //{
-                _conn.Entry(obj).State = EntityState.Deleted;
-                return _conn.SaveChanges();
+            _conn.Entry(obj).State = EntityState.Deleted;
+            return _conn.SaveChanges();
             //}
         }
 
@@ -51,9 +54,9 @@ namespace Project.Repository.Persistence
         {
             //using (DataContextOrcamento conn = new DataContextOrcamento())
             //{
-                return _conn.Set<TEntity>().ToList();
+            return _conn.Set<TEntity>().ToList();
             //}
-                
+
 
         }
 
@@ -61,7 +64,7 @@ namespace Project.Repository.Persistence
         {
             //using(DataContextOrcamento conn = new DataContextOrcamento())
             //{
-                return _conn.Set<TEntity>().Find(_Id);
+            return _conn.Set<TEntity>().Find(_Id);
             //}
         }
 

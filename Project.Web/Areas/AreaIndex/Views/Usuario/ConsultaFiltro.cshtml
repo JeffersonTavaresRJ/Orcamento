@@ -1,0 +1,158 @@
+﻿@*@model Project.Web.Areas.AreaIndex.Models.UsuarioViewModelFiltro*@
+@using Project.Entity
+
+@{
+    ViewBag.Title = "Consulta Usuários";
+    Layout = "~/Views/_layout.cshtml";
+}
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script src="~/js/Areas/AreaIndex/Table/TablePaged.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $.ajax({
+            type: "POST",
+            url: "/Usuario/ListaPerfis",
+            success: function (dados) {
+
+                var option = '<option value=-1>Selecione o Perfil</option>';
+                $.each(dados, function (i, obj) {
+                    option += '<option value="' + obj.Id + '">' + obj.Descricao + '</option>';
+                });
+
+                $('#cmbPerfil').html(option).show();
+
+            },
+            error: function (e) {
+                console.log("Erro: " + e.status);
+            }
+        })
+
+        $.ajax({
+            type: "POST",
+            url: "/Usuario/ListaStatus",
+            success: function (dados) {
+
+                var option = '<option value=-1>Selecione o Status</option>';
+                $.each(dados, function (i, obj) {
+                    option += '<option value="' + obj.Key + '">' + obj.Value + '</option>';
+                });
+
+                $('#cmbStatus').html(option).show();
+
+            },
+            error: function (e) {
+                console.log("Erro: " + e.status);
+            }
+        })
+
+        function Pesquisar() {
+
+            var model = {
+                Busca: $("#txtBusca").val(),
+                Id_Perfil: $("#cmbPerfil").val(),
+                IdStatus: $("#cmbStatus").val()
+            }
+
+            $.ajax(
+                {
+                    type: 'POST',
+                    url: '/Usuario/Consultar',
+                    data: model,
+                    success: function (lista) {
+
+                        //gerar o conteudo da tabela..
+                        var conteudo = "";
+
+                        //varrendo a lista.. (i -> posição, m -> movimentação)
+                        $.each(lista, function (i, obj) {
+
+                            conteudo += "<tr>";
+
+                            conteudo += "<td>" + obj.IdUsuario + "</td>";
+                            conteudo += "<td>" + obj.Nome + "</td>";
+                            conteudo += "<td>" + obj.Perfil + "</td>";
+                            conteudo += "<td>" + obj.Status + "</td>";
+
+                            conteudo += "<td class='text - center'>";
+                            conteudo += "<button data-id='" + obj.IdUsuario + "' class='btn btn-primary edit'><i class='fa fa - edit'></i></button>";
+                            conteudo += "&nbsp;";
+                            conteudo += "<button data-id='" + obj.IdUsuario + "' class='btn btn-danger delete'><i class='fa fa - trash'></i></button>";
+                            conteudo += "</td>";
+
+                            conteudo += "</tr>";
+                        });
+
+                        //preencher a tabela..
+                        $("#tabela tbody").html(conteudo);
+                        $("#TabelaUsuarios").show();
+                    }
+                });
+        }
+
+        $("#btnBusca").click(function () {
+            Pesquisar();
+        })
+
+        $(".edit").click(function () {
+            var id = $(this).attr('data-id');
+            $("#modal").load("Edicao?id=" + id, function () {
+                $("#modal").modal();
+            });
+        });
+
+
+    });
+
+
+
+</script>
+
+<h5>Consulta de Usuários</h5>
+<hr />
+
+<div class="row">
+    <div class="col-4">
+        <label>Nome ou Chave:</label>
+        <input type="text" id="txtBusca" class="form-control" />
+
+    </div>
+    <div class="col-3">
+        <label>Perfil:</label>
+        <select id="cmbPerfil" class="form-control"></select>
+    </div>
+
+    <div class="col-3">
+        <label>Status:</label>
+        <select id="cmbStatus" class="form-control"></select>
+    </div>
+
+    <div class="col-2 text-right mt-4">
+        <button id="btnBusca" type="button" class="btn btn-outline-dark">
+            <i class="fa fa-search"></i> Pesquisar
+        </button>
+    </div>
+</div>
+
+<div id="TabelaUsuarios" class="row mt-5" style="display:none">
+    <div class="col-12">
+        <table id="tabela" class="table hover tabelaPaginada" data-page-length="5">
+            <thead>
+                <tr>
+                    <th scope="col">Usuário</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Perfil</th>
+                    <th scope="col">Status</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal" id="modal">
+</div>
+

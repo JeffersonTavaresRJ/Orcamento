@@ -5,11 +5,10 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 using Project.Entity;
 
-namespace Project.Web.Models.Usuario
+namespace Project.Web.Areas.AreaIndex.Models
 {
-    public class UsuarioViewModelCadastro
+    public class UsuarioViewModelInclusao
     {
-        public string  Acao { get; set; }
 
         [RegularExpression("^[A-Z0-9]{4,4}$", 
             ErrorMessage = "O login do Usuário só pode ter 4 caracteres")]

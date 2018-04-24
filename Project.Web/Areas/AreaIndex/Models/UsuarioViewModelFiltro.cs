@@ -7,7 +7,7 @@ using Project.Entity.Enuns;
 
 namespace Project.Web.Areas.AreaIndex.Models
 {
-    public class PermissoesViewModelFiltro
+    public class UsuarioViewModelFiltro
     {
         [Display(Name ="Login ou Nome:")]
         public string Busca { get; set; }

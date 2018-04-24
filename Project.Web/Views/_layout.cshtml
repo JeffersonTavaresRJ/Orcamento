@@ -29,7 +29,8 @@
     <script src="~/js/bootstrap.bundle.min.js"></script>
 
     <!--js do DataTable JQuery para paginação-->
-    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    @*<script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/js/Areas/AreaIndex/Table/TablePaged.js"></script>*@
 
 
     <script src="~/js/site.js"></script>
@@ -80,11 +81,11 @@
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             @if (u.IdPerfil.Equals(1))
                             {
-                                <a class="dropdown-item" href="/AreaIndex/Permissoes/Consulta">
+                                <a class="dropdown-item" href="/AreaIndex/Usuario/ConsultaFiltro">
                                     Controle de Usuários
                                 </a>
                             }
-                            <a class="dropdown-item" href="/Usuario/Logout">
+                            <a class="dropdown-item" href="/Login/Logout">
                                 Sair
                             </a>
                         </div>
