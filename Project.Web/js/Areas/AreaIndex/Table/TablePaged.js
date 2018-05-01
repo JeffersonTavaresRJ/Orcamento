@@ -13,6 +13,8 @@
 
 
     $('.tabelaPaginada').DataTable({
+        "bProcessing": true,
+        "bServerSide": false,
         "bLengthChange": false, /*tornar invisível combo para visualizar a quantidade de registros */
         "bFilter": false, /*tornar invisível o campo de busca do resultado da tabela */
         "pagingType": "full_numbers",

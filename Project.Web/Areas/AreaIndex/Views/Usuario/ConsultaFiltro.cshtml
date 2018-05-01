@@ -1,16 +1,86 @@
-﻿@*@model Project.Web.Areas.AreaIndex.Models.UsuarioViewModelFiltro*@
-@using Project.Entity
-
-@{
+﻿@{
     ViewBag.Title = "Consulta Usuários";
     Layout = "~/Views/_layout.cshtml";
 }
-<script src="~/Scripts/jquery.dataTables.min.js"></script>
-<link href="~/Content/css/jquery.dataTables.min.css" rel="stylesheet" />
+
+@*<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+    <link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
+
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js "></script>*@
+
 
 <script type="text/javascript">
+    function edit(id) {
+        $("#modal").load("Edicao?id=" + id, function () {
+            $("#modal").modal();
+        })
+    };
 
-    $(document).ready(function () {
+
+
+    $(document).ready(function () {       
+
+        var table = $('#tabela').DataTable({
+            "bProcessing": true,
+            "bServerSide": false,
+            "bLengthChange": false, /*tornar invisível combo para visualizar a quantidade de registros */
+            "bFilter": false, /*tornar invisível o campo de busca do resultado da tabela */
+            "ajax": {
+                type: "POST",
+                url: "/Usuario/Consultar",
+                datatype: "json",
+                data: function (d) {
+                    d.sBusca = $("#txtBusca").val();
+                    d.sPerfil = $("#cmbPerfil").val();
+                    d.sStatus = $("#cmbStatus").val();
+                },
+                error: function (e) {
+                    alert("Erro: " + e.status);
+                }
+            },
+
+            /*colunas que são utilizadas na dataTable*/
+            "aoColumns": [
+                { "mData": "IdUsuario", "sName": "IdUsuario", "sTitle": "Login" },
+                { "mData": "Nome", "sName": "Nome", "sTitle": "Nome" },
+                { "mData": "Perfil", "sName": "Perfil", "sTitle": "Perfil" },
+                { "mData": "Status", "sName": "Status", "sTitle": "Status" },
+                {
+                    "render": function (data, type, row) {
+                        return "<div style='text-align:center'><a href='#' class='btn btn-primary'  onclick=edit('" + row.IdUsuario + "')><i class='fa fa-edit'></i></a></div>";
+                    }
+                },
+                {
+                    "render": function (data, type, row) {
+                        return "<div style='text-align:center'><button class='btn btn-danger delete' data-id='" + row.IdUsuario + "'><i class='fa fa-trash'></i></button></div>";
+                    }
+                }
+            ],
+            "columnDefs":
+                [{
+                    "targets": [4],
+                    "visible": true,
+                    "searchable": false,
+                    "orderable": false
+                },
+                {
+                    "targets": [5],
+                    "visible": true,
+                    "searchable": false,
+                    "orderable": false
+                }]
+        });
+
+        $("#btnPesquisar").click(function () {
+
+            table.ajax.reload();
+            $("#TabelaUsuarios").show();
+        });
+
+       
 
         $.ajax({
             type: "POST",
@@ -35,7 +105,7 @@
             url: "/Usuario/ListaStatus",
             success: function (dados) {
 
-                var option = '<option value=-1>Selecione o Status</option>';
+                var option = '<option value=-1 > Selecione o Status</option>';
                 $.each(dados, function (i, obj) {
                     option += '<option value="' + obj.Key + '">' + obj.Value + '</option>';
                 });
@@ -47,92 +117,6 @@
                 console.log("Erro: " + e.status);
             }
         });
-
-        function Pesquisar() {
-
-            var model = {
-                Busca: $("#txtBusca").val(),
-                Id_Perfil: $("#cmbPerfil").val(),
-                IdStatus: $("#cmbStatus").val()
-            }
-
-            $.ajax(
-                {
-                    type: 'POST',
-                    url: '/Usuario/Consultar',
-                    data: model,
-                    success: function (lista) {
-
-                        //gerar o conteudo da tabela..
-                        var conteudo = "";
-
-                        //varrendo a lista.. (i -> posição, m -> movimentação)
-                        $.each(lista, function (i, obj) {
-
-                            conteudo += "<tr>";
-
-                            conteudo += "<td>" + obj.IdUsuario + "</td>";
-                            conteudo += "<td>" + obj.Nome + "</td>";
-                            conteudo += "<td>" + obj.Perfil + "</td>";
-                            conteudo += "<td>" + obj.Status + "</td>";
-
-                            conteudo += "<td class='text-center'>";
-                            conteudo += "<button data-id='" + obj.IdUsuario + "' class='btn btn-primary edit'><i class='fa fa-edit'></i></button>";
-                            conteudo += "&nbsp;";
-                            conteudo += "<button data-id='" + obj.IdUsuario + "' class='btn btn-danger delete'><i class='fa fa-trash'></i></button>";
-                            conteudo += "</td>";
-
-                            conteudo += "</tr>";
-                        });
-
-                        //preencher a tabela..
-                        $("#tabela tbody").html(conteudo);
-                        $("#TabelaUsuarios").show();
-                    }
-                });
-        }
-
-        $('.tabelaPaginada').DataTable({
-            "bLengthChange": false, /*tornar invisível combo para visualizar a quantidade de registros */
-            "bFilter": false, /*tornar invisível o campo de busca do resultado da tabela */
-            "pagingType": "full_numbers",
-            "language": {
-                "sEmptyTable": "Nenhum registro encontrado",
-                "sInfo": "De _START_ até _END_ de um total de _TOTAL_ registros",
-                "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
-                "sInfoFiltered": "(Filtrados de _MAX_ registros)",
-                "sInfoPostFix": "",
-                "sInfoThousands": ".",
-                "sLengthMenu": "_MENU_ resultados por página",
-                "sLoadingRecords": "Carregando...",
-                "sProcessing": "Processando...",
-                "sZeroRecords": "Nenhum registro encontrado",
-                "sSearch": "Busca:",
-                "oPaginate": {
-                    "sNext": ">",
-                    "sPrevious": "<",
-                    "sFirst": "<<",
-                    "sLast": ">>"
-                },
-                "oAria": {
-                    "sSortAscending": ": Ordenar colunas de forma ascendente",
-                    "sSortDescending": ": Ordenar colunas de forma descendente"
-                }
-            }
-
-        });
-
-        $("#btnBusca").click(function () {
-            Pesquisar();
-        });
-
-        $(".edit").click(function () {
-            var id = $(this).attr('data-id');
-            $("#modal").load("Edicao?id=" + id, function () {
-                $("#modal").modal();
-            });
-        });
-
 
     });
 
@@ -160,7 +144,7 @@
     </div>
 
     <div class="col-2 text-right mt-4">
-        <button id="btnBusca" type="button" class="btn btn-outline-dark">
+        <button id="btnPesquisar" type="button" class="btn btn-outline-dark">
             <i class="fa fa-search"></i> Pesquisar
         </button>
     </div>
@@ -168,7 +152,7 @@
 
 <div id="TabelaUsuarios" class="row mt-5" style="display:none">
     <div class="col-12">
-        <table id="tabela" class="table hover tabelaPaginada" data-page-length="5">
+        <table id="tabela" class="display" style="width:100%">
             <thead>
                 <tr>
                     <th scope="col">Usuário</th>
@@ -176,9 +160,10 @@
                     <th scope="col">Perfil</th>
                     <th scope="col">Status</th>
                     <th scope="col"></th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
-            <tbody></tbody>
+            <tbody id="bodyTable"></tbody>
         </table>
     </div>
 </div>

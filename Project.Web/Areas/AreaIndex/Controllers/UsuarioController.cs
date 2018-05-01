@@ -8,6 +8,7 @@ using Project.Entity.Enuns;
 using Project.Utility.UtilComboBox;
 using Project.Web.Areas.AreaIndex.Models;
 using Project.Utility.UtilString;
+using Project.Utility.UtilTables;
 
 namespace Project.Web.Areas.AreaIndex.Controllers
 {
@@ -36,44 +37,52 @@ namespace Project.Web.Areas.AreaIndex.Controllers
             model.Nome = usuario.Nome;
             model.Id_Perfil = usuario.IdPerfil;
 
+            PerfilPersistence pp = new PerfilPersistence();
+            ViewBag.ListaPerfis = new SelectList(pp.ListarTodos().ToList(), "Id", "Descricao");
+
             return View(model);
         }
 
         [HttpPost]
-        public JsonResult Consultar(UsuarioViewModelFiltro model)
+        public JsonResult Consultar()
         {
 
+            //string sSearche = Request.Params["sSearch"].ToString();
+            string sBusca = Request.Params["sBusca"].ToString();
+            string sPerfil = Request.Params["sPerfil"].ToString();
+            string sStatus = Request.Params["sStatus"].ToString();
+
+
             UsuarioPersistence up = new UsuarioPersistence();
+            IEnumerable<Usuario> totalUsuarios = up.ListarTodos();
+            IList<Usuario> filtroUsuarios = totalUsuarios.ToList<Usuario>();
 
-            IEnumerable<Usuario> usuarios = null;
-
-            if (model.Busca != null)
+            if (sBusca != null)
             {
-                usuarios = up.ListarTodos().Where(u => u.IdUsuario.Contains(model.Busca) || u.Nome.Contains(model.Busca))
-                                           .OrderBy(u => u.IdUsuario);
+                filtroUsuarios = filtroUsuarios
+                    .Where(u =>
+                            (u.IdUsuario.Contains(sBusca.ToUpper())) ||
+                            (u.Nome.ToString().Contains(sBusca.ToUpper()))
+                     ).ToList<Usuario>();
             }
 
-            if (model.Id_Perfil > 0)
+            if (sPerfil != "-1")
             {
-                if (usuarios == null)
-                {
-                    usuarios = up.ListarTodos().OrderBy(u => u.IdUsuario);
-                }
-                usuarios = usuarios.Where(u => u.IdPerfil.Equals(model.Id_Perfil));
+                filtroUsuarios = filtroUsuarios
+                    .Where(u => u.Perfil.Id.ToString().Contains(sPerfil.ToUpper())
+                     ).ToList<Usuario>();
             }
 
-            if (model.IdStatus != "-1" && model.IdStatus != null)
+            if (sStatus != "-1")
             {
-                if (usuarios == null)
-                {
-                    usuarios = up.ListarTodos().OrderBy(u => u.IdUsuario);
-                }
-                usuarios = usuarios.Where(u => u.Status.Equals(model.IdStatus == Convert.ToString(-1) ? "" : model.IdStatus));
+                filtroUsuarios = filtroUsuarios
+                    .Where(u => u.Status.ToString().Contains(sStatus.ToUpper())
+                     ).ToList<Usuario>();
             }
 
             List<UsuarioViewModelConsulta> lista = new List<UsuarioViewModelConsulta>();
 
-            foreach (var item in usuarios)
+            foreach (var item in filtroUsuarios)
             {
                 UsuarioViewModelConsulta u = new UsuarioViewModelConsulta();
                 u.IdUsuario = item.IdUsuario;
@@ -84,7 +93,12 @@ namespace Project.Web.Areas.AreaIndex.Controllers
                 lista.Add(u);
             }
 
-            return Json(lista);
+            var Resultado = new
+            {
+                aaData = lista
+            };
+
+            return Json(Resultado, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -130,8 +144,9 @@ namespace Project.Web.Areas.AreaIndex.Controllers
         }
 
         [HttpPost]
-        public ActionResult Editar(UsuarioViewModelEdicao usuarioModel)
+        public JsonResult Editar(UsuarioViewModelEdicao usuarioModel)
         {
+            string mensagem = null;
             try
             {
 
@@ -144,9 +159,11 @@ namespace Project.Web.Areas.AreaIndex.Controllers
                     u.Nome = usuarioModel.Nome;
                     u.IdPerfil = usuarioModel.Id_Perfil;
 
-                   // up.Atualizar(u);
-                    TempData["MensagemEdicao"] = $"Os dados do usuário {usuarioModel.Nome} foram salvos com sucesso!";
-                    
+                    up.Atualizar(u);
+                    mensagem = $"Os dados do usuário {usuarioModel.Nome} foram editados com sucesso!";
+
+                    //TempData["MensagemEdicao"] = msg;
+
                 }
             }
             catch (Exception ex)
@@ -155,9 +172,9 @@ namespace Project.Web.Areas.AreaIndex.Controllers
 
             }
 
-            return Json(" ");
+            return Json(new { msg = mensagem });
         }
-        
+
         [HttpPost]
         public JsonResult ListaPerfis()
         {
@@ -173,9 +190,9 @@ namespace Project.Web.Areas.AreaIndex.Controllers
                 lista.Add(p);
             }
 
-            return Json(lista); 
+            return Json(lista);
         }
-        
+
         [HttpPost]
         public JsonResult ListaStatus()
         {
