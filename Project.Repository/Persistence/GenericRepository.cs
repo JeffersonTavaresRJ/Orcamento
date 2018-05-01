@@ -36,7 +36,7 @@ namespace Project.Repository.Persistence
 
              //o uso do Modified altera todos os atributos de um objeto
              //por isso que foi comentado para salvar somente os atributos alterados..
-            _conn.Entry(obj).State = EntityState.Unchanged;
+            _conn.Entry(obj).State = EntityState.Modified;
             return _conn.SaveChanges();
             //}
         }

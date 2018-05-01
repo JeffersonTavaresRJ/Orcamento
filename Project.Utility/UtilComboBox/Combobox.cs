@@ -28,7 +28,7 @@ namespace Project.Utility.UtilComboBox
                 {
                     //valor=Id
                     //ObterDescricao=Descrição
-                    lista.Add(new KeyValuePair<Enum, string>(valor, ObterDescricao(valor)));
+                    lista.Add(new KeyValuePair<string, string>(valor.ToString(), ObterDescricao(valor)));
                 }
             }
 

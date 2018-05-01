@@ -3,25 +3,24 @@
     Layout = "~/Views/_layout.cshtml";
 }
 
-@*<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
-    <link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
-    <link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
-
-    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js "></script>*@
-
 
 <script type="text/javascript">
+
+    //chamando o modal de edição..
+
     function edit(id) {
         $("#modal").load("Edicao?id=" + id, function () {
-            $("#modal").modal();
-        })
+            $("#modal").modal({ backdrop: "static" });            
+        });
     };
 
+    $("#btnNovo").click(function () {
+        $("#modal").load("Inclusao", function () {
+            $("#modal").modal({ backdrop: "static" });
+        });
+    });
 
-
-    $(document).ready(function () {       
+    $(document).ready(function () {
 
         var table = $('#tabela').DataTable({
             "bProcessing": true,
@@ -50,12 +49,12 @@
                 { "mData": "Status", "sName": "Status", "sTitle": "Status" },
                 {
                     "render": function (data, type, row) {
-                        return "<div style='text-align:center'><a href='#' class='btn btn-primary'  onclick=edit('" + row.IdUsuario + "')><i class='fa fa-edit'></i></a></div>";
+                        return "<div style='text-align:center'><a href='#' class='btn btn-dark'  onclick=edit('" + row.IdUsuario + "')><i class='fa fa-edit'></i></a></div>";
                     }
                 },
                 {
                     "render": function (data, type, row) {
-                        return "<div style='text-align:center'><button class='btn btn-danger delete' data-id='" + row.IdUsuario + "'><i class='fa fa-trash'></i></button></div>";
+                        return "<div style='text-align:center'><button class='btn btn-dark' data-id='" + row.IdUsuario + "'><i class='fa fa-trash'></i></button></div>";
                     }
                 }
             ],
@@ -80,7 +79,7 @@
             $("#TabelaUsuarios").show();
         });
 
-       
+
 
         $.ajax({
             type: "POST",
@@ -124,7 +123,7 @@
 
 </script>
 
-<h5>Consulta de Usuários</h5>
+        <h5>Consulta de Usuários</h5>
 <hr />
 
 <div class="row">
@@ -143,11 +142,8 @@
         <select id="cmbStatus" class="form-control"></select>
     </div>
 
-    <div class="col-2 text-right mt-4">
-        <button id="btnPesquisar" type="button" class="btn btn-outline-dark">
-            <i class="fa fa-search"></i> Pesquisar
-        </button>
-    </div>
+    
+
 </div>
 
 <div id="TabelaUsuarios" class="row mt-5" style="display:none">
@@ -168,6 +164,6 @@
     </div>
 </div>
 
-<div class="modal" id="modal">
+<div class="modal" id="modal" role="dialog">
 </div>
 

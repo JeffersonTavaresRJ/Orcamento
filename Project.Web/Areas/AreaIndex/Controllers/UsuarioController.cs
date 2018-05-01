@@ -8,12 +8,13 @@ using Project.Entity.Enuns;
 using Project.Utility.UtilComboBox;
 using Project.Web.Areas.AreaIndex.Models;
 using Project.Utility.UtilString;
-using Project.Utility.UtilTables;
 
 namespace Project.Web.Areas.AreaIndex.Controllers
 {
     public class UsuarioController : Controller
     {
+        string mensagem = null;
+
         public ActionResult ConsultaFiltro()
         {
 
@@ -22,7 +23,8 @@ namespace Project.Web.Areas.AreaIndex.Controllers
 
         public ActionResult Inclusao()
         {
-
+            PerfilPersistence pp = new PerfilPersistence();
+            ViewBag.ListaPerfis = new SelectList(pp.ListarTodos().ToList(), "Id", "Descricao");
             return View();
         }
 
@@ -101,11 +103,10 @@ namespace Project.Web.Areas.AreaIndex.Controllers
             return Json(Resultado, JsonRequestBehavior.AllowGet);
         }
 
-
-
         [HttpPost]
-        public ActionResult Incluir(UsuarioViewModelInclusao usuarioModel)
+        public JsonResult Incluir(UsuarioViewModelInclusao usuarioModel)
         {
+
             try
             {
 
@@ -115,7 +116,7 @@ namespace Project.Web.Areas.AreaIndex.Controllers
 
                     if (up.LoginExistente(usuarioModel.Id_Usuario) > 0)
                     {
-                        ViewBag.Mensagem = "O Login informado já existe";
+                        mensagem = "O Login informado já existe";
                     }
                     else
                     {
@@ -128,41 +129,42 @@ namespace Project.Web.Areas.AreaIndex.Controllers
                         u.IdPerfil = usuarioModel.Id_Perfil;
 
                         up.Inserir(u);
-
-                        RedirectToAction("ConsultaFiltro");
+                        mensagem = $"Os dados do usuário {usuarioModel.Nome} foram editados com sucesso!";
                     }
-
-                    ViewBag.Mensagem = "Operação realizada com sucesso!";
                 }
             }
             catch (Exception ex)
             {
-                ViewBag.Mensagem = ex.Message.ToString();
+                mensagem = ex.Message.ToString();
             }
 
-            return PartialView(usuarioModel);
+            return Json(new { msg = mensagem });
         }
 
         [HttpPost]
         public JsonResult Editar(UsuarioViewModelEdicao usuarioModel)
         {
-            string mensagem = null;
+
             try
             {
 
                 if (ModelState.IsValid)
                 {
                     UsuarioPersistence up = new UsuarioPersistence();
-                    Usuario u = new Usuario();
+                    Usuario u = up.ObterPorId(usuarioModel.Id_Usuario);
 
-                    u.IdUsuario = usuarioModel.Id_Usuario;
                     u.Nome = usuarioModel.Nome;
                     u.IdPerfil = usuarioModel.Id_Perfil;
+
+                    if (usuarioModel.RedefinirSenha)
+                    {
+                        u.Senha = Criptografia.EncriptarSenha("#abc123");
+                    }
 
                     up.Atualizar(u);
                     mensagem = $"Os dados do usuário {usuarioModel.Nome} foram editados com sucesso!";
 
-                    //TempData["MensagemEdicao"] = msg;
+                    //TempData["MensagemEdicao"] = mensagem;
 
                 }
             }

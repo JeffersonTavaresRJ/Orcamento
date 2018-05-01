@@ -4,11 +4,31 @@
 }
 <script src="~/js/jquery.validate.unobtrusive.min.js"></script>
 
+<script type="text/javascript">
+    function OnFailure(result) {
+        //adicionar mensagem igual a da edição..
+        alert("Erro:" + result.msg);
+    }
+
+    function OnSuccess(result) {
+
+        //Como o modal é renderizado dentro da página de ConsultaFiltro.cshntm,
+        // pode-se pegar o handle da tabela que já está criada no ConsultaFiltro...
+        // e aplicar a atualização da table..
+        var tabela = $('#tabela').DataTable();
+        tabela.ajax.reload();
+
+        //adicionar mensagem igual a da edição..
+    }
+</script>
+
 <div class="modal-dialog">
     <div class="modal-content">
         @using (Ajax.BeginForm("Incluir", "Usuario", new AjaxOptions()
         {
-            HttpMethod = "POST"
+            HttpMethod = "POST",
+            OnFailure = "OnFailure",
+            OnSuccess = "OnSuccess"
         })
                )
         {

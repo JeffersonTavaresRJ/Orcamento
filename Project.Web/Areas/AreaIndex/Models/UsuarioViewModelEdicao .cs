@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.ComponentModel.DataAnnotations;
-using Project.Entity;
+﻿using System.ComponentModel.DataAnnotations;
+
 
 namespace Project.Web.Areas.AreaIndex.Models
 {
     public class UsuarioViewModelEdicao
     {
 
-        [RegularExpression("^[A-Z0-9]{4,4}$", 
+        [RegularExpression("^[A-Z0-9]{4,4}$",
             ErrorMessage = "O login do Usuário só pode ter 4 caracteres")]
-        [Required(ErrorMessage ="Informe o Login")]
-        [Display(Name ="Login:")]
+        [Required(ErrorMessage = "Informe o Login")]
+        [Display(Name = "Login:")]
         public string Id_Usuario { get; set; }
 
         [RegularExpression("^[A-Za-zÀ-Üà-ü\\s]{6,50}$",
@@ -28,12 +24,6 @@ namespace Project.Web.Areas.AreaIndex.Models
 
         [Display(Name = "Redefinir Senha:")]
         public bool RedefinirSenha { get; set; }
-
-
-
-
-
-
 
     }
 }

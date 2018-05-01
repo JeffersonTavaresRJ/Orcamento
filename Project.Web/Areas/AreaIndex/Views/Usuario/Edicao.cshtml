@@ -13,18 +13,20 @@
     }
 
     function OnSuccess(result) {
-        var mensagem = result.msg;
-        if (mensagem != null) {
-            $("#mensagem").html(mensagem);
-            $("#mensagem").show();
-        } else {
-            $.post("/Usuario/Listar");
-        }
-        
+
+        //Como o modal é renderizado dentro da página de ConsultaFiltro.cshntm,
+        // pode-se pegar o handle da tabela que já está criada no ConsultaFiltro...
+        // e aplicar a atualização da table..        
+        var tabela = $('#tabela').DataTable();
+        tabela.ajax.reload();
+
+        //fechando o modal..
+        $(".close").click();
+       
     }
 </script>
 
-<div class="modal-dialog">
+<div id="modal_dialog" class="modal-dialog">
     <div class="modal-content">
         @using (Ajax.BeginForm("Editar", "Usuario", new AjaxOptions()
         {
@@ -44,11 +46,6 @@
 
             </div>
             <div class="modal-body">
-
-
-                <div class="alert alert-danger" id="mensagem" style="display:none;">
-                </div>
-
 
 
                 @Html.ValidationSummary(true)
