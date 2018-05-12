@@ -9,20 +9,26 @@
 
 <script type="text/javascript">
     function OnFailure(result) {
-        alert("Erro:"+result.msg);
+        alert("Erro:" + result.msg);
     }
 
     function OnSuccess(result) {
 
         //Como o modal é renderizado dentro da página de ConsultaFiltro.cshntm,
         // pode-se pegar o handle da tabela que já está criada no ConsultaFiltro...
-        // e aplicar a atualização da table..        
+        // e aplicar a atualização da table..
         var tabela = $('#tabela').DataTable();
         tabela.ajax.reload();
 
+        //exibindo a mensagem na tela de consulta..
+        //isso pode ser feito porque a tela de edição é renderizada na tela de consulta..
+        $("#mensagem").html(result.msg);
+        $("#alert").show().fadeOut(8000);//exibe e depois esconde o alert..
+
+
         //fechando o modal..
         $(".close").click();
-       
+
     }
 </script>
 
@@ -82,10 +88,10 @@
 
                     </div>
 
-                    <div class="form-group mb-1 col-12">
-                        @Html.LabelFor(model => model.RedefinirSenha)
+                    <div class="form-check mb-1 mt-3 col-12">
 
-                        @Html.CheckBoxFor(model => model.RedefinirSenha, new { @class = "form-control" })
+                        @Html.CheckBox("RedefinirSenha", false)
+                        @Html.LabelFor(model => model.RedefinirSenha)
 
                     </div>
 

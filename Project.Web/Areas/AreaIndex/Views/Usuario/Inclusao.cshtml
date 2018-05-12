@@ -18,7 +18,9 @@
         var tabela = $('#tabela').DataTable();
         tabela.ajax.reload();
 
-        //adicionar mensagem igual a da edição..
+        $("#mensagemInclusao").html(result.msg);
+        $("#alertInclusao").show();
+
     }
 </script>
 
@@ -43,12 +45,11 @@
             </div>
             <div class="modal-body">
 
-                @if (ViewBag.Mensagem != null)
-                {
-                    <div class="alert alert-danger">
-                        @ViewBag.Mensagem
-                    </div>
-                }
+
+                <div id="alertInclusao" class="alert alert-primary" style="display:none">
+                    <span id="mensagemInclusao"></span>
+                </div>
+
 
                 @Html.ValidationSummary(true)
 

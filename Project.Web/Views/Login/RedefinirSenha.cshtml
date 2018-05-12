@@ -1,0 +1,61 @@
+﻿@model Project.Web.Models.Login.RedefinirSenhaViewModel
+
+@{
+    ViewBag.Title = "Redefinir Senha";
+    Layout = "~/Views/_layout.cshtml";
+}
+
+@using Project.Web.Models.Login
+@{
+
+    SenhaViewModel redefinirSenha = (SenhaViewModel)Session["RedefinirSenha"];
+}
+
+
+<div class="row justify-content-center">
+
+    <div class="col-lg-6 col-md-8 col-sm-12 col-xl-6 col-auto">
+        <div class="card mt-4" style="border-color:gray">
+            <div class="card-body">
+                <h3 class="card-title text-center">Redefinir Senha</h3>
+                <hr />
+                @if (ViewBag.Mensagem != null)
+                {
+                    <div class="alert alert-danger">
+                        @ViewBag.Mensagem
+                    </div>
+                }
+                <!--Combinar o row justify-content-center com o col-auto para centralizar-->
+                <div class="row justify-content-center">
+                    <div class=" col-9 col-auto">
+                        @using (Html.BeginForm("AlterarSenha", "Login"))
+                        {
+                            @Html.HiddenFor(model => model.Login, redefinirSenha.Login)
+
+                            <p>Olá <strong>@redefinirSenha.Nome,</strong> digite sua nova senha: </p>
+
+                            @Html.LabelFor(model => model.Senha)
+                            @Html.PasswordFor(model => model.Senha, new { @class = "form-control", @placeholder = "Informe sua nova senha" })
+                            <span class="text-danger">
+                                @Html.ValidationMessageFor(model => model.Senha)
+                            </span>
+                            <br />
+                            @Html.LabelFor(model => model.ConfirmarSenha)
+                            @Html.PasswordFor(model => model.ConfirmarSenha, new { @class = "form-control", @placeholder = "Confirme a senha" })
+                            <span class="text-danger">
+                                @Html.ValidationMessageFor(model => model.ConfirmarSenha)
+                            </span>
+                            <br />
+                            <br />
+                            <input type="submit" class="btn btn-outline-dark btn-block" value="Redefinir Senha" />
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+</div>

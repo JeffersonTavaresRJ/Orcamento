@@ -50,7 +50,7 @@ namespace Project.Web.Areas.AreaIndex.Controllers
         {
 
             //string sSearche = Request.Params["sSearch"].ToString();
-            string sBusca = Request.Params["sBusca"].ToString();
+            string sBusca =  Request.Params["sBusca"].ToString().ToUpper();
             string sPerfil = Request.Params["sPerfil"].ToString();
             string sStatus = Request.Params["sStatus"].ToString();
 
@@ -63,8 +63,8 @@ namespace Project.Web.Areas.AreaIndex.Controllers
             {
                 filtroUsuarios = filtroUsuarios
                     .Where(u =>
-                            (u.IdUsuario.Contains(sBusca.ToUpper())) ||
-                            (u.Nome.ToString().Contains(sBusca.ToUpper()))
+                            (u.IdUsuario.ToUpper().Contains(sBusca.ToUpper())) ||
+                            (u.Nome.ToString().ToUpper().Contains(sBusca.ToUpper()))
                      ).ToList<Usuario>();
             }
 
@@ -129,7 +129,7 @@ namespace Project.Web.Areas.AreaIndex.Controllers
                         u.IdPerfil = usuarioModel.Id_Perfil;
 
                         up.Inserir(u);
-                        mensagem = $"Os dados do usuário {usuarioModel.Nome} foram editados com sucesso!";
+                        mensagem = $"Os dados do usuário {usuarioModel.Nome} foram gravados com sucesso!";
                     }
                 }
             }
@@ -158,15 +158,34 @@ namespace Project.Web.Areas.AreaIndex.Controllers
 
                     if (usuarioModel.RedefinirSenha)
                     {
-                        u.Senha = Criptografia.EncriptarSenha("#abc123");
+                        u.Senha = Criptografia.EncriptarSenha("abc123");
                     }
 
                     up.Atualizar(u);
                     mensagem = $"Os dados do usuário {usuarioModel.Nome} foram editados com sucesso!";
 
-                    //TempData["MensagemEdicao"] = mensagem;
+               }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { msg = ex.Message.ToString() });
 
-                }
+            }
+
+            return Json(new { msg = mensagem });
+        }
+
+        [HttpPost]
+        public JsonResult Excluir(string id)
+        {
+
+            try
+            {
+                    UsuarioPersistence up = new UsuarioPersistence();
+                    Usuario u = up.ObterPorId(id);
+
+                    up.Excluir(u);
+                    mensagem = $"Os dados do usuário {u.Nome} foram excluídos com sucesso!";                
             }
             catch (Exception ex)
             {

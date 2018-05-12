@@ -22,7 +22,7 @@ namespace Project.Web.Areas.AreaIndex.Models
         [Display(Name = "Perfil:")]
         public int Id_Perfil { get; set; }
 
-        [Display(Name = "Redefinir Senha:")]
+        [Display(Name = "redefinir senha")]
         public bool RedefinirSenha { get; set; }
 
     }

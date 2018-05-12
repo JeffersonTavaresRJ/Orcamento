@@ -19,7 +19,10 @@ namespace Project.Web.Controllers
             return View();
         }
 
-
+        public ActionResult RedefinirSenha()
+        {
+            return View();
+        }
 
         [HttpPost]
         public ActionResult AcessarSistema(LoginViewModel loginModel)
@@ -39,6 +42,16 @@ namespace Project.Web.Controllers
                         {
                             throw new Exception("Usuário Inativado." + "\n" + "Procure o Administrador do Sistema");
 
+                        }
+
+                        if (loginModel.Senha.ToUpper().Equals("ABC123")){
+                            SenhaViewModel model = new SenhaViewModel();
+
+                            model.Login = u.IdUsuario;
+                            model.Nome = u.Nome;
+
+                            Session.Add("RedefinirSenha", model);
+                            return RedirectToAction("RedefinirSenha");
                         }
 
                         //criando o tícket para dar acesso a aplicação..
@@ -75,6 +88,33 @@ namespace Project.Web.Controllers
 
         }
 
+        [HttpPost]
+        public ActionResult AlterarSenha(RedefinirSenhaViewModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    UsuarioPersistence up = new UsuarioPersistence();
+                    Usuario u = up.ObterPorId(model.Login);
+                    u.Senha = model.Senha;
+                    up.Atualizar(u);
+                    ViewBag.Mensagem = u.Nome;
+
+                    Session.Remove("RedefinirSenha");
+
+                    return RedirectToAction("MensagemRedefinirSenha");
+                }
+
+            }
+            catch (Exception e)
+            {
+
+                ViewBag.Mensagem = e.Message.ToString();
+            }
+
+            return View();
+        }
 
         public ActionResult Logout()
         {

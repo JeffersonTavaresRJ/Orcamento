@@ -6,24 +6,109 @@
 
 <script type="text/javascript">
 
-    //chamando o modal de edição..
-
-    function edit(id) {
-        $("#modal").load("Edicao?id=" + id, function () {
-            $("#modal").modal({ backdrop: "static" });            
-        });
-    };
-
+    //chamando o modal de inclusão..
     $("#btnNovo").click(function () {
         $("#modal").load("Inclusao", function () {
             $("#modal").modal({ backdrop: "static" });
         });
     });
 
+    //chamando o modal de edição..
+    function edit(id) {
+        $("#modal").load("Edicao?id=" + id, function () {
+            $("#modal").modal({ backdrop: "static" });
+        });
+    };
+
+    //chamando o modal de exclusão..
+    function del(id) {
+
+        $('#modalMensagemConfirmId').html("Deseja excluir o usuário "+ id + "?");
+        $('#modalConfirmMensagem').modal({
+            backdrop: 'static',
+            keyboard: false
+        }).one('click', '#btnConfirmSim', function (e) {
+            $.ajax({
+                type: "POST",
+                url: "/Usuario/Excluir",
+                data: "id=" + id,
+                success: function (result) {
+                    exibirAlert(result.msg);
+                    $("#btnPesquisar").click();
+
+                },
+                error: function (e) {
+                    exibirAlert("Erro: " + e.status);
+                }
+            });
+
+
+
+            //$.ajax({
+            //    type: "POST",
+            //    url: "/Usuario/Excluir",
+            //    function(d) {
+            //        d.sBusca = $("#txtBusca").val();
+            //        d.sPerfil = $("#cmbPerfil").val();
+            //        d.sStatus = $("#cmbStatus").val();
+            //    success: function (result) {
+                   
+            //    },
+            //    error: function (e) {
+                  
+            //    }
+            //});
+        });
+    };
+
+    function exibirAlert(mensagem) {
+        $("#mensagem").html(mensagem);
+        $("#alert").show().fadeOut(8000);//exibe e depois esconde o alert..
+    }
+
     $(document).ready(function () {
 
+        $("#btnNovo").show();
+        $("#btnPesquisar").show();
+
+        $.ajax({
+            type: "POST",
+            url: "/Usuario/ListaPerfis",
+            success: function (dados) {
+
+                var option = '<option value=-1>Selecione o Perfil</option>';
+                $.each(dados, function (i, obj) {
+                    option += '<option value="' + obj.Id + '">' + obj.Descricao + '</option>';
+                });
+
+                $('#cmbPerfil').html(option).show();
+
+            },
+            error: function (e) {
+                exibirAlert("Erro: " + e.status);
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "/Usuario/ListaStatus",
+            success: function (dados) {
+
+                var option = '<option value=-1 > Selecione o Status</option>';
+                $.each(dados, function (i, obj) {
+                    option += '<option value="' + obj.Key + '">' + obj.Value + '</option>';
+                });
+
+                $('#cmbStatus').html(option).show();
+
+            },
+            error: function (e) {
+                exibirAlert("Erro: " + e.status);
+            }
+        });
+
         var table = $('#tabela').DataTable({
-            "bProcessing": true,
+            "bProcessing": false,
             "bServerSide": false,
             "bLengthChange": false, /*tornar invisível combo para visualizar a quantidade de registros */
             "bFilter": false, /*tornar invisível o campo de busca do resultado da tabela */
@@ -37,7 +122,7 @@
                     d.sStatus = $("#cmbStatus").val();
                 },
                 error: function (e) {
-                    alert("Erro: " + e.status);
+                    exibirAlert("Erro: " + e.status);
                 }
             },
 
@@ -54,7 +139,8 @@
                 },
                 {
                     "render": function (data, type, row) {
-                        return "<div style='text-align:center'><button class='btn btn-dark' data-id='" + row.IdUsuario + "'><i class='fa fa-trash'></i></button></div>";
+                        var nome = row.Nome;
+                        return "<div style='text-align:center'><button class='btn btn-dark'  onclick=del('" + row.IdUsuario + "')><i class='fa fa-trash'></i></button></div>";
                     }
                 }
             ],
@@ -73,57 +159,20 @@
                 }]
         });
 
+        //botão pesquisar..
         $("#btnPesquisar").click(function () {
-
+            //atualiza a table para uma nova pesquisa..
             table.ajax.reload();
             $("#TabelaUsuarios").show();
         });
 
 
 
-        $.ajax({
-            type: "POST",
-            url: "/Usuario/ListaPerfis",
-            success: function (dados) {
-
-                var option = '<option value=-1>Selecione o Perfil</option>';
-                $.each(dados, function (i, obj) {
-                    option += '<option value="' + obj.Id + '">' + obj.Descricao + '</option>';
-                });
-
-                $('#cmbPerfil').html(option).show();
-
-            },
-            error: function (e) {
-                console.log("Erro: " + e.status);
-            }
-        });
-
-        $.ajax({
-            type: "POST",
-            url: "/Usuario/ListaStatus",
-            success: function (dados) {
-
-                var option = '<option value=-1 > Selecione o Status</option>';
-                $.each(dados, function (i, obj) {
-                    option += '<option value="' + obj.Key + '">' + obj.Value + '</option>';
-                });
-
-                $('#cmbStatus').html(option).show();
-
-            },
-            error: function (e) {
-                console.log("Erro: " + e.status);
-            }
-        });
-
     });
-
-
 
 </script>
 
-        <h5>Consulta de Usuários</h5>
+<h5>Consulta de Usuários</h5>
 <hr />
 
 <div class="row">
@@ -142,13 +191,11 @@
         <select id="cmbStatus" class="form-control"></select>
     </div>
 
-    
-
 </div>
 
-<div id="TabelaUsuarios" class="row mt-5" style="display:none">
+<div id="TabelaUsuarios" class="row mt-3" style="display:none">
     <div class="col-12">
-        <table id="tabela" class="display" style="width:100%">
+        <table id="tabela" class="display" style="width:100%" data-page-length='5'>
             <thead>
                 <tr>
                     <th scope="col">Usuário</th>
@@ -162,6 +209,16 @@
             <tbody id="bodyTable"></tbody>
         </table>
     </div>
+</div>
+
+<div id="alert" class="row mt-2" style="display:none">
+
+    <div class="col-12">
+        <div class="alert alert-primary" role="alert">
+            <span id="mensagem"></span>
+        </div>
+    </div>
+
 </div>
 
 <div class="modal" id="modal" role="dialog">

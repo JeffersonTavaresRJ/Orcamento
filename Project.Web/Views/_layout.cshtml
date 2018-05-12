@@ -70,11 +70,11 @@
 
                 <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
 
-                    <button id="btnPesquisar" type="button" class="btn btn-lg btn-dark">
+                    <button id="btnPesquisar" style="display:none" type="button" class="btn btn-lg btn-dark">
                         <i class="fa fa-search"></i>
                     </button>
 
-                    <button id="btnNovo" type="button" class="btn btn-lg btn-dark">
+                    <button id="btnNovo" type="button" style="display:none" class="btn btn-lg btn-dark">
                         <i class="fa fa-plus-square"></i>
                     </button>
 
@@ -96,40 +96,15 @@
                     </div>
                 </div>
 
-                @*<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSite">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarSite">
-
-                        <div class="dropdown ml-auto">
-                            <button class="btn btn-dark bg-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                @u.Nome
-                            </button>
-
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                @if (u.IdPerfil.Equals(1))
-                                {
-                                    <a class="dropdown-item" href="/AreaIndex/Usuario/ConsultaFiltro">
-                                        Controle de Usuários
-                                    </a>
-                                }
-                                <a class="dropdown-item" href="/Login/Logout">
-                                    Sair
-                                </a>
-                            </div>
-                        </div>
-                    </div>*@
             }
         </div>
     </nav>
 
     <div class="container">
         @RenderBody()
-
-
     </div>
 
-    <div class="modal fade" role="dialog" id="modalMensagem" aria-labelledby="myModalLabel">
+    <div id="modalMensagem" class="modal fade" role="dialog"  aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -141,6 +116,24 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-dark btn-sm" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalConfirmMensagem" class="modal fade" role="dialog"  aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Sr. Usuário</h4>
+                    <span style="font-size:xx-large"><i class="fa fa-info-circle"></i></span>
+                </div>
+                <div class="modal-body">
+                    <p><span id="modalMensagemConfirmId"></span></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-outline-dark active" id="btnConfirmSim">Sim</button>
+                    <button type="button" data-dismiss="modal" class="btn btn-outline-dark">Não</button>
                 </div>
             </div>
         </div>
