@@ -41,7 +41,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enuns\Status.cs" />
+    <Compile Include="Menu.cs" />
     <Compile Include="Perfil.cs" />
+    <Compile Include="PerfilMenu.cs" />
     <Compile Include="Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

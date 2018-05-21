@@ -19,9 +19,9 @@ namespace Project.Web.Controllers
             return View();
         }
 
-        public ActionResult RedefinirSenha()
+        public ActionResult RedefinirSenha(RedefinirSenhaViewModel model)
         {
-            return View();
+            return View(model);
         }
 
         [HttpPost]
@@ -45,13 +45,20 @@ namespace Project.Web.Controllers
                         }
 
                         if (loginModel.Senha.ToUpper().Equals("ABC123")){
-                            SenhaViewModel model = new SenhaViewModel();
+                            RedefinirSenhaViewModel model = new RedefinirSenhaViewModel();
 
                             model.Login = u.IdUsuario;
                             model.Nome = u.Nome;
 
-                            Session.Add("RedefinirSenha", model);
-                            return RedirectToAction("RedefinirSenha");
+                            //não usei o RedirectToAction, porque: 
+                            //1-carrega na URL da página os valores do parâmetro da model
+                            //2-faz a validação dos campos obrigatórios ao inicializar a página 
+
+                            //return RedirectToAction("RedefinirSenha", model);
+
+
+                            //Navegar pela view, oculta os parâmetros da model..
+                            return View("RedefinirSenha", model );
                         }
 
                         //criando o tícket para dar acesso a aplicação..
@@ -97,13 +104,16 @@ namespace Project.Web.Controllers
                 {
                     UsuarioPersistence up = new UsuarioPersistence();
                     Usuario u = up.ObterPorId(model.Login);
-                    u.Senha = model.Senha;
+                    u.Senha = Criptografia.EncriptarSenha(model.Senha);
                     up.Atualizar(u);
                     ViewBag.Mensagem = u.Nome;
 
-                    Session.Remove("RedefinirSenha");
+                    //destrói o tícket de acesso do usuário..
+                    FormsAuthentication.SignOut();
+                    //apaga a sessão do usuário..
+                    Session.Remove("Usuario");
 
-                    return RedirectToAction("MensagemRedefinirSenha");
+                    return View("MensagemRedefinirSenha");
                 }
 
             }
@@ -113,7 +123,7 @@ namespace Project.Web.Controllers
                 ViewBag.Mensagem = e.Message.ToString();
             }
 
-            return View();
+            return View("RedefinirSenha");
         }
 
         public ActionResult Logout()

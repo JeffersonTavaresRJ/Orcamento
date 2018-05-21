@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Project.Entity;
+﻿using Project.Entity;
 using System.Data.Entity.ModelConfiguration;// mapeamentos..
 
 namespace Project.Repository.Mapping

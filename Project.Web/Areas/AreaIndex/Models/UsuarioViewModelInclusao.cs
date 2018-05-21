@@ -26,16 +26,16 @@ namespace Project.Web.Areas.AreaIndex.Models
         [Display(Name = "Perfil:")]
         public int Id_Perfil { get; set; }
 
-        [RegularExpression("^[A-Za-z0-9]{6,10}$",
-           ErrorMessage = "A senha deve possuir entre 6 a 10 caracteres, com letras e números")]
-        [Required(ErrorMessage = "Informe a Senha")]
-        [Display(Name = "Senha:")]
-        public string Senha { get; set; }
+        //[RegularExpression("^[A-Za-z0-9]{6,10}$",
+        //   ErrorMessage = "A senha deve possuir entre 6 a 10 caracteres, com letras e números")]
+        //[Required(ErrorMessage = "Informe a Senha")]
+        //[Display(Name = "Senha:")]
+        //public string Senha { get; set; }
 
-        [Compare("Senha", ErrorMessage ="Senhas não conferem")]
-        [Required(ErrorMessage = "Confirme a senha de acesso")]
-        [Display(Name = "Confirme a Senha:")]
-        public string ConfirmaSenha { get; set; }
+        //[Compare("Senha", ErrorMessage ="Senhas não conferem")]
+        //[Required(ErrorMessage = "Confirme a senha de acesso")]
+        //[Display(Name = "Confirme a Senha:")]
+        //public string ConfirmaSenha { get; set; }
 
 
 

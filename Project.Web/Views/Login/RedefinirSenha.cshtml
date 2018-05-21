@@ -5,11 +5,11 @@
     Layout = "~/Views/_layout.cshtml";
 }
 
-@using Project.Web.Models.Login
+@*@using Project.Web.Models.Login
 @{
 
     SenhaViewModel redefinirSenha = (SenhaViewModel)Session["RedefinirSenha"];
-}
+}*@
 
 
 <div class="row justify-content-center">
@@ -28,11 +28,12 @@
                 <!--Combinar o row justify-content-center com o col-auto para centralizar-->
                 <div class="row justify-content-center">
                     <div class=" col-9 col-auto">
-                        @using (Html.BeginForm("AlterarSenha", "Login"))
+                        @using (Html.BeginForm("AlterarSenha", "Login", FormMethod.Post))
                         {
-                            @Html.HiddenFor(model => model.Login, redefinirSenha.Login)
-
-                            <p>Olá <strong>@redefinirSenha.Nome,</strong> digite sua nova senha: </p>
+                           
+                            @Html.HiddenFor(model=>model.Login)
+                            
+                            <p>Olá <strong>@Html.LabelForModel(Model.Nome)</strong> digite sua nova senha: </p>
 
                             @Html.LabelFor(model => model.Senha)
                             @Html.PasswordFor(model => model.Senha, new { @class = "form-control", @placeholder = "Informe sua nova senha" })

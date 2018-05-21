@@ -125,7 +125,7 @@ namespace Project.Web.Areas.AreaIndex.Controllers
 
                         u.IdUsuario = usuarioModel.Id_Usuario;
                         u.Nome = usuarioModel.Nome;
-                        u.Senha = Criptografia.EncriptarSenha(usuarioModel.Senha);
+                        u.Senha = Criptografia.EncriptarSenha("ABC123");
                         u.IdPerfil = usuarioModel.Id_Perfil;
 
                         up.Inserir(u);
@@ -158,7 +158,7 @@ namespace Project.Web.Areas.AreaIndex.Controllers
 
                     if (usuarioModel.RedefinirSenha)
                     {
-                        u.Senha = Criptografia.EncriptarSenha("abc123");
+                        u.Senha = Criptografia.EncriptarSenha("ABC123");
                     }
 
                     up.Atualizar(u);
