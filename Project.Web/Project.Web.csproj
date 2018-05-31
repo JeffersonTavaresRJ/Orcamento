@@ -1181,6 +1181,7 @@
     <Content Include="Content\datatables.extensions\TableTools\images\psd\collection.psd" />
     <Content Include="Content\datatables.extensions\Responsive\css\dataTables.responsive.scss" />
     <Content Include="Areas\AreaIndex\Views\Usuario\Edicao.cshtml" />
+    <Content Include="Areas\AreaIndex\Views\Menu\ConsultaFiltro.cshtml" />
     <None Include="js\jquery-3.0.0-vsdoc.js" />
     <Content Include="js\jquery-3.0.0.js" />
     <Content Include="js\jquery-3.0.0.min.js" />
@@ -1240,6 +1241,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\AreaIndex\AreaIndexAreaRegistration.cs" />
     <Compile Include="Areas\AreaIndex\Controllers\LancamentoController.cs" />
+    <Compile Include="Areas\AreaIndex\Controllers\MenuController.cs" />
     <Compile Include="Areas\AreaIndex\Controllers\UsuarioController.cs" />
     <Compile Include="Areas\AreaIndex\Models\PerfilViewModelConsulta.cs" />
     <Compile Include="Areas\AreaIndex\Models\UsuarioViewModelConsulta.cs" />

@@ -76,6 +76,9 @@ namespace Project.Web.Controllers
                         //gravando o objeto Usuario em sessão..
                         Session.Add("Usuario", u);
 
+                        //gravando os itens de menu..
+                        Session.Add("Menu", u.Perfil.Menus);
+
 
                         return RedirectToAction("Consulta", "Lancamento",
                             new { area = "AreaIndex" });

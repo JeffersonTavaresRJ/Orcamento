@@ -19,6 +19,16 @@ namespace Project.Repository.Mapping
                 .HasColumnName("Descricao")
                 .HasMaxLength(50)
                 .IsRequired();
+
+            //muito para muitos.. 
+            //o mapeamento pode ser feito em uma só classe
+            HasMany(Perfil => Perfil.Menus)
+                .WithMany(Menu => Menu.Perfis)
+                .Map(x => {
+                    x.ToTable("Perfil_Menu");
+                    x.MapLeftKey("IdPerfil");
+                    x.MapRightKey("IdMenu");
+                    });
         }
     }
 }

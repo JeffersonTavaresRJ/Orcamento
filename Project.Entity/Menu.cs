@@ -6,11 +6,6 @@ namespace Project.Entity
 {
     public class Menu
     {
-        //mapeamento muito para muitos no entity framework..
-        public Menu()
-        {
-            PerfilMenu = new HashSet<PerfilMenu>();
-        }
 
         public int Id { get; set; }
         public int IdMenu { get; set; }
@@ -40,8 +35,8 @@ namespace Project.Entity
         }
 
         //mapeamento muito para muitos no entity framework..
-        public virtual List<Menu> Menus { get; set; }
-        public virtual ICollection<PerfilMenu> PerfilMenu { get; set; }
+        public virtual ICollection<Menu> Menus { get; set; }
+        public virtual ICollection<Perfil> Perfis { get; set; }
 
 
     }

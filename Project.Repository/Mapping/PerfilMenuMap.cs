@@ -19,16 +19,16 @@ namespace Project.Repository.Mapping
                .HasColumnName("IdMenu")
                .IsRequired();
 
-            HasRequired(m => m.Menu)
-                .WithMany(m => m.PerfilMenu)
-                .HasForeignKey(m => m.IdMenu)
-                .WillCascadeOnDelete(false);
+            //HasRequired(m => m.Menu)
+            //    .WithMany(m => m.PerfilMenu)
+            //    .HasForeignKey(m => m.IdMenu)
+            //    .WillCascadeOnDelete(false);
 
 
-            HasRequired(p => p.Perfil)
-                .WithMany(p => p.PerfilMenu)
-                .HasForeignKey(p => p.IdPerfil)
-                .WillCascadeOnDelete(false);
+            //HasRequired(p => p.Perfil)
+            //    .WithMany(p => p.PerfilMenu)
+            //    .HasForeignKey(p => p.IdPerfil)
+            //    .WillCascadeOnDelete(false);
 
 
         }

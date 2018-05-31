@@ -1,8 +1,5 @@
-﻿using System;
-
-using System.Configuration;
+﻿using System.Configuration;
 using System.Data.Entity;
-
 using Project.Entity;
 using Project.Repository.Mapping;
 
@@ -27,7 +24,7 @@ namespace Project.Repository.Configurations
             modelBuilder.Configurations.Add(new UsuarioMap());
             modelBuilder.Configurations.Add(new PerfilMap());
             modelBuilder.Configurations.Add(new MenuMap());
-            modelBuilder.Configurations.Add(new PerfilMenuMap());
+            //modelBuilder.Configurations.Add(new PerfilMenuMap());
         }
 
         //Regra 4) Declarar um DbSet para cada entidade..         
@@ -36,6 +33,6 @@ namespace Project.Repository.Configurations
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<Perfil> Perfil { get; set; }
         public DbSet<Menu> Menu { get; set; }
-        public DbSet<PerfilMenu> PerfilMenu { get; set; }
+        //public DbSet<PerfilMenu> PerfilMenu { get; set; }
     }
 }
