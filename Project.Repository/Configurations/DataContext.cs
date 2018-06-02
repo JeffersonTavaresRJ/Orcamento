@@ -14,6 +14,7 @@ namespace Project.Repository.Configurations
                : base(ConfigurationManager.ConnectionStrings["OrcamentoLocal"].ConnectionString)
         {
             Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
+            Configuration.LazyLoadingEnabled = false;
         }
 
         //Regra 3) Sobrescrever o método OnModelCreating        
