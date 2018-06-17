@@ -1182,6 +1182,7 @@
     <Content Include="Content\datatables.extensions\Responsive\css\dataTables.responsive.scss" />
     <Content Include="Areas\AreaIndex\Views\Usuario\Edicao.cshtml" />
     <Content Include="Areas\AreaIndex\Views\Menu\ConsultaFiltro.cshtml" />
+    <Content Include="Views\_navbar.cshtml" />
     <None Include="js\jquery-3.0.0-vsdoc.js" />
     <Content Include="js\jquery-3.0.0.js" />
     <Content Include="js\jquery-3.0.0.min.js" />
@@ -1277,6 +1278,7 @@
     <Content Include="Scripts\datatables.extensions\Responsive\Readme.md" />
     <Content Include="Views\Login\RedefinirSenha.cshtml" />
     <Content Include="Views\Login\MensagemRedefinirSenha.cshtml" />
+    <Content Include="Areas\AreaIndex\Views\Menu\_menu.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

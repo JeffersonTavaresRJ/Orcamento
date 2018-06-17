@@ -8,7 +8,10 @@ namespace Project.Entity
     {
 
         public int Id { get; set; }
-        public int IdMenu { get; set; }
+
+        //marcando com o ponto de interrogação para aceitar valor nulo..
+        public int? IdMenu { get; set; }
+
         public string Nome { get; set; }
         public string Path { get; set; }
         private string status = "A";

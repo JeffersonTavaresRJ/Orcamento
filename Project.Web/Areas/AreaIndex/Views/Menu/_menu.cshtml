@@ -1,0 +1,80 @@
+﻿@model ICollection<Project.Entity.Menu>
+
+<style type="text/css">
+
+    ul {
+        color: white;
+    }
+
+        ul li {
+            display: inline-block;
+        }
+
+        ul ul {
+            display: none;
+        }
+
+        ul li:hover {
+            background-color: slategray;
+        }
+</style>
+
+@helper MontarMenu(ICollection<Project.Entity.Menu> menus)
+{
+
+    foreach (var item in menus)
+    {
+        <li>
+            <a class="nav-link" href="@item.Path">
+                @item.Nome
+            </a>
+
+            @if (item.Menus != null)
+            {
+                <ul>
+                    @MontarMenu(item.Menus)
+                </ul>
+            }
+
+        </li>
+    }
+
+}
+<div class="container">
+    <ul>
+        @if (Model != null)
+        {
+            @:@MontarMenu(Model)
+        }
+    </ul>
+</div>
+
+
+@*@helper MontarMenu(ICollection<Project.Entity.Menu> menus)
+    {
+
+        foreach (var item in menus)
+        {
+            <li class="nav-item active">
+                <a class="nav-link" href="@item.Path">
+                    @item.Nome
+                </a>
+
+                @if (item.Menus != null)
+                {
+                    <ul class="menu nav navbar-nav">
+                        @MontarMenu(item.Menus)
+                    </ul>
+                }
+
+            </li>
+        }
+
+    }
+
+    <ul class="menu nav navbar-nav">
+        @if (Model != null)
+        {
+            @:@MontarMenu(Model)
+        }
+    </ul>*@

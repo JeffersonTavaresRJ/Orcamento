@@ -19,14 +19,10 @@ namespace Project.Web.Areas.AreaIndex.Controllers
             return View(lista);
         }
 
-        //[HttpPost]
-        //public JsonResult PopulaMenu(Perfil perfil)
-        //{
-        //    List<Menu> lista = new List<Menu>();
-        //    MenuPersistence mp = new MenuPersistence();
-
-        //    lista = mp.ObterItensMenus(perfil);
-        //    return Json(lista);
-        //}
+        [Authorize]
+        public ActionResult PopularMenu(ICollection<Menu> menus)
+        {
+            return PartialView("_menu", menus);
+        }
     }
 }

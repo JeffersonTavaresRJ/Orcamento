@@ -73,15 +73,16 @@ namespace Project.Web.Controllers
                         //Gravando o cookie no navegador..
                         Response.Cookies.Add(cookie);
 
-                        //gravando o objeto Usuario em sessão..
+                        //gravando o objeto Usuario, seus perfis e menus em sessão..
                         Session.Add("Usuario", u);
 
                         //gravando os itens de menu..
-                        Session.Add("Menu", u.Perfil.Menus);
+                      //  Session.Add("Menu", u.Perfil.Menus.Where(m=>m.IdMenu.Equals(null)).ToList());
 
 
                         return RedirectToAction("Consulta", "Lancamento",
                             new { area = "AreaIndex" });
+
                     }
 
                     ViewBag.Mensagem = "Usuário/Senha Inválido";
