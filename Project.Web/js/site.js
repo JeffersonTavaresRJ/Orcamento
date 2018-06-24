@@ -11,7 +11,7 @@
 function PopulaPerfil() {
     $.ajax({
         type: "POST",
-        url: "/Usuario/ListaPerfis",
+        url: "/Perfil/ListarPerfil",
         success: function (dados) {
 
             var option = '<option value=-1>Selecione o Perfil</option>';

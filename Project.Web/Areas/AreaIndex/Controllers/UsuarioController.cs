@@ -16,7 +16,7 @@ namespace Project.Web.Areas.AreaIndex.Controllers
     {
         string mensagem = null;
 
-        public ActionResult ConsultaFiltro()
+        public ActionResult ManutencaoUsuario()
         {
 
             return View();
@@ -195,24 +195,6 @@ namespace Project.Web.Areas.AreaIndex.Controllers
             }
 
             return Json(new { msg = mensagem });
-        }
-
-        [HttpPost]
-        public JsonResult ListaPerfis()
-        {
-            PerfilPersistence pp = new PerfilPersistence();
-
-            List<PerfilViewModelConsulta> lista = new List<PerfilViewModelConsulta>();
-
-            foreach (var item in pp.ListarTodos().ToList())
-            {
-                PerfilViewModelConsulta p = new PerfilViewModelConsulta();
-                p.Id = item.Id;
-                p.Descricao = item.Descricao;
-                lista.Add(p);
-            }
-
-            return Json(lista);
         }
 
         [HttpPost]

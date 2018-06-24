@@ -23,7 +23,8 @@
     //chamando o modal de exclusão..
     function del(id) {
 
-        $('#modalMensagemConfirmId').html("Deseja excluir o usuário "+ id + "?");
+        $('#spanConfirmMensagem').html("Deseja excluir o usuário <strong>" + id + "</strong>?");
+
         $('#modalConfirmMensagem').modal({
             backdrop: 'static',
             keyboard: false

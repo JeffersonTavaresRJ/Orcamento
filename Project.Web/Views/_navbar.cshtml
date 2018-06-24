@@ -1,34 +1,31 @@
-﻿<nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+﻿<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="#">
-            <strong>Conta Fácil</strong>
-        </a>
-        @using Project.Entity
-        @{
-            Usuario u = (Usuario)Session["Usuario"];
-        }
-        @if (u != null)
-        {
-            <div class="btn-group" role="group">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Navegação">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="#"><strong>Conta Fácil</strong></a>
+        <div class="collapse navbar-collapse" id="navbarMenu">
+            @using Project.Entity
+            @{
+                Usuario u = (Usuario)Session["Usuario"];
+            }
+            @if (u != null)
+            {
+                @Html.Action("PopularMenu", "Menu", new { @menus = u.Perfil.Menus.Where(m => m.IdMenu == null).ToList() })
 
-                <button id="btnPesquisar" style="display:none" type="button" class="btn btn-lg btn-dark">
-                    <i class="fa fa-search"></i>
-                </button>
+                <div class="btn-group" role="group">
 
-                <button id="btnNovo" type="button" style="display:none" class="btn btn-lg btn-dark">
-                    <i class="fa fa-plus-square"></i>
-                </button>
+                    <button id="btnPesquisar" style="display:none" type="button" class="btn btn-lg btn-dark">
+                        <i class="fa fa-search"></i>
+                    </button>
 
-                <button type="button" class="btn btn-lg btn-dark" data-toggle="collapse" data-target="#linksMenu">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-            </div>
-        }
+                    <button id="btnNovo" type="button" style="display:none" class="btn btn-lg btn-dark">
+                        <i class="fa fa-plus-square"></i>
+                    </button>
+                </div>
+
+            }
+        </div>
     </div>
 </nav>
-<nav id="linksMenu" class="navbar-dark bg-dark collapse navbar-collapse">
-    @if (u != null)
-    {
-        @Html.Action("PopularMenu", "Menu", new { @menus = u.Perfil.Menus.Where(m => m.IdMenu == null).ToList() })
-    }
-</nav>
+

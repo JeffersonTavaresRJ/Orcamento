@@ -1172,8 +1172,8 @@
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="Areas\AreaIndex\Views\web.config" />
-    <Content Include="Areas\AreaIndex\Views\Lancamento\Consulta.cshtml" />
-    <Content Include="Areas\AreaIndex\Views\Usuario\ConsultaFiltro.cshtml" />
+    <Content Include="Areas\AreaIndex\Views\Lancamento\ManutencaoLancamento.cshtml" />
+    <Content Include="Areas\AreaIndex\Views\Usuario\ManutencaoUsuario.cshtml" />
     <Content Include="Content\images\Sorting icons.psd" />
     <Content Include="Content\datatables.extensions\TableTools\images\psd\printer.psd" />
     <Content Include="Content\datatables.extensions\TableTools\images\psd\file_types.psd" />
@@ -1181,8 +1181,10 @@
     <Content Include="Content\datatables.extensions\TableTools\images\psd\collection.psd" />
     <Content Include="Content\datatables.extensions\Responsive\css\dataTables.responsive.scss" />
     <Content Include="Areas\AreaIndex\Views\Usuario\Edicao.cshtml" />
-    <Content Include="Areas\AreaIndex\Views\Menu\ConsultaFiltro.cshtml" />
+    <Content Include="Areas\AreaIndex\Views\Transacao\ManutencaoTransacao.cshtml" />
     <Content Include="Views\_navbar.cshtml" />
+    <Content Include="Areas\AreaIndex\Views\Perfil\Inclusao.cshtml" />
+    <Content Include="Areas\AreaIndex\Views\Index\Index.cshtml" />
     <None Include="js\jquery-3.0.0-vsdoc.js" />
     <Content Include="js\jquery-3.0.0.js" />
     <Content Include="js\jquery-3.0.0.min.js" />
@@ -1241,8 +1243,11 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\AreaIndex\AreaIndexAreaRegistration.cs" />
+    <Compile Include="Areas\AreaIndex\Controllers\IndexController.cs" />
     <Compile Include="Areas\AreaIndex\Controllers\LancamentoController.cs" />
     <Compile Include="Areas\AreaIndex\Controllers\MenuController.cs" />
+    <Compile Include="Areas\AreaIndex\Controllers\PerfilController.cs" />
+    <Compile Include="Areas\AreaIndex\Controllers\TransacaoController.cs" />
     <Compile Include="Areas\AreaIndex\Controllers\UsuarioController.cs" />
     <Compile Include="Areas\AreaIndex\Models\PerfilViewModelConsulta.cs" />
     <Compile Include="Areas\AreaIndex\Models\UsuarioViewModelConsulta.cs" />
@@ -1287,7 +1292,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\AreaIndex\Views\Perfil\" />
     <Folder Include="js\Areas\AreaIndex\Lancamento\" />
     <Folder Include="js\Areas\AreaIndex\Permissoes\" />
   </ItemGroup>

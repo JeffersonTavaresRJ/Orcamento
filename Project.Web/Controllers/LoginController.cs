@@ -80,7 +80,7 @@ namespace Project.Web.Controllers
                       //  Session.Add("Menu", u.Perfil.Menus.Where(m=>m.IdMenu.Equals(null)).ToList());
 
 
-                        return RedirectToAction("Consulta", "Lancamento",
+                        return RedirectToAction("Index", "Index",
                             new { area = "AreaIndex" });
 
                     }

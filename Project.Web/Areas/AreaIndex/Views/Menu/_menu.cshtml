@@ -1,80 +1,101 @@
 ﻿@model ICollection<Project.Entity.Menu>
 
 <style type="text/css">
-
-    ul {
-        color: white;
+    .dropdown-submenu {
+        position: relative;
     }
 
-        ul li {
-            display: inline-block;
+        .dropdown-submenu a::after {
+            transform: rotate(-90deg);
+            position: absolute;
+            right: 6px;
+            top: .8em;
         }
 
-        ul ul {
-            display: none;
-        }
-
-        ul li:hover {
-            background-color: slategray;
+        .dropdown-submenu .dropdown-menu {
+            top: 0;
+            left: 100%;
+            margin-left: .1rem;
+            margin-right: .1rem;
         }
 </style>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.dropdown-menu a.dropdown-toggle').on('click', function (e) {
+            if (!$(this).next().hasClass('show')) {
+                $(this).parents('.dropdown-menu').first().find('.show').removeClass("show");
+            }
+            var $subMenu = $(this).next(".dropdown-menu");
+            $subMenu.toggleClass('show');
+
+
+            $(this).parents('li.nav-item.dropdown.show').on('hidden.bs.dropdown', function (e) {
+                $('.dropdown-submenu .show').removeClass("show");
+            });
+
+            return false;
+        });
+    });
+</script>
 
 @helper MontarMenu(ICollection<Project.Entity.Menu> menus)
 {
 
     foreach (var item in menus)
     {
-        <li>
-            <a class="nav-link" href="@item.Path">
-                @item.Nome
-            </a>
 
-            @if (item.Menus != null)
+        if (item.Menus == null && item.IdMenu == null)
+        {
+            <!--Item de menu simples-->
+            <li class="nav-item active">
+                <a class="nav-link" href="@item.Path"> @item.Nome <span class="sr-only">(current)</span></a>
+            </li>
+        }
+        else
+        {
+
+            if (item.Menus != null && item.IdMenu == null)
             {
-                <ul>
-                    @MontarMenu(item.Menus)
-                </ul>
-            }
+                <!--DropDown Principal-->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="@item.Id" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        @item.Nome
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="@item.Id">
+                        @MontarMenu(item.Menus)
+                    </ul>
+                </li>
 
-        </li>
+            }
+            else
+            {
+                <!--Sub-menus-->
+                if (item.Menus == null)
+                {
+                    <!--Item de um dropdown SEM submenu-->
+                    <li><a class="dropdown-item" href="@item.Path">@item.Nome</a></li>
+                }
+                else
+                {
+                    <!--Item de um dropdown COM submenu-->
+                    <li class="dropdown-submenu">
+                        <a class="dropdown-item dropdown-toggle" href="#">@item.Nome</a>
+                        <ul class="dropdown-menu">
+                            @MontarMenu(item.Menus)
+                        </ul>
+                    </li>
+                }
+
+            }
+        }
+
     }
 
 }
-<div class="container">
-    <ul>
-        @if (Model != null)
-        {
-            @:@MontarMenu(Model)
-        }
-    </ul>
-</div>
-
-
-@*@helper MontarMenu(ICollection<Project.Entity.Menu> menus)
+<!--ul Principal, só para colocar os itens de menu, que serão escondidos quando a página encolher-->
+<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+    @if (Model != null)
     {
-
-        foreach (var item in menus)
-        {
-            <li class="nav-item active">
-                <a class="nav-link" href="@item.Path">
-                    @item.Nome
-                </a>
-
-                @if (item.Menus != null)
-                {
-                    <ul class="menu nav navbar-nav">
-                        @MontarMenu(item.Menus)
-                    </ul>
-                }
-
-            </li>
-        }
-
+        @:@MontarMenu(Model)
     }
-
-    <ul class="menu nav navbar-nav">
-        @if (Model != null)
-        {
-            @:@MontarMenu(Model)
-        }
-    </ul>*@
+</ul>

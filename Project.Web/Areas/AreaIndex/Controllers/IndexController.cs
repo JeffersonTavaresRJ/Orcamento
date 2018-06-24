@@ -6,11 +6,10 @@ using System.Web.Mvc;
 
 namespace Project.Web.Areas.AreaIndex.Controllers
 {
-    [Authorize]
-    public class LancamentoController : Controller
+    public class IndexController : Controller
     {
-        // GET: AreaIndex/Lancamento
-        public ActionResult ManutencaoLancamento()
+        // GET: AreaIndex/Index
+        public ActionResult Index()
         {
             return View();
         }
