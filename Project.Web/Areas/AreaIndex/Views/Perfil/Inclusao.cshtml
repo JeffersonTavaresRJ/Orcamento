@@ -1,1 +1,35 @@
-﻿
+﻿@model Project.Web.Areas.AreaIndex.Models.PerfilViewModelInclusao
+@{
+    Layout = "~/Views/_modalCrud.cshtml";
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnSalvar").click(function () {
+
+            var model = {
+                Descricao: $("#Descricao").val()
+            }
+            $.ajax({
+                type: "POST",
+                url: "/Perfil/Incluir",
+                data: model,
+                success: function (result) {
+                    PopulaPerfil();
+                },
+                error: function (e) {
+                    exibirAlert("Erro: " + e.status);
+                }
+            });
+        });
+    });
+</script>
+
+<div class="form-group">
+        @Html.LabelFor(model => model.Descricao)
+
+        @Html.TextBoxFor(model => model.Descricao, new { @class = "form-control", @placehoder = "Informe um novo Perfil" })
+        <span style="color:red">
+            @Html.ValidationMessageFor(model => model.Descricao)
+        </span>
+</div>

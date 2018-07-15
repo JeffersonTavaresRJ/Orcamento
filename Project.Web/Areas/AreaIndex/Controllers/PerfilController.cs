@@ -5,11 +5,41 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Project.Entity;
 
 namespace Project.Web.Areas.AreaIndex.Controllers
 {
     public class PerfilController : Controller
     {
+
+        public ActionResult Inclusao()
+        {
+            ViewBag.Titulo = "Incluir Perfil";
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult Incluir(PerfilViewModelInclusao model)
+        {
+                try
+                {
+                    PerfilPersistence pp = new PerfilPersistence();
+                    Perfil p = new Perfil();
+
+                    p.Descricao = model.Descricao;
+                    p.Menus = new List<Menu>();
+
+                    pp.Inserir(p);
+                }
+                catch (Exception ex)
+                {
+                    Json(ex.Message);
+                }
+
+            return Json("");
+        }
+
+
         [HttpPost]
         public JsonResult ListarPerfil()
         {

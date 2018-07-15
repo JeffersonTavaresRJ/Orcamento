@@ -48,7 +48,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UtilComboBox\Combobox.cs" />
     <Compile Include="UtilString\Criptografia.cs" />
-    <Compile Include="UtilTables\Table.cs" />
     <Compile Include="UtilValidator\Validator.cs" />
   </ItemGroup>
   <ItemGroup>

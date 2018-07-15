@@ -1183,8 +1183,8 @@
     <Content Include="Areas\AreaIndex\Views\Usuario\Edicao.cshtml" />
     <Content Include="Areas\AreaIndex\Views\Transacao\ManutencaoTransacao.cshtml" />
     <Content Include="Views\_navbar.cshtml" />
-    <Content Include="Areas\AreaIndex\Views\Perfil\Inclusao.cshtml" />
     <Content Include="Areas\AreaIndex\Views\Index\Index.cshtml" />
+    <Content Include="Areas\AreaIndex\Views\Perfil\Inclusao.cshtml" />
     <None Include="js\jquery-3.0.0-vsdoc.js" />
     <Content Include="js\jquery-3.0.0.js" />
     <Content Include="js\jquery-3.0.0.min.js" />
@@ -1250,6 +1250,7 @@
     <Compile Include="Areas\AreaIndex\Controllers\TransacaoController.cs" />
     <Compile Include="Areas\AreaIndex\Controllers\UsuarioController.cs" />
     <Compile Include="Areas\AreaIndex\Models\PerfilViewModelConsulta.cs" />
+    <Compile Include="Areas\AreaIndex\Models\PerfilViewModelInclusao.cs" />
     <Compile Include="Areas\AreaIndex\Models\UsuarioViewModelConsulta.cs" />
     <Compile Include="Areas\AreaIndex\Models\UsuarioViewModelEdicao .cs" />
     <Compile Include="Areas\AreaIndex\Models\UsuarioViewModelFiltro.cs" />
@@ -1284,6 +1285,7 @@
     <Content Include="Views\Login\RedefinirSenha.cshtml" />
     <Content Include="Views\Login\MensagemRedefinirSenha.cshtml" />
     <Content Include="Areas\AreaIndex\Views\Menu\_menu.cshtml" />
+    <Content Include="Views\_modalCrud.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

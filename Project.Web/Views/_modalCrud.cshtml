@@ -1,0 +1,18 @@
+﻿<div class="modal-dialog">
+    <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@ViewBag.Titulo</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @RenderBody()
+            </div>
+            <div class="modal-footer">
+                <input id="btnSalvar" type="button" value="Salvar" class="btn btn-outline-dark" />
+                <input type="button" value="Cancelar" class="btn btn-outline-dark" data-dismiss="modal" />
+            </div>        
+    </div>
+</div>
