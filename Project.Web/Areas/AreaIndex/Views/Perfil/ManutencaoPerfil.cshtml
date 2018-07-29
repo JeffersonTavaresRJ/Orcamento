@@ -1,0 +1,42 @@
+﻿
+@{
+    ViewBag.Title = "ManutencaoPerfil";
+    Layout = "~/Views/_layout.cshtml";
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#btnNovo").show();
+        $("#btnPesquisar").show();
+
+        PopulaPerfil();
+
+        $("#btnNovo").click(function () {
+            $("#modal").load("@Url.Action("Inclusao", "Perfil")", function () {
+                $("#modal").modal({ backdrop:"static"});
+            })
+        })
+    });
+
+</script>
+
+<h5>Perfil</h5>
+<hr />
+
+<div class="row">
+    <div class="col-3">
+        <label>Perfil:</label>
+    </div>
+</div>
+<div class="row">
+    <div class="col-3">
+        <select id="cmbPerfil" class="form-control"></select>
+    </div>
+</div>
+
+
+
+<div id="modal" class="modal" role="dialog">
+
+</div>
+

@@ -12,6 +12,11 @@ namespace Project.Web.Areas.AreaIndex.Controllers
     public class PerfilController : Controller
     {
 
+        public ActionResult ManutencaoPerfil()
+        {
+            return View();
+        }
+
         public ActionResult Inclusao()
         {
             ViewBag.Titulo = "Incluir Perfil";

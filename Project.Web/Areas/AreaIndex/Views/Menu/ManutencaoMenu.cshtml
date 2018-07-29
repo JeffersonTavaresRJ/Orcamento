@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Project.Web.Areas.AreaIndex.Models.MenuViewModelConsulta>
+
+<style type="text/css">
+    thead {
+        width: calc(100% - 17px);
+    }
+
+    tbody {
+        height: 260px;
+        overflow-y: scroll;
+        width: 100%;
+    }
+
+    .c1 {
+        width: 0%;
+    }
+
+    .c2 {
+        width: 80%;
+    }
+
+    .c3 {
+        width: 20%;
+    }
+
+
+    thead, tbody, tr, td, th {
+        display: block;
+    }
+
+    td, th {
+        float: left;
+    }
+</style>
+
+<table class="table table-borderless">
+    <thead>
+        <tr class="bg-primary">
+            <th scope="col" class="c1" style="display:none">@Html.DisplayNameFor(model => model.Id)</th>
+            <th scope="col" class="c1" style="display:none">@Html.DisplayNameFor(model => model.IdMenu)</th>
+            <th scope="col" class="c2">@Html.DisplayNameFor(model => model.Nome)</th>
+            <th scope="col" class="c3" style="text-align:center">@Html.DisplayNameFor(model => model.Selecao)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="bg-success">
+                <td scope="row" class="c1" style="display:none">@Html.DisplayFor(modelItem => item.Id)</td>
+                <td scope="row" class="c1" style="display:none">@Html.DisplayFor(modelItem => item.IdMenu)</td>
+                <td scope="row" class="c2">@Html.DisplayFor(modelItem => item.Nome)</td>
+                <td scope="row" class="c3" style="text-align:center">@Html.CheckBoxFor(modelItem => item.Selecao)</td>
+            </tr>
+        }
+    </tbody>
+</table>

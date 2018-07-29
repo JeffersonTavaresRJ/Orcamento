@@ -26,10 +26,12 @@
 </script>
 
 <div class="form-group">
-        @Html.LabelFor(model => model.Descricao)
+    @Html.LabelFor(model => model.Descricao)
 
-        @Html.TextBoxFor(model => model.Descricao, new { @class = "form-control", @placehoder = "Informe um novo Perfil" })
-        <span style="color:red">
-            @Html.ValidationMessageFor(model => model.Descricao)
-        </span>
+    @Html.TextBoxFor(model => model.Descricao, new { @class = "form-control", @placehoder = "Informe um novo Perfil" })
+    <span style="color:red">
+        @Html.ValidationMessageFor(model => model.Descricao)
+    </span>
+    <br />
+    @{Html.RenderAction("ManutencaoMenu", "Menu");}
 </div>
