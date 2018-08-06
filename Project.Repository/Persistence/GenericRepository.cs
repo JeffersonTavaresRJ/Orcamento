@@ -10,9 +10,9 @@ namespace Project.Repository.Persistence
     {
         protected DataContextOrcamento _conn { get; set; }
 
-        public GenericRepository()
+        public GenericRepository(bool lazyLoadingEnabled)
         {
-            _conn = new DataContextOrcamento();
+            _conn = new DataContextOrcamento(lazyLoadingEnabled);
         }
 
 

@@ -9,6 +9,7 @@ using Project.Entity;
 
 namespace Project.Web.Areas.AreaIndex.Controllers
 {
+    [Authorize]
     public class PerfilController : Controller
     {
 
@@ -28,7 +29,7 @@ namespace Project.Web.Areas.AreaIndex.Controllers
         {
                 try
                 {
-                    PerfilPersistence pp = new PerfilPersistence();
+                    PerfilPersistence pp = new PerfilPersistence(false);
                     Perfil p = new Perfil();
 
                     p.Descricao = model.Descricao;
@@ -48,7 +49,7 @@ namespace Project.Web.Areas.AreaIndex.Controllers
         [HttpPost]
         public JsonResult ListarPerfil()
         {
-            PerfilPersistence pp = new PerfilPersistence();
+            PerfilPersistence pp = new PerfilPersistence(false);
 
             List<PerfilViewModelConsulta> lista = new List<PerfilViewModelConsulta>();
 

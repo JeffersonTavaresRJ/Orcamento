@@ -12,6 +12,7 @@ using Project.Utility.UtilString;
 
 namespace Project.Web.Areas.AreaIndex.Controllers
 {
+    [Authorize]
     public class UsuarioController : Controller
     {
         string mensagem = null;
@@ -24,7 +25,7 @@ namespace Project.Web.Areas.AreaIndex.Controllers
 
         public ActionResult Inclusao()
         {
-            PerfilPersistence pp = new PerfilPersistence();
+            PerfilPersistence pp = new PerfilPersistence(false);
             ViewBag.ListaPerfis = new SelectList(pp.ListarTodos().ToList(), "Id", "Descricao");
             return View();
         }
@@ -32,7 +33,7 @@ namespace Project.Web.Areas.AreaIndex.Controllers
         public ActionResult Edicao(string id)
         {
 
-            UsuarioPersistence up = new UsuarioPersistence();
+            UsuarioPersistence up = new UsuarioPersistence(false);
             UsuarioViewModelEdicao model = new UsuarioViewModelEdicao();
 
             var usuario = up.ObterPorId(id);
@@ -40,7 +41,7 @@ namespace Project.Web.Areas.AreaIndex.Controllers
             model.Nome = usuario.Nome;
             model.Id_Perfil = usuario.IdPerfil;
 
-            PerfilPersistence pp = new PerfilPersistence();
+            PerfilPersistence pp = new PerfilPersistence(false);
             ViewBag.ListaPerfis = new SelectList(pp.ListarTodos().ToList(), "Id", "Descricao");
 
             return View(model);
@@ -56,7 +57,7 @@ namespace Project.Web.Areas.AreaIndex.Controllers
             string sStatus = Request.Params["sStatus"].ToString();
 
 
-            UsuarioPersistence up = new UsuarioPersistence();
+            UsuarioPersistence up = new UsuarioPersistence(false);
             IEnumerable<Usuario> totalUsuarios = up.ListarTodos();
             IList<Usuario> filtroUsuarios = totalUsuarios.ToList<Usuario>();
 
@@ -113,7 +114,7 @@ namespace Project.Web.Areas.AreaIndex.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    UsuarioPersistence up = new UsuarioPersistence();
+                    UsuarioPersistence up = new UsuarioPersistence(false);
 
                     if (up.LoginExistente(usuarioModel.Id_Usuario) > 0)
                     {
@@ -151,7 +152,7 @@ namespace Project.Web.Areas.AreaIndex.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    UsuarioPersistence up = new UsuarioPersistence();
+                    UsuarioPersistence up = new UsuarioPersistence(false);
                     Usuario u = up.ObterPorId(usuarioModel.Id_Usuario);
 
                     u.Nome = usuarioModel.Nome;
@@ -182,7 +183,7 @@ namespace Project.Web.Areas.AreaIndex.Controllers
 
             try
             {
-                    UsuarioPersistence up = new UsuarioPersistence();
+                    UsuarioPersistence up = new UsuarioPersistence(false);
                     Usuario u = up.ObterPorId(id);
 
                     up.Excluir(u);

@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace Project.Web.Areas.AreaIndex.Controllers
 {
+    [Authorize]
     public class IndexController : Controller
     {
         // GET: AreaIndex/Index

@@ -10,11 +10,11 @@ namespace Project.Repository.Configurations
     {
         //Regra 2) Construtor que envie para o DbContext a connectionstring 
 
-        public DataContextOrcamento()
+        public DataContextOrcamento(bool lazyLoadingEnabled)
                : base(ConfigurationManager.ConnectionStrings["OrcamentoLocal"].ConnectionString)
         {
             Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
-            Configuration.LazyLoadingEnabled = false;
+            Configuration.LazyLoadingEnabled = lazyLoadingEnabled;
         }
 
         //Regra 3) Sobrescrever o método OnModelCreating        

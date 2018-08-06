@@ -7,6 +7,12 @@ namespace Project.Repository.Persistence
 {
     public class UsuarioPersistence : GenericRepository<Usuario>
     {
+        public UsuarioPersistence(bool lazyLoadingEnabled) : base(lazyLoadingEnabled)
+        {
+
+        }
+
+
         public Usuario ObterLoginSenha(string _login, string _senha)
         {
 
