@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using Project.Entity;
 
 namespace Project.Web.Areas.AreaIndex.Models
 {
@@ -15,6 +12,6 @@ namespace Project.Web.Areas.AreaIndex.Models
         [Display(Name ="Item de Menu")]
         public string Nome { get; set; }
         [Display(Name = "Selecionar")]
-        public bool Selecao{ get; set; }
+        public bool Checked{ get; set; }
     }
 }

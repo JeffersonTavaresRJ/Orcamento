@@ -1,12 +1,37 @@
 ﻿@model Project.Web.Areas.AreaIndex.Models.PerfilViewModelInclusao
 @{
-    Layout = "~/Views/_modalCrud.cshtml";
+    Layout = "~/Views/_modalCrud-Lg.cshtml";
 }
 
 <script type="text/javascript">
     $(document).ready(function () {
+
+        $("#tabela").DataTable({
+            "bLengthChange": false, /*tornar invisível combo para visualizar a quantidade de registros */
+            "bFilter": false, /*tornar invisível o campo de busca do resultado da tabela */
+            "order": [[2, "asc"]],
+            "columnDefs":
+                [{
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false,
+                    "orderable": false
+                },
+                {
+                    "targets": [1],
+                    "visible": false,
+                    "searchable": false,
+                    "orderable": false
+                }]
+        });
+
         $("#btnSalvar").click(function () {
 
+            console.log('teste');
+
+            $("#tabela tr ").each(function (e, i) {
+                console.log($(e));
+            });
             var model = {
                 Descricao: $("#Descricao").val()
             }
@@ -33,5 +58,25 @@
         @Html.ValidationMessageFor(model => model.Descricao)
     </span>
     <br />
-    @{Html.RenderAction("ManutencaoMenu", "Menu");}
+    <table id="tabela" class="display" style="width:100%" data-page-length='5'>
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">IdMenu</th>
+                <th scope="col">Item de Menu</th>
+                <th scope="col" style="text-align:center">Selecionar</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Menus)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(m => item.Id)</td>
+                    <td>@Html.DisplayFor(m => item.IdMenu)</td>
+                    <td>@Html.DisplayFor(m => item.Nome)</td>
+                    <td style="text-align:center">@Html.CheckBoxFor(m => item.Checked, new { @class = "check", @id = "chk_" + item.Id })</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>

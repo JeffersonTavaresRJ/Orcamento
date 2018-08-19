@@ -53,6 +53,15 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Project.Entity\Project.Entity.csproj">
+      <Project>{627a64a2-830f-40a4-b259-c413076c6b3b}</Project>
+      <Name>Project.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Project.Repository\Project.Repository.csproj">
+      <Project>{54a31312-57d5-4671-8f2a-8f899d8c43c6}</Project>
+      <Name>Project.Repository</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

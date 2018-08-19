@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
+using Project.Repository.Persistence;
 
 namespace Project.Utility.UtilValidator
 {
@@ -15,6 +16,20 @@ namespace Project.Utility.UtilValidator
 
                 return !(senha.ToUpper().Equals("ABC123")) || rgx.Matches(senha).Count > 0;
 
+            }
+            return false;
+        }
+    }
+
+    public class DescricaoPerfilValidador : ValidationAttribute
+    {
+        public override bool IsValid(object value)
+        {
+            if( value is string)
+            {
+                PerfilPersistence pp = new PerfilPersistence();
+                var p = pp.ObterPorDescricao(value.ToString());
+                return  p.Count == 0;
             }
             return false;
         }

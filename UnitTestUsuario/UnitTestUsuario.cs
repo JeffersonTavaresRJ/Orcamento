@@ -21,7 +21,7 @@ namespace UnitTestUsuario
                 u.Nome = "Jefferson Silva Tavares";
                 u.Senha = Criptografia.EncriptarSenha("ABC123");
 
-                UsuarioPersistence up = new UsuarioPersistence(false);
+                UsuarioPersistence up = new UsuarioPersistence();
 
                 int i = up.Inserir(u);
 
@@ -35,7 +35,7 @@ namespace UnitTestUsuario
         public void Alterar()
         {
 
-            UsuarioPersistence up = new UsuarioPersistence(false);
+            UsuarioPersistence up = new UsuarioPersistence();
 
             Usuario u = up.ObterLoginSenha("B9GY", Criptografia.EncriptarSenha("ABC123"));
 
@@ -52,7 +52,7 @@ namespace UnitTestUsuario
         public void Excluir()
         {
 
-            UsuarioPersistence up = new UsuarioPersistence(false);
+            UsuarioPersistence up = new UsuarioPersistence();
 
             Usuario u = up.ObterPorId("B9GY");
 
@@ -67,7 +67,7 @@ namespace UnitTestUsuario
         public void ListarTodos()
         {
 
-            UsuarioPersistence up = new UsuarioPersistence(false);
+            UsuarioPersistence up = new UsuarioPersistence();
 
             List<Usuario> lista = up.ListarTodos();
 
@@ -81,7 +81,7 @@ namespace UnitTestUsuario
         public void ObterLoginSenha()
         {
 
-            UsuarioPersistence up = new UsuarioPersistence(false);
+            UsuarioPersistence up = new UsuarioPersistence();
 
             Usuario u = up.ObterLoginSenha("B9GY", Criptografia.EncriptarSenha("ABC123"));
 
@@ -94,7 +94,7 @@ namespace UnitTestUsuario
         public void LoginExistente()
         {
 
-            UsuarioPersistence up = new UsuarioPersistence(false);
+            UsuarioPersistence up = new UsuarioPersistence();
 
             int i = up.LoginExistente("B9GY");
 

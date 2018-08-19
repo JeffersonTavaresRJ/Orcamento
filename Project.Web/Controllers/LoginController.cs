@@ -31,7 +31,7 @@ namespace Project.Web.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    UsuarioPersistence up = new UsuarioPersistence(false);
+                    UsuarioPersistence up = new UsuarioPersistence();
                     Usuario u = new Usuario();
                     u = up.ObterLoginSenha(loginModel.Login,
                                         Criptografia.EncriptarSenha(loginModel.Senha));
@@ -106,7 +106,7 @@ namespace Project.Web.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    UsuarioPersistence up = new UsuarioPersistence(false);
+                    UsuarioPersistence up = new UsuarioPersistence();
                     Usuario u = up.ObterPorId(model.Login);
                     u.Senha = Criptografia.EncriptarSenha(model.Senha);
                     up.Atualizar(u);

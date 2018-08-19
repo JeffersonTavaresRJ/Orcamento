@@ -1186,7 +1186,6 @@
     <Content Include="Areas\AreaIndex\Views\Index\Index.cshtml" />
     <Content Include="Areas\AreaIndex\Views\Perfil\Inclusao.cshtml" />
     <Content Include="Areas\AreaIndex\Views\Perfil\ManutencaoPerfil.cshtml" />
-    <Content Include="Areas\AreaIndex\Views\Menu\ManutencaoMenu.cshtml" />
     <None Include="js\jquery-3.0.0-vsdoc.js" />
     <Content Include="js\jquery-3.0.0.js" />
     <Content Include="js\jquery-3.0.0.min.js" />
@@ -1290,6 +1289,7 @@
     <Content Include="Areas\AreaIndex\Views\Menu\_menu.cshtml" />
     <Content Include="Views\_modalCrud.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="Views\_modalCrud-Lg.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

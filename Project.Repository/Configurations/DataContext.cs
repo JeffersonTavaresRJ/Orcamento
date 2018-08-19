@@ -10,11 +10,19 @@ namespace Project.Repository.Configurations
     {
         //Regra 2) Construtor que envie para o DbContext a connectionstring 
 
-        public DataContextOrcamento(bool lazyLoadingEnabled)
+        public DataContextOrcamento()
                : base(ConfigurationManager.ConnectionStrings["OrcamentoLocal"].ConnectionString)
         {
             Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
-            Configuration.LazyLoadingEnabled = lazyLoadingEnabled;
+
+            /*foi utulizado para tratar erro na utilização do linq to sql
+              para carregar os valores dos objetos filhos de cada classe.
+              Foi solucionado implementando "join" nas consultas linq 
+              (ex.: classe MenuPersistence, método ListarMenu() :*/
+
+            //Configuration.LazyLoadingEnabled = lazyLoadingEnabled;
+
+            Configuration.LazyLoadingEnabled = false;
         }
 
         //Regra 3) Sobrescrever o método OnModelCreating        
@@ -25,7 +33,7 @@ namespace Project.Repository.Configurations
             modelBuilder.Configurations.Add(new UsuarioMap());
             modelBuilder.Configurations.Add(new PerfilMap());
             modelBuilder.Configurations.Add(new MenuMap());
-            //modelBuilder.Configurations.Add(new PerfilMenuMap());
+         //   modelBuilder.Configurations.Add(new PerfilMenuMap());
         }
 
         //Regra 4) Declarar um DbSet para cada entidade..         
@@ -34,6 +42,6 @@ namespace Project.Repository.Configurations
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<Perfil> Perfil { get; set; }
         public DbSet<Menu> Menu { get; set; }
-        //public DbSet<PerfilMenu> PerfilMenu { get; set; }
+       // public DbSet<PerfilMenu> PerfilMenu { get; set; }
     }
 }

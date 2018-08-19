@@ -7,18 +7,13 @@ namespace Project.Repository.Persistence
 {
     public class UsuarioPersistence : GenericRepository<Usuario>
     {
-        public UsuarioPersistence(bool lazyLoadingEnabled) : base(lazyLoadingEnabled)
-        {
-
-        }
-
 
         public Usuario ObterLoginSenha(string _login, string _senha)
         {
 
             return _conn.Usuario
-                              .Include(u=>u.Perfil.Menus)
-                              //.Include(p=>p.Perfil.Menus)
+                              .Include(u => u.Perfil)
+                              .Include(p => p.Perfil.Menus)
                               .FirstOrDefault(u => u.IdUsuario.Equals(_login) &&
                                                    u.Senha.Equals(_senha));
 

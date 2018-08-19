@@ -10,11 +10,10 @@ namespace Project.Repository.Persistence
     {
         protected DataContextOrcamento _conn { get; set; }
 
-        public GenericRepository(bool lazyLoadingEnabled)
+        public GenericRepository()
         {
-            _conn = new DataContextOrcamento(lazyLoadingEnabled);
-        }
-
+            _conn = new DataContextOrcamento();
+        }    
 
         public virtual int Inserir(TEntity obj)
         {

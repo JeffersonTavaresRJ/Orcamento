@@ -10,10 +10,6 @@ namespace Project.Repository.Persistence
 {
     public class MenuPersistence : GenericRepository<Menu>
     {
-        public MenuPersistence(bool lazyLoadingEnabled) : base(lazyLoadingEnabled)
-        {
-
-        }
 
 
         public Menu ObterMenuPorId(int? _Id)
@@ -28,7 +24,8 @@ namespace Project.Repository.Persistence
             try
             {
                 lista = (from m in _conn.Menu
-                        select m).ToList();
+                         join sm in _conn.Menu on m.Id equals sm.IdMenu                       
+                         select sm).ToList();
 
 
                 lista = BuscarMenu(lista, busca);
