@@ -1,82 +1,62 @@
-﻿@model Project.Web.Areas.AreaIndex.Models.PerfilViewModelInclusao
+﻿@model Project.Web.Areas.AreaIndex.Models.PerfilMenuViewModelInclusao
 @{
-    Layout = "~/Views/_modalCrud-Lg.cshtml";
+    Layout = "~/Views/_modalCrud-LG.cshtml";
 }
 
 <script type="text/javascript">
     $(document).ready(function () {
-
-        $("#tabela").DataTable({
+        $('#tabela').DataTable({
             "bLengthChange": false, /*tornar invisível combo para visualizar a quantidade de registros */
-            "bFilter": false, /*tornar invisível o campo de busca do resultado da tabela */
-            "order": [[2, "asc"]],
-            "columnDefs":
-                [{
-                    "targets": [0],
-                    "visible": false,
-                    "searchable": false,
-                    "orderable": false
-                },
-                {
-                    "targets": [1],
-                    "visible": false,
-                    "searchable": false,
-                    "orderable": false
-                }]
+            "bFilter": false /*tornar invisível o campo de busca do resultado da tabela */
         });
-
-        $("#btnSalvar").click(function () {
-
-            console.log('teste');
-
-            $("#tabela tr ").each(function (e, i) {
-                console.log($(e));
-            });
-            var model = {
-                Descricao: $("#Descricao").val()
-            }
-            $.ajax({
-                type: "POST",
-                url: "/Perfil/Incluir",
-                data: model,
-                success: function (result) {
-                    PopulaPerfil();
-                },
-                error: function (e) {
-                    exibirAlert("Erro: " + e.status);
-                }
-            });
-        });
-    });
+    })
 </script>
 
-<div class="form-group">
-    @Html.LabelFor(model => model.Descricao)
 
-    @Html.TextBoxFor(model => model.Descricao, new { @class = "form-control", @placehoder = "Informe um novo Perfil" })
-    <span style="color:red">
-        @Html.ValidationMessageFor(model => model.Descricao)
-    </span>
-    <br />
-    <table id="tabela" class="display" style="width:100%" data-page-length='5'>
-        <thead>
-            <tr>
-                <th scope="col">Id</th>
-                <th scope="col">IdMenu</th>
-                <th scope="col">Item de Menu</th>
-                <th scope="col" style="text-align:center">Selecionar</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Menus)
-            {
+@using (Html.BeginForm("Inclusao", "Perfil", FormMethod.Post))
+{
+    <div class="modal-body">
+
+        @Html.ValidationSummary(true)
+
+        @Html.LabelFor(model => model.NomePerfil)
+        @Html.TextBoxFor(model => model.NomePerfil, new { @class = "form-control", @placehoder = "Informe um novo Perfil" })
+        <span style="color:red">
+            @Html.ValidationMessageFor(model => model.NomePerfil)
+        </span>
+        <br />
+
+        <table id="tabela" class="display" style="width:100%" data-page-length='4'>
+            <thead>
                 <tr>
-                    <td>@Html.DisplayFor(m => item.Id)</td>
-                    <td>@Html.DisplayFor(m => item.IdMenu)</td>
-                    <td>@Html.DisplayFor(m => item.Nome)</td>
-                    <td style="text-align:center">@Html.CheckBoxFor(m => item.Checked, new { @class = "check", @id = "chk_" + item.Id })</td>
+                    <th style="display:none">Id</th>
+                    <th style="display:none">IdMenu</th>
+                    <th>Item de Menu</th>
+                    <th style="text-align:center">Selecionar</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-</div>
+            </thead>
+
+            <tbody>
+                @for (int i = 0; i < Model.Menus.Count(); i++)
+                {
+                    <tr>
+                        <td style="display:none">
+                            @*@Html.DisplayFor(model => model.Menus[i].Id)*@
+                            @Html.HiddenFor(model => model.Menus[i].Id)
+                        </td>
+                        <td style="display:none">
+                            @*@Html.DisplayFor(model => model.Menus[i].IdMenu)*@
+                            @Html.HiddenFor(model => model.Menus[i].IdMenu)
+                        </td>
+                        <td>@Html.DisplayFor(model => model.Menus[i].Descricao)</td>
+                        <td style="text-align:center">@Html.CheckBoxFor(model => model.Menus[i].Selecionado)</td>
+                    </tr>
+                }
+            </tbody>  
+        </table>
+    </div>
+    <div class="modal-footer">
+        <input id="btnSalvar" type="submit" value="Salvar" class="btn btn-outline-dark" />
+        <input type="button" value="Cancelar" class="btn btn-outline-dark" data-dismiss="modal" />
+    </div>
+}

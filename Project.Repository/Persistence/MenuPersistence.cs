@@ -104,5 +104,42 @@ namespace Project.Repository.Persistence
             return menu;
         }
 
+
+        public List<Menu> ListarTableMenus()
+        {
+            //MenuPersistence mp = new MenuPersistence();
+            List<Menu> lista = new List<Menu>();
+
+            IEnumerable<Menu> menus = this.ListarMenu(new Menu() { IdMenu = 0 }, "nome");
+
+            foreach (var item in menus)
+            {
+                if (item.IdMenu > 0)
+                {
+                    Menu menu = new Menu();
+                    menu.Id = item.Id;
+                    menu.IdMenu = item.IdMenu;
+
+                    string descricaoMenu = null;
+                    int? IdMenuAnt = item.IdMenu;
+
+                    while (IdMenuAnt > 0)
+                    {
+                        if (descricaoMenu == null)
+                        {
+                            descricaoMenu = item.Nome;
+                        }
+                        Menu m = this.ObterMenuPorId(IdMenuAnt);
+                        descricaoMenu = m.Nome + " >> " + descricaoMenu;
+                        IdMenuAnt = m.IdMenu;
+                    }
+                    menu.Nome = descricaoMenu;
+                    lista.Add(menu);
+                }
+            }
+
+            return lista;
+        }
+
     }
 }

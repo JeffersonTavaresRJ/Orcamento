@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Usuário";
 }
+<!--Para que a validação do MVC funcione, foi necessário colocar a referência deste script-->
 <script src="~/js/jquery.validate.unobtrusive.min.js"></script>
 
 <script type="text/javascript">
@@ -86,24 +87,24 @@
                     </div>
 
                     @*<div class="form-group mb-1 col-6">
-                        @Html.LabelFor(model => model.Senha)
+                            @Html.LabelFor(model => model.Senha)
 
-                        @Html.PasswordFor(model => model.Senha, new { @class = "form-control", @placehoder = "Informe a senha" })
-                        <span style="color:red">
-                            @Html.ValidationMessageFor(model => model.Senha)
-                        </span>
+                            @Html.PasswordFor(model => model.Senha, new { @class = "form-control", @placehoder = "Informe a senha" })
+                            <span style="color:red">
+                                @Html.ValidationMessageFor(model => model.Senha)
+                            </span>
 
-                    </div>
+                        </div>
 
-                    <div class="form-group mb-1 col-6">
-                        @Html.LabelFor(model => model.ConfirmaSenha)
+                        <div class="form-group mb-1 col-6">
+                            @Html.LabelFor(model => model.ConfirmaSenha)
 
-                        @Html.PasswordFor(model => model.ConfirmaSenha, new { @class = "form-control", @placehoder = "Confirme a senha" })
-                        <span style="color:red">
-                            @Html.ValidationMessageFor(model => model.ConfirmaSenha)
-                        </span>
+                            @Html.PasswordFor(model => model.ConfirmaSenha, new { @class = "form-control", @placehoder = "Confirme a senha" })
+                            <span style="color:red">
+                                @Html.ValidationMessageFor(model => model.ConfirmaSenha)
+                            </span>
 
-                    </div>*@
+                        </div>*@
                 </div>
 
             </div>

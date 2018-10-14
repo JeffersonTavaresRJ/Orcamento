@@ -25,13 +25,14 @@ namespace Project.Utility.UtilValidator
     {
         public override bool IsValid(object value)
         {
-            if( value is string)
+            if (value is string)
             {
                 PerfilPersistence pp = new PerfilPersistence();
                 var p = pp.ObterPorDescricao(value.ToString());
-                return  p.Count == 0;
+                return p.Count == 0;
             }
             return false;
         }
     }
+
 }

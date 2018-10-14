@@ -3,7 +3,6 @@ using Project.Web.Areas.AreaIndex.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Project.Entity;
 
@@ -21,13 +20,13 @@ namespace Project.Web.Areas.AreaIndex.Controllers
         public ActionResult Inclusao()
         {
             ViewBag.Titulo = "Incluir Perfil";
-            PerfilViewModelInclusao perfis = new PerfilViewModelInclusao();
-            perfis.Menus = ListarMenus();
-            return View(perfis);
+            PerfilMenuViewModelInclusao perfil = new PerfilMenuViewModelInclusao();
+            ListarMenus(perfil);
+            return View(perfil);
         }
 
         [HttpPost]
-        public JsonResult Incluir(PerfilViewModelInclusao model)
+        public ActionResult Inclusao(PerfilMenuViewModelInclusao model)
         {
             if (ModelState.IsValid)
             {
@@ -35,31 +34,26 @@ namespace Project.Web.Areas.AreaIndex.Controllers
                 {
                     PerfilPersistence pp = new PerfilPersistence();
                     MenuPersistence mp = new MenuPersistence();
+
                     Perfil p = new Perfil();
-                    List<Menu> lista = new List<Menu>();
+                    p.Menus  = new List<Menu>();
 
-                    p.Descricao = model.Descricao;
-
-                    foreach (var item in model.Menus)
+                    p.Descricao = model.NomePerfil;
+                    foreach (int id in model.getSelectedIds())
                     {
-                        if (item.Checked)
-                        {
-                            Menu m = mp.ObterMenuPorId(item.Id);
-                            lista.Add(m);
-                        }
-
+                        Menu m = mp.ObterMenuPorId(id);
+                        p.Menus.Add(m);
                     }
 
-                    p.Menus = lista;
                     pp.Inserir(p);
                 }
                 catch (Exception ex)
                 {
                     Json(ex.Message);
                 }
-               
+
             }
-            return Json("");
+            return View(model);
         }
 
         [HttpPost]
@@ -80,10 +74,10 @@ namespace Project.Web.Areas.AreaIndex.Controllers
             return Json(lista);
         }
 
-        private List<MenuViewModelConsulta> ListarMenus()
+        private void ListarMenus(PerfilMenuViewModelInclusao model)
         {
             MenuPersistence mp = new MenuPersistence();
-            List<MenuViewModelConsulta> lista = new List<MenuViewModelConsulta>();
+            List<MenuViewModelSelecionaEdicao> lista = new List<MenuViewModelSelecionaEdicao>();
 
             IEnumerable<Menu> menus = mp.ListarMenu(new Menu() { IdMenu = 0 }, "nome");
 
@@ -91,29 +85,28 @@ namespace Project.Web.Areas.AreaIndex.Controllers
             {
                 if (item.IdMenu > 0)
                 {
-                    MenuViewModelConsulta menu = new MenuViewModelConsulta();
+                    MenuViewModelSelecionaEdicao menu = new MenuViewModelSelecionaEdicao();
                     menu.Id = item.Id;
                     menu.IdMenu = item.IdMenu;
 
-                    string nomeMenu = null;
+                    string descricaoMenu = null;
                     int? IdMenuAnt = item.IdMenu;
 
                     while (IdMenuAnt > 0)
                     {
-                        if (nomeMenu == null)
+                        if (descricaoMenu == null)
                         {
-                            nomeMenu = item.Nome;
+                            descricaoMenu = item.Nome;
                         }
                         Menu m = mp.ObterMenuPorId(IdMenuAnt);
-                        nomeMenu = m.Nome + " >> " + nomeMenu;
+                        descricaoMenu = m.Nome + " >> " + descricaoMenu;
                         IdMenuAnt = m.IdMenu;
                     }
-                    menu.Nome = nomeMenu;
-                    lista.Add(menu);
+                    menu.Descricao = descricaoMenu;
+                    menu.Selecionado = false;
+                    model.Menus.Add(menu);
                 }
             }
-
-            return lista;
         }
     }
 }

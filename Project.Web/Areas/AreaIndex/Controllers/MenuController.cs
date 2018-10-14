@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using Project.Entity;
 using Project.Repository.Persistence;
 using Project.Web.Areas.AreaIndex.Models;
+using System.Linq;
 
 namespace Project.Web.Areas.AreaIndex.Controllers
 {
@@ -10,12 +11,10 @@ namespace Project.Web.Areas.AreaIndex.Controllers
     public class MenuController : Controller
     {
 
-        [Authorize]
         public ActionResult PopularMenu(ICollection<Menu> menus)
         {
             return PartialView("_menu", menus);
         }
 
-        
     }
 }

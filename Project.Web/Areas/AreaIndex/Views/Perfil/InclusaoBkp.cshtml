@@ -1,0 +1,39 @@
+﻿@model Project.Web.Areas.AreaIndex.Models.PerfilMenuViewModelInclusao
+
+@{
+    Layout = "~/Views/_modalCrud-LG.cshtml";
+}
+
+@using (Html.BeginForm("Inclusao", "Perfil", FormMethod.Post))
+{
+
+    <table id="tabela" class="table" style="width:100%">
+        <tr>
+            <th>Id</th>
+            <th>IdMenu</th>
+            <th>Item de Menu</th>
+            <th style="text-align:center">Selecionar</th>
+        </tr>
+
+        @for (int i = 0; i < Model.Menus.Count(); i++)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(m => m.Menus[i].Id)
+                    @Html.HiddenFor(m => m.Menus[i].Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(m => m.Menus[i].IdMenu)
+                    @Html.HiddenFor(m => m.Menus[i].IdMenu)
+                </td>
+                <td>@Html.DisplayFor(m => m.Menus[i].Descricao)</td>
+                <td style="text-align:center">@Html.CheckBoxFor(m => m.Menus[i].Selecionado)</td>
+            </tr>
+        }
+
+
+    </table>
+
+    <input type="submit" value="Salvar" />
+}
+
