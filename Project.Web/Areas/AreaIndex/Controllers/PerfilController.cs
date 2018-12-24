@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Project.Entity;
+using PagedList;
 
 namespace Project.Web.Areas.AreaIndex.Controllers
 {
@@ -25,6 +26,28 @@ namespace Project.Web.Areas.AreaIndex.Controllers
             return View(perfil);
         }
 
+        public ActionResult InclusaoPagedList(int? pagina)
+        {
+            PerfilMenuViewModelInclusao model = new PerfilMenuViewModelInclusao();
+
+            MenuPersistence mp = new MenuPersistence();
+            List<MenuViewModelSelecionaEdicao> lista = new List<MenuViewModelSelecionaEdicao>();
+
+            int numeroPagina = pagina ?? 1;
+
+            foreach (var item in mp.ListarTableMenus())
+            {
+                MenuViewModelSelecionaEdicao menu = new MenuViewModelSelecionaEdicao();
+                menu.Id = item.Id;
+                menu.IdMenu = item.IdMenu;
+                menu.Descricao = item.Nome;
+                lista.Add(menu);
+            }
+
+          //  model.Menus = lista.ToPagedList(numeroPagina, 3);            
+            return View(model);
+        }
+
         [HttpPost]
         public ActionResult Inclusao(PerfilMenuViewModelInclusao model)
         {
@@ -36,7 +59,7 @@ namespace Project.Web.Areas.AreaIndex.Controllers
                     MenuPersistence mp = new MenuPersistence();
 
                     Perfil p = new Perfil();
-                    p.Menus  = new List<Menu>();
+                    p.Menus = new List<Menu>();
 
                     p.Descricao = model.NomePerfil;
                     foreach (int id in model.getSelectedIds())
@@ -107,6 +130,8 @@ namespace Project.Web.Areas.AreaIndex.Controllers
                     model.Menus.Add(menu);
                 }
             }
+
+
         }
     }
 }

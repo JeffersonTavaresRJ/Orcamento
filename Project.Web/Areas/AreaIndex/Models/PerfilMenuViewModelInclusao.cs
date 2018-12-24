@@ -1,9 +1,8 @@
-﻿using System;
+﻿using Project.Utility.UtilValidator;
 using System.Collections.Generic;
-using System.Linq;
 using System.ComponentModel.DataAnnotations;
-using Project.Utility.UtilValidator;
-using System.Web;
+using System.Linq;
+//using PagedList.Mvc;
 
 namespace Project.Web.Areas.AreaIndex.Models
 {
@@ -16,6 +15,7 @@ namespace Project.Web.Areas.AreaIndex.Models
         public string NomePerfil { get; set; }
 
        // [Required(ErrorMessage = "Um item de menu deve ser informado")]
+       // public PagedList.IPagedList<MenuViewModelSelecionaEdicao> Menus { get; set; }
         public List<MenuViewModelSelecionaEdicao> Menus { get; set; }
 
         public PerfilMenuViewModelInclusao()

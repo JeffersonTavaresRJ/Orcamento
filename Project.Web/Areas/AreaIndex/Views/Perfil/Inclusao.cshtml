@@ -5,11 +5,55 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#tabela').DataTable({
-            "bLengthChange": false, /*tornar invisível combo para visualizar a quantidade de registros */
+
+        var arr = [];
+
+        var table = $('#tabela').DataTable({
+            "bLengthChange": true, /*tornar invisível combo para visualizar a quantidade de registros */
             "bFilter": false /*tornar invisível o campo de busca do resultado da tabela */
         });
+
+        //função que é o parâmetro do método forEach() do array..
+        //function printElementos(elemento, indice, array) {
+        //    alert("a[" + indice + "]=" + elemento);
+        //}
+
+        $('#tabela tbody').on('click', 'tr', function () {
+            //pegando a célula da tabela que refere-se ao Id do menu..
+            //o input é o HiddenFor..
+            var x = $(this).find('td.identificador input');
+            //debugger;
+
+            $(this).toggleClass('selected');
+            var valor = $(x).val();
+
+            if ($(this).hasClass('selected')) {
+                //adicionando..
+                arr.push(valor);
+            } else {
+                //excluindo..
+                var indice = arr.indexOf(valor);
+                //a partir do índice, exclui 1 item (que é o que se deseja excluir)..
+                arr.splice(indice, 1);
+            }
+
+            // o método abaixo do array só aceita o parâmetro de um callBack(function)..
+             //arr.forEach(printElementos);
+
+        });
+
+        //function menusSelecionados() {
+        //    $('#tabela tbody tr').each(function () {
+        //        var checked = $('input[type=checkbox]').val();
+        //        if (checked == true) {
+        //            arr.push($('#Id').val());
+        //        }
+        //    });
+        //}
     })
+
+
+
 </script>
 
 
@@ -26,11 +70,9 @@
         </span>
         <br />
 
-        <table id="tabela" class="display" style="width:100%" data-page-length='4'>
+        <table id="tabela" class="display" style="width:100%">
             <thead>
                 <tr>
-                    <th style="display:none">Id</th>
-                    <th style="display:none">IdMenu</th>
                     <th>Item de Menu</th>
                     <th style="text-align:center">Selecionar</th>
                 </tr>
@@ -40,19 +82,16 @@
                 @for (int i = 0; i < Model.Menus.Count(); i++)
                 {
                     <tr>
-                        <td style="display:none">
-                            @*@Html.DisplayFor(model => model.Menus[i].Id)*@
+                        <td class="identificador">
                             @Html.HiddenFor(model => model.Menus[i].Id)
+                            @Html.DisplayFor(model => model.Menus[i].Descricao)
                         </td>
-                        <td style="display:none">
-                            @*@Html.DisplayFor(model => model.Menus[i].IdMenu)*@
-                            @Html.HiddenFor(model => model.Menus[i].IdMenu)
+                        <td style="text-align:center">
+                            @Html.CheckBoxFor(model => model.Menus[i].Selecionado)
                         </td>
-                        <td>@Html.DisplayFor(model => model.Menus[i].Descricao)</td>
-                        <td style="text-align:center">@Html.CheckBoxFor(model => model.Menus[i].Selecionado)</td>
                     </tr>
                 }
-            </tbody>  
+            </tbody>
         </table>
     </div>
     <div class="modal-footer">
