@@ -1259,11 +1259,10 @@
     <Compile Include="Areas\AreaIndex\Controllers\PerfilController.cs" />
     <Compile Include="Areas\AreaIndex\Controllers\TransacaoController.cs" />
     <Compile Include="Areas\AreaIndex\Controllers\UsuarioController.cs" />
-    <Compile Include="Areas\AreaIndex\Models\MenuViewModelConsulta.cs" />
-    <Compile Include="Areas\AreaIndex\Models\PerfilMenuViewModelInclusao.cs" />
+    <Compile Include="Areas\AreaIndex\Models\PerfilMenuViewModelConsulta.cs" />
     <Compile Include="Areas\AreaIndex\Models\MenuViewModelSelecionaEdicao.cs" />
+    <Compile Include="Areas\AreaIndex\Models\PerfilMenuViewModelInclusao.cs" />
     <Compile Include="Areas\AreaIndex\Models\PerfilViewModelConsulta.cs" />
-    <Compile Include="Areas\AreaIndex\Models\PerfilViewModelInclusao.cs" />
     <Compile Include="Areas\AreaIndex\Models\UsuarioViewModelConsulta.cs" />
     <Compile Include="Areas\AreaIndex\Models\UsuarioViewModelEdicao .cs" />
     <Compile Include="Areas\AreaIndex\Models\UsuarioViewModelFiltro.cs" />

@@ -21,62 +21,55 @@ namespace Project.Web.Areas.AreaIndex.Controllers
         public ActionResult Inclusao()
         {
             ViewBag.Titulo = "Incluir Perfil";
-            PerfilMenuViewModelInclusao perfil = new PerfilMenuViewModelInclusao();
-            ListarMenus(perfil);
-            return View(perfil);
-        }
-
-        public ActionResult InclusaoPagedList(int? pagina)
-        {
-            PerfilMenuViewModelInclusao model = new PerfilMenuViewModelInclusao();
-
-            MenuPersistence mp = new MenuPersistence();
-            List<MenuViewModelSelecionaEdicao> lista = new List<MenuViewModelSelecionaEdicao>();
-
-            int numeroPagina = pagina ?? 1;
-
-            foreach (var item in mp.ListarTableMenus())
-            {
-                MenuViewModelSelecionaEdicao menu = new MenuViewModelSelecionaEdicao();
-                menu.Id = item.Id;
-                menu.IdMenu = item.IdMenu;
-                menu.Descricao = item.Nome;
-                lista.Add(menu);
-            }
-
-          //  model.Menus = lista.ToPagedList(numeroPagina, 3);            
+            PerfilMenuViewModelConsulta model = new PerfilMenuViewModelConsulta();
+            ListarMenus(model);
             return View(model);
         }
+
 
         [HttpPost]
         public ActionResult Inclusao(PerfilMenuViewModelInclusao model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                try
+                if (model.NomePerfil == null)
                 {
-                    PerfilPersistence pp = new PerfilPersistence();
-                    MenuPersistence mp = new MenuPersistence();
-
-                    Perfil p = new Perfil();
-                    p.Menus = new List<Menu>();
-
-                    p.Descricao = model.NomePerfil;
-                    foreach (int id in model.getSelectedIds())
-                    {
-                        Menu m = mp.ObterMenuPorId(id);
-                        p.Menus.Add(m);
-                    }
-
-                    pp.Inserir(p);
-                }
-                catch (Exception ex)
-                {
-                    Json(ex.Message);
+                   throw new Exception("O nome do perfil deve ser informado");
                 }
 
+                if (model.IdMenus == null)
+                {
+                    throw new Exception("Pelo menos um item de menu deverá ser selecionado");
+                }
+
+                PerfilPersistence pp = new PerfilPersistence();
+
+                if (pp.ObterPorDescricao(model.NomePerfil).Count() > 0)
+                {
+                    throw new Exception("Este perfil já existe");
+                }
+
+                MenuPersistence mp = new MenuPersistence();
+                Perfil p = new Perfil();
+
+                p.Menus = new List<Menu>();
+
+                foreach (var item in model.IdMenus)
+                {
+                    Menu m = new Menu();
+                    m = mp.ObterMenuPorId(item);
+                    p.Menus.Add(m);
+                }
+
+                p.Descricao = model.NomePerfil;
+
+                pp.Inserir(p);
             }
-            return View(model);
+            catch (Exception ex)
+            {
+                return Json(ex.Message, JsonRequestBehavior.AllowGet);
+            }
+            return Json("Perfil cadastrado com sucesso", JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -97,7 +90,7 @@ namespace Project.Web.Areas.AreaIndex.Controllers
             return Json(lista);
         }
 
-        private void ListarMenus(PerfilMenuViewModelInclusao model)
+        private void ListarMenus(PerfilMenuViewModelConsulta model)
         {
             MenuPersistence mp = new MenuPersistence();
             List<MenuViewModelSelecionaEdicao> lista = new List<MenuViewModelSelecionaEdicao>();
@@ -110,8 +103,6 @@ namespace Project.Web.Areas.AreaIndex.Controllers
                 {
                     MenuViewModelSelecionaEdicao menu = new MenuViewModelSelecionaEdicao();
                     menu.Id = item.Id;
-                    menu.IdMenu = item.IdMenu;
-
                     string descricaoMenu = null;
                     int? IdMenuAnt = item.IdMenu;
 
@@ -126,7 +117,7 @@ namespace Project.Web.Areas.AreaIndex.Controllers
                         IdMenuAnt = m.IdMenu;
                     }
                     menu.Descricao = descricaoMenu;
-                    menu.Selecionado = false;
+
                     model.Menus.Add(menu);
                 }
             }
