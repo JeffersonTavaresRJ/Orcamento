@@ -34,12 +34,10 @@ namespace Project.Repository.Mapping
                 .HasMaxLength(1)
                 .IsRequired();
 
-
             //auto-relacionamento..
             HasMany(m => m.Menus)
                 .WithOptional()
                 .HasForeignKey(m=>m.IdMenu);
-
 
         }
     }

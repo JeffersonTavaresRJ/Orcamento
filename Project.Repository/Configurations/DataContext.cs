@@ -14,6 +14,7 @@ namespace Project.Repository.Configurations
                : base(ConfigurationManager.ConnectionStrings["OrcamentoLocal"].ConnectionString)
         {
             Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
+            
 
             /*foi utulizado para tratar erro na utilização do linq to sql
               para carregar os valores dos objetos filhos de cada classe.
@@ -29,11 +30,11 @@ namespace Project.Repository.Configurations
         //para configurar as entidades mapeadas no projeto.. 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);            
             modelBuilder.Configurations.Add(new UsuarioMap());
             modelBuilder.Configurations.Add(new PerfilMap());
             modelBuilder.Configurations.Add(new MenuMap());
-         //   modelBuilder.Configurations.Add(new PerfilMenuMap());
+            //modelBuilder.Configurations.Add(new PerfilMenuMap());
         }
 
         //Regra 4) Declarar um DbSet para cada entidade..         
@@ -42,6 +43,6 @@ namespace Project.Repository.Configurations
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<Perfil> Perfil { get; set; }
         public DbSet<Menu> Menu { get; set; }
-       // public DbSet<PerfilMenu> PerfilMenu { get; set; }
+        //public DbSet<PerfilMenu> PerfilMenu { get; set; }
     }
 }

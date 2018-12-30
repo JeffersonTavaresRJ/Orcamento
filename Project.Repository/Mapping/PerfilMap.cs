@@ -22,13 +22,14 @@ namespace Project.Repository.Mapping
 
             //muito para muitos.. 
             //o mapeamento pode ser feito em uma só classe
-            HasMany(Perfil => Perfil.Menus)
-                .WithMany(Menu => Menu.Perfis)
-                .Map(x => {
+            HasMany(p => p.Menus)
+                .WithMany(m=>m.Perfis)                
+                .Map(x =>
+                {
                     x.ToTable("Perfil_Menu");
                     x.MapLeftKey("IdPerfil");
                     x.MapRightKey("IdMenu");
-                    });
+                });
         }
     }
 }

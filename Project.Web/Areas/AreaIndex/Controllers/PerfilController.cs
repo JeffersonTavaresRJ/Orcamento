@@ -49,21 +49,19 @@ namespace Project.Web.Areas.AreaIndex.Controllers
                     throw new Exception("Este perfil já existe");
                 }
 
-                MenuPersistence mp = new MenuPersistence();
                 Perfil p = new Perfil();
-
-                p.Menus = new List<Menu>();
-
-                foreach (var item in model.IdMenus)
-                {
-                    Menu m = new Menu();
-                    m = mp.ObterMenuPorId(item);
-                    p.Menus.Add(m);
-                }
-
                 p.Descricao = model.NomePerfil;
 
-                pp.Inserir(p);
+                //MenuPersistence mp = new MenuPersistence();                
+                //List<Menu> lista = new List<Menu>();
+                //foreach (var item in model.IdMenus)
+                //{
+                //    lista.Add(mp.ObterMenuPorId(item));
+                //}
+
+                //para pegar o menu, deverá ser feito dentro do mesmo context..
+                //daí se passa o list de códigos do menu para pegar os objetos de cada menu através de um único context..
+                pp.InserirPerfilMenu(p, model.IdMenus );
             }
             catch (Exception ex)
             {

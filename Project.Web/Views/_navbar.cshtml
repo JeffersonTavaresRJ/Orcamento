@@ -11,7 +11,7 @@
             }
             @if (u != null)
             {
-                @Html.Action("PopularMenu", "Menu", new { @menus = u.Perfil.Menus.Where(m => m.IdMenu == null).ToList() })
+                @Html.Action("PopularMenu", "Menu", new { @menus = u.Perfil.Menus.Where(m=>m.IdMenu==null).ToList()})
 
                 <div class="btn-group" role="group">
 

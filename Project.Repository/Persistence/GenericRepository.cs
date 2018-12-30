@@ -8,11 +8,15 @@ namespace Project.Repository.Persistence
     public abstract class GenericRepository<TEntity>
         where TEntity : class
     {
-        protected DataContextOrcamento _conn { get; set; }
+        protected static DataContextOrcamento _conn { get; set; }
 
         public GenericRepository()
         {
-            _conn = new DataContextOrcamento();
+            if (_conn == null)
+            {
+                _conn = new DataContextOrcamento();
+            }
+            
         }    
 
         public virtual int Inserir(TEntity obj)

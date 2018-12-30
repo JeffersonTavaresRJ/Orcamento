@@ -15,5 +15,11 @@ namespace Project.Entity
         //mapeamento muito para muitos no entity framework..
         public virtual List<Usuario> Usuarios { get; set; }
         public virtual ICollection<Menu> Menus { get; set; }
+
+        public Perfil()
+        {
+            Menus = new List<Menu>();
+        }
+        
     }
 }
