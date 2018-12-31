@@ -26,20 +26,53 @@ namespace Project.Web.Areas.AreaIndex.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public JsonResult Consultar()
+        {
+            List<MenuPerfilViewModelConsulta> listaModel = new List<MenuPerfilViewModelConsulta>();
+            string sPerfil = Request.Params["sPerfil"].ToString();
+
+            if (!sPerfil.Trim().Equals("") && !sPerfil.Equals("-1") )
+            {
+                PerfilPersistence pp = new PerfilPersistence();
+                Perfil p = pp.ObterPorId(Convert.ToInt32(sPerfil));
+
+                MenuPersistence mp = new MenuPersistence();
+                List<Menu> listaMenu = mp.ListarTableMenus();
+
+                foreach (var item in listaMenu)
+                {
+                    MenuPerfilViewModelConsulta model = new MenuPerfilViewModelConsulta();
+                    model.IdPerfil = p.Id;
+                    model.IdMenu = item.Id;
+                    model.DescricaoMenu = item.Nome;
+                    model.Status = item.Status;
+
+                    if (pp.ObterMenus(p.Id).Where(x=>x.Id.Equals(item.Id)).Count()>0)
+                    {
+                        model.Selecionado = "checked";
+                    }
+                    listaModel.Add(model);
+                }
+            }
+
+            var Resultado = new
+            {
+                aaData = listaModel
+            };
+
+            return Json(Resultado, JsonRequestBehavior.AllowGet);
+
+        }
 
         [HttpPost]
-        public ActionResult Inclusao(PerfilMenuViewModelInclusao model)
+        public ActionResult Incluir(PerfilMenuViewModelInclusao model)
         {
             try
             {
                 if (model.NomePerfil == null)
                 {
-                   throw new Exception("O nome do perfil deve ser informado");
-                }
-
-                if (model.IdMenus == null)
-                {
-                    throw new Exception("Pelo menos um item de menu deverá ser selecionado");
+                    throw new Exception("O nome do perfil deve ser informado");
                 }
 
                 PerfilPersistence pp = new PerfilPersistence();
@@ -47,6 +80,11 @@ namespace Project.Web.Areas.AreaIndex.Controllers
                 if (pp.ObterPorDescricao(model.NomePerfil).Count() > 0)
                 {
                     throw new Exception("Este perfil já existe");
+                }
+
+                if (model.IdMenus == null)
+                {
+                    throw new Exception("Pelo menos um item de menu deverá ser selecionado");
                 }
 
                 Perfil p = new Perfil();
@@ -61,7 +99,7 @@ namespace Project.Web.Areas.AreaIndex.Controllers
 
                 //para pegar o menu, deverá ser feito dentro do mesmo context..
                 //daí se passa o list de códigos do menu para pegar os objetos de cada menu através de um único context..
-                pp.InserirPerfilMenu(p, model.IdMenus );
+                pp.InserirPerfilMenu(p, model.IdMenus);
             }
             catch (Exception ex)
             {
@@ -91,36 +129,20 @@ namespace Project.Web.Areas.AreaIndex.Controllers
         private void ListarMenus(PerfilMenuViewModelConsulta model)
         {
             MenuPersistence mp = new MenuPersistence();
-            List<MenuViewModelSelecionaEdicao> lista = new List<MenuViewModelSelecionaEdicao>();
+            List<Menu> listaMenu = mp.ListarTableMenus();
 
-            IEnumerable<Menu> menus = mp.ListarMenu(new Menu() { IdMenu = 0 }, "nome");
-
-            foreach (var item in menus)
+            foreach (var item in listaMenu)
             {
                 if (item.IdMenu > 0)
                 {
-                    MenuViewModelSelecionaEdicao menu = new MenuViewModelSelecionaEdicao();
-                    menu.Id = item.Id;
-                    string descricaoMenu = null;
-                    int? IdMenuAnt = item.IdMenu;
-
-                    while (IdMenuAnt > 0)
+                    MenuViewModelSelecionaEdicao menu = new MenuViewModelSelecionaEdicao()
                     {
-                        if (descricaoMenu == null)
-                        {
-                            descricaoMenu = item.Nome;
-                        }
-                        Menu m = mp.ObterMenuPorId(IdMenuAnt);
-                        descricaoMenu = m.Nome + " >> " + descricaoMenu;
-                        IdMenuAnt = m.IdMenu;
-                    }
-                    menu.Descricao = descricaoMenu;
-
+                        Id = item.Id,
+                        Descricao = item.Nome
+                    };
                     model.Menus.Add(menu);
                 }
             }
-
-
         }
     }
 }

@@ -1,15 +1,65 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "ManutencaoPerfil";
     Layout = "~/Views/_layout.cshtml";
 }
 
 <script type="text/javascript">
+
+    function exibirAlert(mensagem) {
+        $("#mensagem").html(mensagem);
+        $("#alert").show().fadeOut(8000);//exibe e depois esconde o alert..
+    }
+
     $(document).ready(function () {
         $("#btnNovo").show();
         $("#btnPesquisar").show();
 
         PopulaPerfil();
+        var idPerfil=-1;
+
+        var table = $('#tabela').DataTable({
+            "bProcessing": false,
+            "bServerSide": false,
+            "bLengthChange": false, /*tornar invisível combo para visualizar a quantidade de registros */
+            "bFilter": false, /*tornar invisível o campo de busca do resultado da tabela */
+            "ajax": {
+                type: "POST",
+                url: "/Perfil/Consultar",
+                datatype: "json",
+                data: function (d) {
+                    d.sPerfil = $("#cmbPerfil").val();
+                },
+                error: function (e) {
+                    exibirAlert("Erro: " + e.status);
+                }
+            },
+
+            /*colunas que são utilizadas na dataTable*/
+            "aoColumns": [
+                { "mData": "IdPerfil", "sName": "IdPerfil", "sTitle": "CodPerfil" },
+                { "mData": "IdMenu", "sName": "IdMenu", "sTitle": "CodMenu" },
+                { "mData": "DescricaoMenu", "sName": "DescricaoMenu", "sTitle": "Menu" },
+                { "mData": "Status", "sName": "Status", "sTitle": "Status" },
+                {
+                    "render": function (data, type, row) {
+                        return "<div style='text-align:center'><input type='checkbox' " + row.Selecionado + " ></div>";
+                    }
+                }
+            ],
+            "columnDefs":
+                [{
+                    "targets": [4],
+                    "visible": true,
+                    "searchable": false,
+                    "orderable": false
+                }]
+        });
+
+        $("#btnPesquisar").click(function () {
+            //atualiza a table para uma nova pesquisa..
+            table.ajax.reload();
+            $("#TabelaMenus").show();
+        })
 
         $("#btnNovo").click(function () {
             $("#modal").load("@Url.Action("Inclusao", "Perfil")", function () {
@@ -34,7 +84,33 @@
     </div>
 </div>
 
-<div id="modal" class="modal" role="dialog">
+<div id="TabelaMenus" class="row mt-3" style="display:none">
+    <div class="col-12">
+        <table id="tabela" class="display" style="width:100%" data-page-length='5'>
+            <thead>
+                <tr>
+                    <th scope="col">Código do Perfil</th>
+                    <th scope="col">Código do Menu</th>
+                    <th scope="col">Descrição do Menu</th>
+                    <th scope="col">Status</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody id="bodyTable"></tbody>
+        </table>
+    </div>
+</div>
 
+<div id="alert" class="row mt-2" style="display:none">
+
+    <div class="col-12">
+        <div class="alert alert-primary" role="alert">
+            <span id="mensagem"></span>
+        </div>
+    </div>
+
+</div>
+
+<div id="modal" class="modal" role="dialog">
 </div>
 

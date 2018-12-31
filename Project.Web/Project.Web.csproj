@@ -1191,10 +1191,8 @@
     <Content Include="Areas\AreaIndex\Views\Transacao\ManutencaoTransacao.cshtml" />
     <Content Include="Views\_navbar.cshtml" />
     <Content Include="Areas\AreaIndex\Views\Index\Index.cshtml" />
-    <Content Include="Areas\AreaIndex\Views\Perfil\InclusaoBkp.cshtml" />
     <Content Include="Areas\AreaIndex\Views\Perfil\ManutencaoPerfil.cshtml" />
     <Content Include="Areas\AreaIndex\Views\Perfil\Inclusao.cshtml" />
-    <Content Include="Areas\AreaIndex\Views\Perfil\InclusaoPagedList.cshtml" />
     <None Include="js\jquery-3.0.0-vsdoc.js" />
     <Content Include="js\jquery-3.0.0.js" />
     <Content Include="js\jquery-3.0.0.min.js" />
@@ -1259,6 +1257,7 @@
     <Compile Include="Areas\AreaIndex\Controllers\PerfilController.cs" />
     <Compile Include="Areas\AreaIndex\Controllers\TransacaoController.cs" />
     <Compile Include="Areas\AreaIndex\Controllers\UsuarioController.cs" />
+    <Compile Include="Areas\AreaIndex\Models\MenuPerfilViewModelConsulta.cs" />
     <Compile Include="Areas\AreaIndex\Models\PerfilMenuViewModelConsulta.cs" />
     <Compile Include="Areas\AreaIndex\Models\MenuViewModelSelecionaEdicao.cs" />
     <Compile Include="Areas\AreaIndex\Models\PerfilMenuViewModelInclusao.cs" />

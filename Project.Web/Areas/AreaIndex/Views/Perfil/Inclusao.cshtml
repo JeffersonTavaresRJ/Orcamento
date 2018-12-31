@@ -27,19 +27,22 @@
                 if (isChecked) {
                     //adicionando..
                     arr.push(value);
+                    $(this).addClass('selected');
                 } else {
                     //excluindo..
                     var indice = arr.indexOf(value);
                     //a partir do índice, exclui 1 item (que é o que se deseja excluir)..
                     arr.splice(indice, 1);
-                }
-
-                $(this).toggleClass('selected');
+                    $(this).removeClass('selected');
+                }                 
 
                 // o método abaixo do array só aceita o parâmetro de um callBack(function)..
                 //arr.forEach(printElementos);
-
             });
+
+            //$('#itemCheckBox').on('click', function () {
+            //    $('#tabela tbody tr').toggleClass('selected');
+            //});
 
             $('#btnSalvar').on('click', function () {
                 var model = {
@@ -49,7 +52,7 @@
                 //debugger;
                 $.ajax({
                     type: "POST",
-                    url: "/Perfil/Inclusao",
+                    url: "/Perfil/Incluir",
                     data: model,
                     success: function (msg) {
                         $('#mensagem').html(msg);
