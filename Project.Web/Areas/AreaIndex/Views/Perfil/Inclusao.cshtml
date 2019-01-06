@@ -4,6 +4,12 @@
     }
 
     <script type="text/javascript">
+
+        function exibirAlertInclusao(mensagem) {
+            $("#spMensagemInclusaoPerfil").html(mensagem);
+            $("#alertInclusaoPerfil").show().fadeOut(8000);//exibe e depois esconde o alert..
+        }
+
         $(document).ready(function () {
 
             var arr = [];
@@ -55,10 +61,11 @@
                     url: "/Perfil/Incluir",
                     data: model,
                     success: function (msg) {
-                        $('#mensagem').html(msg);
+                        exibirAlertInclusao(msg);
+                        PopulaPerfil();
                     },
                     error: function (e) {
-                        $('#mensagem').html('Erro: ' + e.status);
+                        exibirAlertInclusao('Erro: ' + e.status);
                     }
                 });
             });
@@ -71,8 +78,6 @@
 
     <form id="formCadastro">
         <div class="modal-body">
-
-
 
             @Html.LabelFor(model => model.NomePerfil)
             @Html.TextBoxFor(model => model.NomePerfil, new { @class = "form-control", @placehoder = "Informe um novo Perfil" })
@@ -101,7 +106,13 @@
                     }
                 </tbody>
             </table>
-            <span id="mensagem" class="text-danger"></span>
+            <div id="alertInclusaoPerfil" class="row mt-2" style="display:none">
+                <div class="col-12">
+                    <div class="alert alert-primary" role="alert">
+                        <span id="spMensagemInclusaoPerfil"></span>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="modal-footer">
             <input type="button" id="btnSalvar" value="Salvar" class="btn btn-outline-dark" />

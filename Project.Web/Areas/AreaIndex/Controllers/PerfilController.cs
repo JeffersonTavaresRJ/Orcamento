@@ -27,6 +27,52 @@ namespace Project.Web.Areas.AreaIndex.Controllers
         }
 
         [HttpPost]
+        public JsonResult Excluir(int idPerfil)
+        {
+            string mensagem;
+            int cod = 0;
+
+            try
+            {
+                if (idPerfil > 0)
+                {
+                    PerfilPersistence pp = new PerfilPersistence();
+
+                    int qtdeUsuarios = pp.ObterUsuarios(idPerfil).Count();
+
+                    if (qtdeUsuarios > 0)
+                    {
+                        mensagem = "Existe(m) " + qtdeUsuarios + " usuário(s) associados ao perfil a ser excluído. Operação cancelada";
+                    }
+                    else
+                    {
+                        Perfil p = pp.ObterPorId(idPerfil);
+                        List<Menu> listaMenu = pp.ObterMenus(idPerfil).ToList();
+
+                        foreach (Menu menu in listaMenu)
+                        {
+                            pp.RemoverMenu(p, menu);
+                        }
+
+                        pp.Excluir(p);
+                        cod = 1;
+                        mensagem = "Perfil " + p.Descricao + " excluído com sucesso.";
+                    }
+
+                }
+                else
+                {
+                    mensagem = "O perfil deve ser selecionado";
+                }
+            }
+            catch (Exception e)
+            {
+                mensagem = "Erro:  " + e.Message.ToString();
+            }
+            return Json(new { cod, msg = mensagem }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
         public JsonResult Consultar()
         {
             List<MenuPerfilViewModelConsulta> listaModel = new List<MenuPerfilViewModelConsulta>();

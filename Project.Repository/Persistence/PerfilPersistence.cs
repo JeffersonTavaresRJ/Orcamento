@@ -47,5 +47,12 @@ namespace Project.Repository.Persistence
 
         }
 
+        public List<Usuario> ObterUsuarios(int idPerfil)
+        {
+            Perfil perfil = _conn.Perfil.Include(p => p.Usuarios)
+                                        .FirstOrDefault(p => p.Id.Equals(idPerfil));
+            return perfil.Usuarios;
+        }
+
     }
 }
