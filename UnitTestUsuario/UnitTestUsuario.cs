@@ -16,19 +16,19 @@ namespace UnitTestUsuario
         public void Adicionar()
         {
 
-                Usuario u = new Usuario();
-                u.IdUsuario = "B9GY";
-                u.Nome = "Jefferson Silva Tavares";
-                u.Senha = Criptografia.EncriptarSenha("ABC123");
+            Usuario u = new Usuario();
+            u.IdUsuario = "B9GY";
+            u.Nome = "Jefferson Silva Tavares";
+            u.Senha = Criptografia.EncriptarSenha("ABC123");
 
-                UsuarioPersistence up = new UsuarioPersistence();
+            UsuarioPersistence up = new UsuarioPersistence();
 
-                int i = up.Inserir(u);
+            int i = up.Inserir(u);
 
-                Assert.IsTrue(i > 0);
-                Assert.IsFalse(i == 0);
+            Assert.IsTrue(i > 0);
+            Assert.IsFalse(i == 0);
 
-            
+
         }
 
         [TestMethod]
@@ -71,7 +71,7 @@ namespace UnitTestUsuario
 
             List<Usuario> lista = up.ListarTodos();
 
-            Assert.IsTrue(lista.Count ==5);
+            Assert.IsTrue(lista.Count == 5);
             Assert.IsFalse(lista.Count == 0);
 
 
@@ -96,14 +96,27 @@ namespace UnitTestUsuario
 
             UsuarioPersistence up = new UsuarioPersistence();
 
-            int i = up.LoginExistente("B9GY");
+            int i = up.LoginExistente("TSRV");
 
-            Assert.IsTrue(i==1);
-
+            Assert.IsTrue(i == 1);
 
         }
 
+        [TestMethod]
+        public void RemoverMenu()
+        {
 
+            PerfilPersistence pp = new PerfilPersistence();
+            Perfil p = pp.ObterPorId(6);
+
+            MenuPersistence mp = new MenuPersistence();
+            Menu m = mp.ObterPorId(13);
+
+            int i = pp.RemoverMenu(p, m);
+
+            Assert.IsTrue(i == 1);
+
+        }
 
     }
 }

@@ -30,39 +30,45 @@ namespace Project.Web.Areas.AreaIndex.Controllers
         public JsonResult Consultar()
         {
             List<MenuPerfilViewModelConsulta> listaModel = new List<MenuPerfilViewModelConsulta>();
-            string sPerfil = Request.Params["sPerfil"].ToString();
-
-            if (!sPerfil.Trim().Equals("") && !sPerfil.Equals("-1") )
+            try
             {
-                PerfilPersistence pp = new PerfilPersistence();
-                Perfil p = pp.ObterPorId(Convert.ToInt32(sPerfil));
+                string sPerfil = Request.Params["sPerfil"].ToString();
 
-                MenuPersistence mp = new MenuPersistence();
-                List<Menu> listaMenu = mp.ListarTableMenus();
-
-                foreach (var item in listaMenu)
+                if (!sPerfil.Trim().Equals("") && !sPerfil.Equals("-1"))
                 {
-                    MenuPerfilViewModelConsulta model = new MenuPerfilViewModelConsulta();
-                    model.IdPerfil = p.Id;
-                    model.IdMenu = item.Id;
-                    model.DescricaoMenu = item.Nome;
-                    model.Status = item.Status;
+                    PerfilPersistence pp = new PerfilPersistence();
+                    Perfil p = pp.ObterPorId(Convert.ToInt32(sPerfil));
 
-                    if (pp.ObterMenus(p.Id).Where(x=>x.Id.Equals(item.Id)).Count()>0)
+                    MenuPersistence mp = new MenuPersistence();
+                    List<Menu> listaMenu = mp.ListarTableMenus();
+
+                    foreach (var item in listaMenu)
                     {
-                        model.Selecionado = "checked";
+                        MenuPerfilViewModelConsulta model = new MenuPerfilViewModelConsulta();
+                        model.IdPerfil = p.Id;
+                        model.IdMenu = item.Id;
+                        model.DescricaoMenu = item.Nome;
+                        model.Status = item.Status;
+
+                        if (pp.ObterMenus(p.Id).Where(x => x.Id.Equals(item.Id)).Count() > 0)
+                        {
+                            model.Selecionado = "checked";
+                        }
+                        listaModel.Add(model);
                     }
-                    listaModel.Add(model);
                 }
+
+                var Resultado = new
+                {
+                    aaData = listaModel
+                };
+                return Json(Resultado, JsonRequestBehavior.AllowGet);
             }
-
-            var Resultado = new
+            catch (Exception e)
             {
-                aaData = listaModel
-            };
 
-            return Json(Resultado, JsonRequestBehavior.AllowGet);
-
+                return Json(e.Message, JsonRequestBehavior.AllowGet);
+            }
         }
 
         [HttpPost]
@@ -111,37 +117,70 @@ namespace Project.Web.Areas.AreaIndex.Controllers
         [HttpPost]
         public JsonResult ListarPerfil()
         {
-            PerfilPersistence pp = new PerfilPersistence();
-
             List<PerfilViewModelConsulta> lista = new List<PerfilViewModelConsulta>();
-
-            foreach (var item in pp.ListarTodos().ToList())
+            try
             {
-                PerfilViewModelConsulta p = new PerfilViewModelConsulta();
-                p.Id = item.Id;
-                p.Descricao = item.Descricao;
-                lista.Add(p);
+                PerfilPersistence pp = new PerfilPersistence();
+                foreach (var item in pp.ListarTodos().ToList())
+                {
+                    PerfilViewModelConsulta p = new PerfilViewModelConsulta();
+                    p.Id = item.Id;
+                    p.Descricao = item.Descricao;
+                    lista.Add(p);
+                }
             }
+            catch (Exception e)
+            {
+                return Json(e.Message, JsonRequestBehavior.AllowGet);
+            }
+            return Json(lista, JsonRequestBehavior.AllowGet);
+        }
 
-            return Json(lista);
+        [HttpPost]
+        public JsonResult RemoverMenu(int idPerfil, int idMenu)
+        {
+            try
+            {
+                PerfilPersistence pp = new PerfilPersistence();
+                Perfil p = pp.ObterPorId(idPerfil);
+
+                MenuPersistence mp = new MenuPersistence();
+                Menu m = mp.ObterPorId(idMenu);
+
+                pp.RemoverMenu(p, m);
+
+            }
+            catch (Exception e)
+            {
+                return Json(e.Message);
+            }
+            return Json("Item de menu removido com sucesso", JsonRequestBehavior.AllowGet);
         }
 
         private void ListarMenus(PerfilMenuViewModelConsulta model)
         {
-            MenuPersistence mp = new MenuPersistence();
-            List<Menu> listaMenu = mp.ListarTableMenus();
-
-            foreach (var item in listaMenu)
+            try
             {
-                if (item.IdMenu > 0)
+                MenuPersistence mp = new MenuPersistence();
+                List<Menu> listaMenu = mp.ListarTableMenus();
+
+                foreach (var item in listaMenu)
                 {
-                    MenuViewModelSelecionaEdicao menu = new MenuViewModelSelecionaEdicao()
+                    if (item.IdMenu > 0)
                     {
-                        Id = item.Id,
-                        Descricao = item.Nome
-                    };
-                    model.Menus.Add(menu);
+                        MenuViewModelSelecionaEdicao menu = new MenuViewModelSelecionaEdicao()
+                        {
+                            Id = item.Id,
+                            Descricao = item.Nome
+                        };
+                        model.Menus.Add(menu);
+                    }
                 }
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(e.Message);
             }
         }
     }

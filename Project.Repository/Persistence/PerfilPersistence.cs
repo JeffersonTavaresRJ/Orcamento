@@ -24,15 +24,12 @@ namespace Project.Repository.Persistence
             return _conn.SaveChanges();
         }
 
-        public int ExcluirPerfilMenu(Perfil p, Menu m)
+        public int RemoverMenu(Perfil p, Menu m)
         {
-            PerfilMenuPersistence pmp = new PerfilMenuPersistence();
-
-            PerfilMenu pm = new PerfilMenu();
-            pm.Perfil = p;
-            pm.Menu = m;
-
-            return pmp.Excluir(pm);
+            Perfil perfil = _conn.Perfil.Include(x => x.Menus)
+                                        .FirstOrDefault(x => x.Id.Equals(p.Id));
+            perfil.Menus.Remove(m);
+            return _conn.SaveChanges();
         }
 
         public List<Perfil> ObterPorDescricao(string nome)
@@ -49,5 +46,6 @@ namespace Project.Repository.Persistence
             return perfil.Menus;
 
         }
+
     }
 }
