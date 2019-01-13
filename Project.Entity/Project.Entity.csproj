@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Enuns\Extension.cs" />
     <Compile Include="Enuns\Status.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="Perfil.cs" />

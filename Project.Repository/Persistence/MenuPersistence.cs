@@ -102,9 +102,7 @@ namespace Project.Repository.Persistence
 
         public List<Menu> ListarTableMenus()
         {
-            //MenuPersistence mp = new MenuPersistence();
             List<Menu> lista = new List<Menu>();
-
             IEnumerable<Menu> menus = this.ListarMenu(new Menu() { IdMenu = 0 }, "nome");
 
             foreach (var item in menus)
@@ -114,6 +112,7 @@ namespace Project.Repository.Persistence
                     Menu menu = new Menu();
                     menu.Id = item.Id;
                     menu.IdMenu = item.IdMenu;
+                    menu.Status = item.Status;
 
                     string descricaoMenu = null;
                     int? IdMenuAnt = item.IdMenu;

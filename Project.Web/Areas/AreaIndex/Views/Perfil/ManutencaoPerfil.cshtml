@@ -34,14 +34,15 @@
                     data: "idPerfil=" + id,
                     success: function (result) {
                         //o .msg é identificado como um atributo do retorno da execução..
-                        //somente com sucesso deverá recarregar a página..
+                        //somente com sucesso repopulará o perfil e esconde a table carregada..
                         if (result.cod == 1) {
                             setTimeout(exibirAlert(result.msg, 10000), 10000);
-                            window.location.reload();
+                            PopulaPerfil();
+                            $("#TabelaMenus").hide();
                         } else {
                             exibirAlert(result.msg, 10000);
                         }
-                        
+
                      },
                     error: function (e) {
                         exibirAlert("Erro: " + e.status);
@@ -54,6 +55,8 @@
     $(document).ready(function () {
         $("#btnNovo").show();
         $("#btnPesquisar").show();
+        $("#btnExcluir").show();
+        $("#btnSalvar").show();
 
         PopulaPerfil();
         var idPerfil=-1;
@@ -79,8 +82,13 @@
             "aoColumns": [
                 { "mData": "IdPerfil", "sName": "IdPerfil", "sTitle": "CodPerfil" },
                 { "mData": "IdMenu", "sName": "IdMenu", "sTitle": "CodMenu" },
-                { "mData": "DescricaoMenu", "sName": "DescricaoMenu", "sTitle": "Menu" },
-                { "mData": "Status", "sName": "Status", "sTitle": "Status" },
+                { "mData": "DescricaoMenu", "sName": "DescricaoMenu", "sTitle": "Descrição do Menu" },
+                {
+                    "sTitle": "Status",
+                    "render": function (data, type, row) {
+                        return "<div style='text-align:center'>" + row.Status + "</div>";
+                    }
+                },
                 {
                     "render": function (data, type, row) {
                         return "<div style='text-align:center'><input type='checkbox' " + row.Selecionado + " ></div>";
@@ -89,12 +97,39 @@
             ],
             "columnDefs":
                 [{
-                    "targets": [4],
-                    "visible": true,
+                    "targets": [0],
+                    "visible": false,
                     "searchable": false,
-                    "orderable": false
-                }]
+                    "orderable": false,
+                    "width": "1%"
+                },
+                {
+                   "targets": [1],
+                   "visible": false,
+                   "searchable": false,
+                    "orderable": false,
+                    "width": "1%"
+                },
+                {
+                   "targets": [2],
+                   "width": "50%"
+                 },
+                {
+                   "targets": [3],
+                    "width": "40%"
+                },
+                 {
+                   "targets": [4],
+                   "visible": true,
+                   "searchable": false,
+                   "orderable": false,
+                   "width": "8%"
+                 }]
         });
+
+        $("#cmbPerfil").change(function () {
+            $("#TabelaMenus").hide();
+        })
 
         $("#btnPesquisar").click(function () {
             //atualiza a table para uma nova pesquisa..
@@ -106,6 +141,11 @@
             $("#modal").load("@Url.Action("Inclusao", "Perfil")", function () {
                 $("#modal").modal({ backdrop:"static"});
             })
+        })
+
+        $("#btnExcluir").click(function () {
+            //Exclui o perfil selecionado..
+            ExcluirPerfil();
         })
     });
 
@@ -123,11 +163,6 @@
     <div class="col-3">
         <select id="cmbPerfil" class="form-control"></select>
     </div>
-    <div class="col-3">
-        <button type="submit" id="btnExcluirPerfil" class="btn btn-dark" onclick="ExcluirPerfil()">
-            <i class="fa fa-trash"></i> Excluir Perfil
-        </button>
-    </div>
 </div>
 
 <div id="TabelaMenus" class="row mt-3" style="display:none">
@@ -135,8 +170,8 @@
         <table id="tabela" class="display" style="width:100%" data-page-length='5'>
             <thead>
                 <tr>
-                    <th scope="col">Código do Perfil</th>
-                    <th scope="col">Código do Menu</th>
+                    <th scope="col" style="display:none">Código do Perfil</th>
+                    <th scope="col" style="display:none">Código do Menu</th>
                     <th scope="col">Descrição do Menu</th>
                     <th scope="col">Status</th>
                     <th scope="col"></th>

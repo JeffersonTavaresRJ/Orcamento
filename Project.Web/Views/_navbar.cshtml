@@ -11,7 +11,7 @@
             }
             @if (u != null)
             {
-                @Html.Action("PopularMenu", "Menu", new { @menus = u.Perfil.Menus.Where(m=>m.IdMenu==null).ToList()})
+                @Html.Action("PopularMenu", "Menu", new { @menus = u.Perfil.Menus.Where(m => m.IdMenu == null).ToList() })
 
                 <div class="btn-group" role="group">
 
@@ -21,6 +21,14 @@
 
                     <button id="btnNovo" type="button" style="display:none" class="btn btn-lg btn-dark">
                         <i class="fa fa-plus-square"></i>
+                    </button>
+
+                    <button id="btnSalvar" type="button" style="display:none" class="btn btn-lg btn-dark">
+                        <i class="fa fa-save"></i>
+                    </button>
+
+                    <button id="btnExcluir" type="button" style="display:none" class="btn btn-lg btn-dark">
+                        <i class="fa fa-trash"></i>
                     </button>
 
                     <!--para enxergar a action que está fora da área restrita, foi necessário usar a tag href-->

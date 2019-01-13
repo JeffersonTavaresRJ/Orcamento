@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Project.Entity;
-using PagedList;
+using Project.Entity.Enuns;
 
 namespace Project.Web.Areas.AreaIndex.Controllers
 {
@@ -88,13 +88,20 @@ namespace Project.Web.Areas.AreaIndex.Controllers
                     MenuPersistence mp = new MenuPersistence();
                     List<Menu> listaMenu = mp.ListarTableMenus();
 
-                    foreach (var item in listaMenu)
+                    foreach (var item in listaMenu.OrderBy(m => m.Nome))
                     {
                         MenuPerfilViewModelConsulta model = new MenuPerfilViewModelConsulta();
                         model.IdPerfil = p.Id;
                         model.IdMenu = item.Id;
                         model.DescricaoMenu = item.Nome;
-                        model.Status = item.Status;
+
+                        if (item.Status.Equals("A")){
+                            model.Status = Status.A.ObterDescricao();
+                        }else if (item.Status.Equals("I")){
+                            model.Status = Status.I.ObterDescricao();
+                        }else{
+                            model.Status = "Valor Desconhecido";
+                        }
 
                         if (pp.ObterMenus(p.Id).Where(x => x.Id.Equals(item.Id)).Count() > 0)
                         {

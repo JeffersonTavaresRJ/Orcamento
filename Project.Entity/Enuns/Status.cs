@@ -10,8 +10,10 @@ namespace Project.Entity.Enuns
     public enum Status
     {
         [Description("Ativo")]
-        A='A',
+        A = 'A',
         [Description("Inativo")]
-        I='I'
+        I = 'I'
     }
+
+
 }
