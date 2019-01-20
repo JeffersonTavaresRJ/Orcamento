@@ -10,6 +10,8 @@ namespace Project.Repository.Persistence
 
         public int InserirPerfilMenu(Perfil perfil, List<int> idMenus)
         {
+            //função cria um novo perfil com vários menus..
+
             foreach (var item in idMenus)
             {
                 //não utiliza o método de inserção do Perfil para usar um único context 
@@ -26,9 +28,21 @@ namespace Project.Repository.Persistence
 
         public int RemoverMenu(Perfil p, Menu m)
         {
+            //método que remove o menu de um perfil..
+
             Perfil perfil = _conn.Perfil.Include(x => x.Menus)
                                         .FirstOrDefault(x => x.Id.Equals(p.Id));
             perfil.Menus.Remove(m);
+            return _conn.SaveChanges();
+        }
+
+        public int IncluiMenu(int idPerfil, int idMenu)
+        {
+            Menu menu = _conn.Menu.Find(idMenu);
+
+            Perfil perfil = _conn.Perfil.Include(x => x.Menus)
+                                        .FirstOrDefault(x => x.Id.Equals(idPerfil));
+            perfil.Menus.Add(menu);
             return _conn.SaveChanges();
         }
 

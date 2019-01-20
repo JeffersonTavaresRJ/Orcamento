@@ -12,6 +12,8 @@ namespace Project.Web.Areas.AreaIndex.Controllers
     [Authorize]
     public class PerfilController : Controller
     {
+        int cod = 0;
+        string mensagem;
 
         public ActionResult ManutencaoPerfil()
         {
@@ -29,9 +31,6 @@ namespace Project.Web.Areas.AreaIndex.Controllers
         [HttpPost]
         public JsonResult Excluir(int idPerfil)
         {
-            string mensagem;
-            int cod = 0;
-
             try
             {
                 if (idPerfil > 0)
@@ -88,33 +87,36 @@ namespace Project.Web.Areas.AreaIndex.Controllers
                     MenuPersistence mp = new MenuPersistence();
                     List<Menu> listaMenu = mp.ListarTableMenus();
 
-                    foreach (var item in listaMenu.OrderBy(m => m.Nome))
+                    foreach (var menu in listaMenu.OrderBy(m => m.Nome))
                     {
                         MenuPerfilViewModelConsulta model = new MenuPerfilViewModelConsulta();
                         model.IdPerfil = p.Id;
-                        model.IdMenu = item.Id;
-                        model.DescricaoMenu = item.Nome;
+                        model.IdMenu = menu.Id;
+                        model.DescricaoMenu = menu.Nome;
 
-                        if (item.Status.Equals("A")){
+                        if (menu.Status.Equals("A"))
+                        {
                             model.Status = Status.A.ObterDescricao();
-                        }else if (item.Status.Equals("I")){
+                        }
+                        else if (menu.Status.Equals("I"))
+                        {
                             model.Status = Status.I.ObterDescricao();
-                        }else{
+                        }
+                        else
+                        {
                             model.Status = "Valor Desconhecido";
                         }
 
-                        if (pp.ObterMenus(p.Id).Where(x => x.Id.Equals(item.Id)).Count() > 0)
+                        if (pp.ObterMenus(p.Id).Where(x => x.Id.Equals(menu.Id)).Count() > 0)
                         {
                             model.Selecionado = "checked";
                         }
+
                         listaModel.Add(model);
                     }
                 }
+                var Resultado = new { aaData = listaModel };
 
-                var Resultado = new
-                {
-                    aaData = listaModel
-                };
                 return Json(Resultado, JsonRequestBehavior.AllowGet);
             }
             catch (Exception e)
@@ -208,6 +210,48 @@ namespace Project.Web.Areas.AreaIndex.Controllers
                 return Json(e.Message);
             }
             return Json("Item de menu removido com sucesso", JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult EditarPerfilMenus(PerfilMenuViewModelEdicao model)
+        {
+            try
+            {
+                if (model.Menus.Count == 0)
+                {
+                    throw new Exception("Deve existir pelo menos um item de menu cadastrado para o perfil");
+                }
+
+                PerfilPersistence pp = new PerfilPersistence();
+                MenuPersistence mp = new MenuPersistence();
+
+                Perfil p = pp.ObterPorId(model.IdPerfil);
+
+                List<Menu> listaMenu = pp.ObterMenus(model.IdPerfil).ToList();
+
+                //exclui todos os menus..
+                foreach (var m in listaMenu)
+                {
+                    pp.RemoverMenu(p, m);
+                }
+
+                //inclui os menus que estão com o checkbox na tela..
+                foreach (var idMenu in model.Menus)
+                {
+                    pp.IncluiMenu(model.IdPerfil, idMenu);
+                }               
+
+                cod = 1;
+                mensagem = "Perfil editado com sucesso";
+
+            }
+            catch (Exception e)
+            {
+                mensagem = e.Message.ToString();
+            }
+
+            return Json(new { cod, msg = mensagem }, JsonRequestBehavior.AllowGet);
+
         }
 
         private void ListarMenus(PerfilMenuViewModelConsulta model)

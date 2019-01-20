@@ -1260,6 +1260,7 @@
     <Compile Include="Areas\AreaIndex\Models\MenuPerfilViewModelConsulta.cs" />
     <Compile Include="Areas\AreaIndex\Models\PerfilMenuViewModelConsulta.cs" />
     <Compile Include="Areas\AreaIndex\Models\MenuViewModelSelecionaEdicao.cs" />
+    <Compile Include="Areas\AreaIndex\Models\PerfilMenuViewModelEdicao.cs" />
     <Compile Include="Areas\AreaIndex\Models\PerfilMenuViewModelInclusao.cs" />
     <Compile Include="Areas\AreaIndex\Models\PerfilViewModelConsulta.cs" />
     <Compile Include="Areas\AreaIndex\Models\UsuarioViewModelConsulta.cs" />
