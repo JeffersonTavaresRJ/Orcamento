@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Project.Entity;
 using Project.Repository.Persistence;
-using Project.Web;
 using Project.Utility.UtilString;
 
-namespace UnitTestUsuario
+namespace UnitTestPersistence
 {
     [TestClass]
-    public class UnitTestAdicionar
+    public class UnitTestUsuario
     {
         [TestMethod]
         public void Adicionar()

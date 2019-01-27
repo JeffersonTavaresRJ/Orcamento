@@ -1251,6 +1251,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\AreaIndex\AreaIndexAreaRegistration.cs" />
+    <Compile Include="Areas\AreaIndex\Controllers\FormaPagamentoController.cs" />
     <Compile Include="Areas\AreaIndex\Controllers\IndexController.cs" />
     <Compile Include="Areas\AreaIndex\Controllers\LancamentoController.cs" />
     <Compile Include="Areas\AreaIndex\Controllers\MenuController.cs" />
@@ -1308,6 +1309,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\AreaIndex\Views\FormaPagamento\" />
     <Folder Include="js\Areas\AreaIndex\Lancamento\" />
     <Folder Include="js\Areas\AreaIndex\Permissoes\" />
   </ItemGroup>

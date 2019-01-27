@@ -41,8 +41,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Conta.cs" />
+    <Compile Include="Enuns\TipoConta.cs" />
     <Compile Include="Enuns\Extension.cs" />
     <Compile Include="Enuns\Status.cs" />
+    <Compile Include="FormaPagamento.cs" />
+    <Compile Include="Grupo.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="Perfil.cs" />
     <Compile Include="PerfilMenu.cs" />
