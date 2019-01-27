@@ -1193,6 +1193,7 @@
     <Content Include="Areas\AreaIndex\Views\Index\Index.cshtml" />
     <Content Include="Areas\AreaIndex\Views\Perfil\ManutencaoPerfil.cshtml" />
     <Content Include="Areas\AreaIndex\Views\Perfil\Inclusao.cshtml" />
+    <Content Include="Areas\AreaIndex\Views\Grupo\ManutencaoGrupo.cshtml" />
     <None Include="js\jquery-3.0.0-vsdoc.js" />
     <Content Include="js\jquery-3.0.0.js" />
     <Content Include="js\jquery-3.0.0.min.js" />
@@ -1252,6 +1253,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\AreaIndex\AreaIndexAreaRegistration.cs" />
     <Compile Include="Areas\AreaIndex\Controllers\FormaPagamentoController.cs" />
+    <Compile Include="Areas\AreaIndex\Controllers\GrupoController.cs" />
     <Compile Include="Areas\AreaIndex\Controllers\IndexController.cs" />
     <Compile Include="Areas\AreaIndex\Controllers\LancamentoController.cs" />
     <Compile Include="Areas\AreaIndex\Controllers\MenuController.cs" />
