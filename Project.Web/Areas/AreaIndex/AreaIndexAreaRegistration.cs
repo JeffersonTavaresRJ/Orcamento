@@ -20,5 +20,6 @@ namespace Project.Web.Areas.AreaIndex
                 new { action = "Index", id = UrlParameter.Optional }
             );
         }
-    }
+
+   }
 }

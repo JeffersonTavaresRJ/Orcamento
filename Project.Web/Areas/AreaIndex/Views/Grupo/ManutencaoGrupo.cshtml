@@ -1,21 +1,25 @@
-﻿@{
-    ViewBag.Title = "Consulta Grupos de Contas";
+﻿@model Project.Web.Areas.AreaIndex.Models.GrupoViewModelInclusao
+@{
+    ViewBag.Title = "Manutenção dos Grupos de Contas";
     Layout = "~/Views/_layout.cshtml";
 }
 
-<h5>Grupos</h5>
+<h5>Grupos de Contas</h5>
 <hr />
 
-@using (Html.BeginForm("Incluir", "Grupo", FormMethod.Post))
+@using (Html.BeginForm("IncluirGrupo", "Grupo"))
 {
     <div class="row">
         <div class="col-4">
-            <label>Nome do Grupo:</label>
+            @Html.LabelFor(model => model.NomeGrupo)
         </div>
     </div>
     <div class="row">
         <div class="col-4">
-            <input type="text" id="txtNomeGrupo" class="form-control" />
+            @Html.TextBoxFor(model => model.NomeGrupo, new { @class = "form-control", @placeholder = "Informe o nome do grupo" })
+            <span style="color:red">
+                @Html.ValidationMessageFor(model => model.NomeGrupo)
+            </span>
         </div>
         <div class="col-4 pl-0">
             <button type="submit" class="btn btn-dark btn-lg">
@@ -25,41 +29,23 @@
     </div>
 }
 
-<div class="row mt-4">
-    <div class="col-12">
-        <table class="table table-striped" id="tGrupos" data-page-length="5">
-            <thead>
-                <tr>
-                    <th scope="col" style="width:80%">Nome do Grupo</th>
-                    <th scope="col" style="width:10%"></th>
-                    <th scope="col" style="width:10%"></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in ViewBag.Grupos)
-                {
-                    <tr>
-                        <td>@item.Descricao</td>
-                        <td>
-                            <div style="text-align:center">
-                                <a href="#" class="btn btn-dark" onclick="editarGrupo(@item.Id)">
-                                    <i class="fa fa-edit"></i>
-                                </a>
-                            </div>
-                        </td>
-                        <td>
-                            <div style="text-align:center">
-                                <a href="#" class="btn btn-dark" onclick="excluirGrupo(@item.Id)">
-                                    <i class="fa fa-trash"></i>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+@{Html.RenderAction("TabelaGrupos", "Grupo");}
+
+
+@if (ViewBag.MsgGrupo != null)
+{
+    <div id="alertManutencaoGrupo" class="row mt-2">
+        <div class="col-12">
+            <div class="alert alert-primary" role="alert">
+                <span id="spMensagemManutencaoGrupo">
+                    @ViewBag.MsgGrupo
+                </span>
+            </div>
+        </div>
     </div>
-</div>
+}
+
+
 
 
 
