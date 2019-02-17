@@ -56,9 +56,6 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
-      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -98,6 +95,9 @@
     </Reference>
     <Reference Include="X.PagedList.Mvc, Version=7.6.0.0, Culture=neutral, PublicKeyToken=c6e0b5b21f916f4f, processorArchitecture=MSIL">
       <HintPath>..\packages\X.PagedList.Mvc.7.6.0\lib\net461\X.PagedList.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="X.PagedList.Mvc.Bootstrap4, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\X.PagedList.Mvc.Bootstrap4.7.5.0\lib\net452\X.PagedList.Mvc.Bootstrap4.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -1088,6 +1088,12 @@
     <Content Include="assets\icons\si-glyph-zip.svg" />
     <Content Include="assets\icons\si-glyph-zoom-in.svg" />
     <Content Include="assets\icons\si-glyph-zoom-out.svg" />
+    <Content Include="Content\bootstrap-grid.css" />
+    <Content Include="Content\bootstrap-grid.min.css" />
+    <Content Include="Content\bootstrap-reboot.css" />
+    <Content Include="Content\bootstrap-reboot.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\jquery.dataTables.css" />
     <Content Include="Content\css\jquery.dataTables.min.css" />
     <Content Include="Content\css\jquery.dataTables_themeroller.css" />
@@ -1191,12 +1197,33 @@
     <Content Include="Content\datatables.extensions\Responsive\css\dataTables.responsive.scss" />
     <Content Include="Areas\AreaIndex\Views\Usuario\Edicao.cshtml" />
     <Content Include="Areas\AreaIndex\Views\Transacao\ManutencaoTransacao.cshtml" />
+    <Content Include="Scripts\bootstrap.bundle.js" />
+    <Content Include="Scripts\bootstrap.bundle.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\esm\popper-utils.js" />
+    <Content Include="Scripts\esm\popper-utils.min.js" />
+    <Content Include="Scripts\esm\popper.js" />
+    <Content Include="Scripts\esm\popper.min.js" />
+    <Content Include="Scripts\popper-utils.js" />
+    <Content Include="Scripts\popper-utils.min.js" />
+    <Content Include="Scripts\popper.js" />
+    <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\umd\popper-utils.js" />
+    <Content Include="Scripts\umd\popper-utils.min.js" />
+    <Content Include="Scripts\umd\popper.js" />
+    <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Views\_navbar.cshtml" />
     <Content Include="Areas\AreaIndex\Views\Index\Index.cshtml" />
     <Content Include="Areas\AreaIndex\Views\Perfil\ManutencaoPerfil.cshtml" />
     <Content Include="Areas\AreaIndex\Views\Perfil\Inclusao.cshtml" />
     <Content Include="Areas\AreaIndex\Views\Grupo\ManutencaoGrupo.cshtml" />
-    <Content Include="Areas\AreaIndex\Views\Grupo\TabelaGrupos.cshtml" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-reboot.min.css.map" />
+    <Content Include="Content\bootstrap-reboot.css.map" />
+    <Content Include="Content\bootstrap-grid.min.css.map" />
+    <Content Include="Content\bootstrap-grid.css.map" />
     <None Include="js\jquery-3.0.0-vsdoc.js" />
     <Content Include="js\jquery-3.0.0.js" />
     <Content Include="js\jquery-3.0.0.min.js" />
@@ -1263,8 +1290,6 @@
     <Compile Include="Areas\AreaIndex\Controllers\PerfilController.cs" />
     <Compile Include="Areas\AreaIndex\Controllers\TransacaoController.cs" />
     <Compile Include="Areas\AreaIndex\Controllers\UsuarioController.cs" />
-    <Compile Include="Areas\AreaIndex\Models\GrupoViewModelConsulta.cs" />
-    <Compile Include="Areas\AreaIndex\Models\GrupoViewModelInclusao.cs" />
     <Compile Include="Areas\AreaIndex\Models\MenuPerfilViewModelConsulta.cs" />
     <Compile Include="Areas\AreaIndex\Models\PerfilMenuViewModelConsulta.cs" />
     <Compile Include="Areas\AreaIndex\Models\MenuViewModelSelecionaEdicao.cs" />
@@ -1308,6 +1333,23 @@
     <Content Include="Views\_modalCrud.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Views\_modalCrud-LG.cshtml" />
+    <Content Include="Scripts\umd\popper.min.js.map" />
+    <Content Include="Scripts\umd\popper.js.map" />
+    <Content Include="Scripts\umd\popper-utils.min.js.map" />
+    <Content Include="Scripts\umd\popper-utils.js.map" />
+    <Content Include="Scripts\README.md" />
+    <Content Include="Scripts\popper.min.js.map" />
+    <Content Include="Scripts\popper.js.map" />
+    <Content Include="Scripts\popper-utils.min.js.map" />
+    <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Scripts\esm\popper.min.js.map" />
+    <Content Include="Scripts\esm\popper.js.map" />
+    <Content Include="Scripts\esm\popper-utils.min.js.map" />
+    <Content Include="Scripts\esm\popper-utils.js.map" />
+    <Content Include="Scripts\bootstrap.min.js.map" />
+    <Content Include="Scripts\bootstrap.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.min.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.js.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1322,6 +1364,7 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="js\index.d.ts" />
+    <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

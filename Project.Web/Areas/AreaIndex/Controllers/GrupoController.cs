@@ -3,44 +3,34 @@ using Project.Repository.Persistence;
 using System.Web.Mvc;
 using Project.Web.Areas.AreaIndex.Models;
 using System.Collections.Generic;
+using X.PagedList;
+using X.PagedList.Mvc;
 
 namespace Project.Web.Areas.AreaIndex.Controllers
 {
     public class GrupoController : Controller
     {
         // GET: AreaIndex/Grupo
-        public ActionResult ManutencaoGrupo()
-        {
-            return View();
-        }
-
-        public ActionResult TabelaGrupos( int pagina = 1)
+        public ActionResult ManutencaoGrupo( int pagina = 1)
         {
             GrupoPersistence gp = new GrupoPersistence();
-            List<GrupoViewModelConsulta> lista = new List<GrupoViewModelConsulta>();
-
-            foreach (var item in gp.ListarTodosGrupos())
-            {
-                GrupoViewModelConsulta model = new GrupoViewModelConsulta();
-                model.Id = item.Id;
-                model.Descricao = item.Descricao;
-                lista.Add(model);
-            }
+            var lista = gp.ListarTodosGrupos().ToPagedList(pagina, 3);
             return View(lista);
         }
 
         [HttpPost]
-        public ActionResult IncluirGrupo(GrupoViewModelInclusao Model)
+        //este método é chamado através de um beginForm..
+        public ActionResult IncluirGrupo(string DescricaoGrupo)
         {
-            if (ModelState.IsValid)
+            GrupoPersistence gp = new GrupoPersistence();
+            if (DescricaoGrupo != null)
             {
                 try
-                {
-                    GrupoPersistence gp = new GrupoPersistence();
+                {                   
                     Grupo g = new Grupo();
-                    g.Descricao = Model.NomeGrupo;
+                    g.Descricao = DescricaoGrupo;
                     gp.Inserir(g);
-                    ViewBag.MsgGrupo = "O grupo " + Model.NomeGrupo + " foi gravado com sucesso!";
+                    ViewBag.MsgGrupo = "O grupo " + DescricaoGrupo + " foi gravado com sucesso!";
 
                 }
                 catch (System.Exception e)
@@ -48,7 +38,8 @@ namespace Project.Web.Areas.AreaIndex.Controllers
                     ViewBag.MsgGrupo = "Erro: " + e.Message.ToString();
                 }
             }
-            return View("ManutencaoGrupo");
+            var lista = gp.ListarTodosGrupos().ToPagedList(1, 3);
+            return View("ManutencaoGrupo", lista);
         }
 
         [HttpPost]
@@ -59,10 +50,13 @@ namespace Project.Web.Areas.AreaIndex.Controllers
                 GrupoPersistence gp = new GrupoPersistence();
                 Grupo g = gp.ObterPorId(Id);
                 gp.Excluir(g);
+
+                //falta fazer o tratamento da saída da mensagem via json..
                 ViewBag.MsgGrupo = "O grupo " + g.Descricao + " foi excluído com sucesso!";
             }
             catch (System.Exception e)
             {
+                //falta fazer o tratamento da saída da mensagem via json..
                 ViewBag.MsgGrupo = "Erro: " + e.ToString();
             }
 

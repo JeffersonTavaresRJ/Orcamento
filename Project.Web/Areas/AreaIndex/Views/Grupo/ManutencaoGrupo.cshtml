@@ -1,8 +1,26 @@
-﻿@model Project.Web.Areas.AreaIndex.Models.GrupoViewModelInclusao
+﻿@using X.PagedList.Mvc;
+@model X.PagedList.IPagedList<Project.Entity.Grupo>
 @{
     ViewBag.Title = "Manutenção dos Grupos de Contas";
     Layout = "~/Views/_layout.cshtml";
 }
+
+<script type="text/javascript">
+    function excluirGrupo(id) {
+        $.ajax({
+            type: "POST",
+            url: "/Grupo/ExcluirGrupo",
+            data: { id },
+            success: function () {
+               window.location.href = '@Url.Action("ManutencaoGrupo", "Grupo")'
+            },
+            error: function (e) {
+                $("#spMensagemManutencaoGrupo").html(e);
+            }
+
+        })
+    };
+</script>
 
 <h5>Grupos de Contas</h5>
 <hr />
@@ -11,15 +29,12 @@
 {
     <div class="row">
         <div class="col-4">
-            @Html.LabelFor(model => model.NomeGrupo)
+            <label>Nome do Grupo:</label>
         </div>
     </div>
     <div class="row">
         <div class="col-4">
-            @Html.TextBoxFor(model => model.NomeGrupo, new { @class = "form-control", @placeholder = "Informe o nome do grupo" })
-            <span style="color:red">
-                @Html.ValidationMessageFor(model => model.NomeGrupo)
-            </span>
+            <input name="DescricaoGrupo" type="text" class="form-control" placeholder="Informe a descrição do Grupo" />
         </div>
         <div class="col-4 pl-0">
             <button type="submit" class="btn btn-dark btn-lg">
@@ -29,7 +44,52 @@
     </div>
 }
 
-@{Html.RenderAction("TabelaGrupos", "Grupo");}
+<div class="row mt-4">
+    <div class="col-12">
+        <table class="table table-striped" id="tGrupos" data-page-length="5">
+            <thead>
+                <tr>
+                    <th scope="col" style="width:80%">Nome</th>
+                    <th scope="col" style="width:10%"></th>
+                    <th scope="col" style="width:10%"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Descricao</td>
+                        <td>
+                            <div style="text-align:center">
+                                <a href="#" class="btn btn-dark" onclick="editarGrupo(@item.Id)">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                            </div>
+                        </td>
+                        <td>
+                            <div style="text-align:center">
+                                <a href="#" class="btn btn-dark" onclick="excluirGrupo(@item.Id)">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="row">
+    <div class="col-8">
+        @Html.PagedListPager(Model, pagina=>Url.Action("ManutencaoGrupo", new { pagina}))
+    </div>
+    <div class="col-4">
+        <span class="pull-right">
+            Listando @Model.FirstItemOnPage de @Model.LastItemOnPage, num total de @Model.TotalItemCount registros.
+        </span>
+
+    </div>
+</div>
 
 
 @if (ViewBag.MsgGrupo != null)
