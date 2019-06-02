@@ -6,6 +6,24 @@
 }
 
 <script type="text/javascript">
+
+
+    function consultarGrupo() {
+        $.ajax({
+            type: "POST",
+            url: "/Grupo/ManutencaoGrupo",
+            data: { id },
+            beforeSend: function () {
+                $('#tabela').hide();
+                $('#carregando').show();
+            }
+        }).done(function () {
+            $('#tabela').show();
+            $('#carregando').hide();
+        })
+    };
+
+
     function excluirGrupo(id) {
         $.ajax({
             type: "POST",
@@ -37,57 +55,61 @@
             <input name="DescricaoGrupo" type="text" class="form-control" placeholder="Informe a descrição do Grupo" />
         </div>
         <div class="col-4 pl-0">
-            <button type="submit" class="btn btn-dark btn-lg">
+            <button type="submit" class="btn btn-dark btn-lg" id="btnIncluir">
                 <i class="fa fa-plus-square"></i>
             </button>
         </div>
     </div>
 }
 
-<div class="row mt-4">
-    <div class="col-12">
-        <table class="table table-striped" id="tGrupos" data-page-length="5">
-            <thead>
-                <tr>
-                    <th scope="col" style="width:80%">Nome</th>
-                    <th scope="col" style="width:10%"></th>
-                    <th scope="col" style="width:10%"></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@item.Descricao</td>
-                        <td>
-                            <div style="text-align:center">
-                                <a href="#" class="btn btn-dark" onclick="editarGrupo(@item.Id)">
-                                    <i class="fa fa-edit"></i>
-                                </a>
-                            </div>
-                        </td>
-                        <td>
-                            <div style="text-align:center">
-                                <a href="#" class="btn btn-dark" onclick="excluirGrupo(@item.Id)">
-                                    <i class="fa fa-trash"></i>
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-</div>
 <div class="row">
-    <div class="col-8">
-        @Html.PagedListPager(Model, pagina=>Url.Action("ManutencaoGrupo", new { pagina}))
-    </div>
-    <div class="col-4">
-        <span class="pull-right">
-            Listando @Model.FirstItemOnPage de @Model.LastItemOnPage, num total de @Model.TotalItemCount registros.
-        </span>
+    <div class="col-12" id="tabela">
+        <div class="row mt-4">
+            <div class="col-12">
+                <table class="table table-striped" id="tGrupos" data-page-length="5">
+                    <thead>
+                        <tr>
+                            <th scope="col" style="width:80%">Nome</th>
+                            <th scope="col" style="width:10%"></th>
+                            <th scope="col" style="width:10%"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Descricao</td>
+                                <td>
+                                    <div style="text-align:center">
+                                        <a href="#" class="btn btn-dark" onclick="editarGrupo(@item.Id)">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="text-align:center">
+                                        <a href="#" class="btn btn-dark" onclick="excluirGrupo(@item.Id)">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                @Html.PagedListPager(Model, pagina => Url.Action("ManutencaoGrupo", new { pagina }))
+            </div>
+            <div class="col-4">
+                <span class="pull-right">
+                    Listando @Model.FirstItemOnPage de @Model.LastItemOnPage, num total de @Model.TotalItemCount registros.
+                </span>
 
+            </div>
+        </div>
     </div>
 </div>
 

@@ -47,3 +47,10 @@ function PopulaStatus() {
         }
     });
 }
+
+//$(document).ready(function () {    
+//}).ajaxComplete(function () {
+//    alert("Página carregada");
+//    $('#imgCarregando').hide();
+//    });
+

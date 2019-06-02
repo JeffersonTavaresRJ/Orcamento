@@ -110,7 +110,10 @@
     <Content Include="App_Data\OrcamentoLocal_log.ldf">
       <DependentUpon>OrcamentoLocal.mdf</DependentUpon>
     </Content>
+    <Content Include="assets\gifs\carregando.gif" />
     <Content Include="assets\gifs\ajax-loader.gif" />
+    <Content Include="assets\gifs\loading.gif" />
+    <Content Include="assets\gifs\loading2.gif" />
     <Content Include="assets\icons\octicons-6.0.1\alert.svg" />
     <Content Include="assets\icons\octicons-6.0.1\arrow-down.svg" />
     <Content Include="assets\icons\octicons-6.0.1\arrow-left.svg" />
