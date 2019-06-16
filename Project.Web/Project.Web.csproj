@@ -1091,6 +1091,8 @@
     <Content Include="assets\icons\si-glyph-zip.svg" />
     <Content Include="assets\icons\si-glyph-zoom-in.svg" />
     <Content Include="assets\icons\si-glyph-zoom-out.svg" />
+    <Content Include="assets\img\detail_close.png" />
+    <Content Include="assets\img\detail_open.png" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />

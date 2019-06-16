@@ -19,11 +19,24 @@ namespace Project.Web.Areas.AreaIndex.Controllers
         }
 
         [HttpPost]
+        public JsonResult Consultar()
+        {
+            GrupoPersistence gp = new GrupoPersistence();
+            var lista = gp.ListarTodos();
+            var Resultado = new
+            {
+                aaData = lista
+            };
+
+            return Json(Resultado, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
         //este método é chamado através de um beginForm..
         public ActionResult IncluirGrupo(string DescricaoGrupo)
         {
             GrupoPersistence gp = new GrupoPersistence();
-            if (DescricaoGrupo != null)
+            if (DescricaoGrupo.Trim() != null)
             {
                 try
                 {                   

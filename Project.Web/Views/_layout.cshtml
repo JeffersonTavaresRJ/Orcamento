@@ -74,9 +74,9 @@
 <body>
     @Html.Partial("~/Views/_navbar.cshtml")
 
-    @*<img id="imgCarregando" src="~/assets/gifs/loading.gif" />*@
+    <img id="imgCarregando" src="~/assets/gifs/loading.gif" style="display:block" />
 
-    <div class="container mt-2" style="z-index:1">
+    <div id="divBody" class="container mt-2" style="z-index:1; display:none">
         @RenderBody()
     </div>
 

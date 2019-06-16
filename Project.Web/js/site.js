@@ -1,4 +1,15 @@
-﻿function AjaxMensagem(result) {
+﻿//$(document).ready(function () {    
+//}).ajaxComplete(function () {
+//    alert("Página carregada");
+//    $('#imgCarregando').hide();
+//    });
+
+$(document).ready(function () {  
+    document.getElementById('imgCarregando').style.display = 'none';
+    document.getElementById('divBody').style.display ='block';
+})
+
+function AjaxMensagem(result) {
     if (result && result.mensagem) {
         if (result.mensagem != null) {
             $('#modalMensagemId').html(result.mensagem);
@@ -47,10 +58,3 @@ function PopulaStatus() {
         }
     });
 }
-
-//$(document).ready(function () {    
-//}).ajaxComplete(function () {
-//    alert("Página carregada");
-//    $('#imgCarregando').hide();
-//    });
-
