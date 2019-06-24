@@ -11,9 +11,16 @@ namespace Project.Repository.Persistence
             return _conn.Grupo.Where(g => g.IdGrupo.Equals(null)).ToList();
         }
 
-        public List<Grupo> ListarTodosSubGrupos()
+        public List<Grupo> ListarGruposNivel_1()
+        {
+            return _conn.Grupo.Where(g => g.IdGrupo == null).ToList();
+        }
+
+        public List<Grupo> ListarGruposNivel_2()
         {
             return _conn.Grupo.Where(g => g.IdGrupo > 0 ).ToList();
         }
+
+
     }
 }

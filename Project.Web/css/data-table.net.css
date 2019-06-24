@@ -1,0 +1,9 @@
+﻿/*css para abertura e fechamento dos botões da grid filho..*/
+td.details-control {
+    background: url('../assets/img/detail_open.png') no-repeat center center;
+    cursor: pointer;
+}
+
+tr.shown td.details-control {
+    background: url('../assets/img/detail_close.png') no-repeat center center;
+}

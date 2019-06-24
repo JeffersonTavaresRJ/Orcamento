@@ -1,0 +1,73 @@
+﻿@model Project.Web.Areas.AreaIndex.Models.GrupoViewModelInclusao
+@{
+    ViewBag.Title = "Grupo";
+}
+
+<script type="text/javascript">
+    function OnFailure(result) {
+        //adicionar mensagem igual a da edição..
+        alert("Erro:" + result.msg);
+    }
+
+    function OnSuccess(result) {
+
+        //Como o modal é renderizado dentro da página de ConsultaFiltro.cshntm,
+        // pode-se pegar o handle da tabela que já está criada no ConsultaFiltro...
+        // e aplicar a atualização da table..
+        var tabela = $('#tblGrupos').DataTable();
+        tabela.ajax.reload();
+
+        $("#mensagemInclusao").html(result.msg);
+        $("#alertInclusao").show();
+
+    }
+</script>
+
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        @using (Ajax.BeginForm("IncluirGrupo", "Grupo", new AjaxOptions()
+        {
+            HttpMethod = "POST",
+            OnFailure = "OnFailure",
+            OnSuccess = "OnSuccess"
+        }))
+        {
+            <div class="modal-header">
+                <h5 class="modal-title">Incluir Grupo</h5>
+
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                    <span class="sr-only">Close</span>
+                </button>
+
+            </div>
+            <div class="modal-body">
+
+                <div id="alertInclusao" class="alert alert-primary" style="display:none">
+                    <span id="mensagemInclusao"></span>
+                </div>
+
+                @Html.ValidationSummary(true)
+
+                <div class="row">
+                    <div class="form-group mb-1 col-12">
+                        @Html.LabelFor(model => model.Id_Grupo)
+
+                        @Html.DropDownListFor(model => model.Id_Grupo, (SelectList)ViewBag.ListaGrupos, "--Nenhum--", new { @class = "form-control " })
+                    </div>
+                    <div class="form-group mb-1 col-12">
+                        @Html.LabelFor(model => model.Descricao)
+
+                        @Html.TextBoxFor(model => model.Descricao, new { @class = "form-control ", @placehoder = "Informe a descrição" })
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <input type="submit" value="Salvar" class="btn btn-outline-dark" />
+                <input type="button" value="Cancelar" class="btn btn-outline-dark" data-dismiss="modal" />
+            </div>
+        }
+    </div>
+</div>
