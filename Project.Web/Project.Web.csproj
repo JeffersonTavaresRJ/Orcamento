@@ -1231,6 +1231,7 @@
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Areas\AreaIndex\Views\Grupo\Inclusao.cshtml" />
+    <Content Include="Areas\AreaIndex\Views\Grupo\Edicao.cshtml" />
     <None Include="js\jquery-3.0.0-vsdoc.js" />
     <Content Include="js\jquery-3.0.0.js" />
     <Content Include="js\jquery-3.0.0.min.js" />
@@ -1297,7 +1298,8 @@
     <Compile Include="Areas\AreaIndex\Controllers\PerfilController.cs" />
     <Compile Include="Areas\AreaIndex\Controllers\TransacaoController.cs" />
     <Compile Include="Areas\AreaIndex\Controllers\UsuarioController.cs" />
-    <Compile Include="Areas\AreaIndex\Models\GrupoViewModelInclusao.cs" />
+    <Compile Include="Areas\AreaIndex\Models\GrupoViewModel.cs" />
+    <Compile Include="Areas\AreaIndex\Models\GrupoViewModelEdicao.cs" />
     <Compile Include="Areas\AreaIndex\Models\MenuPerfilViewModelConsulta.cs" />
     <Compile Include="Areas\AreaIndex\Models\PerfilMenuViewModelConsulta.cs" />
     <Compile Include="Areas\AreaIndex\Models\MenuViewModelSelecionaEdicao.cs" />

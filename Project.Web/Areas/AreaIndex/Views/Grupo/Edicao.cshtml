@@ -1,8 +1,7 @@
-﻿@model Project.Web.Areas.AreaIndex.Models.GrupoViewModel
+﻿@model Project.Web.Areas.AreaIndex.Models.GrupoViewModelEdicao
 @{
     ViewBag.Title = "Grupo";
 }
-
 <!--Para que a validação do MVC funcione, foi necessário colocar a referência deste script-->
 <script src="~/js/jquery.validate.unobtrusive.min.js"></script>
 
@@ -20,24 +19,23 @@
         var tabela = $('#tblGrupos').DataTable();
         tabela.ajax.reload();
 
-        $("#mensagemInclusao").html(result.msg);
-        $("#dvAlertInclusao").show();
+        $("#spMensagemEdicao").html(result.msg);
+        $("#dvAlertEdicao").show();
 
     }
 </script>
 
-
 <div class="modal-dialog">
     <div class="modal-content">
-        @using (Ajax.BeginForm("Incluir", "Grupo", new AjaxOptions()
+        @using (Ajax.BeginForm("Editar", "Grupo", new AjaxOptions()
         {
             HttpMethod = "POST",
-            OnFailure = "OnFailure",
-            OnSuccess = "OnSuccess"
+            OnSuccess = "OnSuccess",
+            OnFailure = "OnFailure"
         }))
         {
             <div class="modal-header">
-                <h5 class="modal-title">Incluir Grupo</h5>
+                <h5 class="modal-title">Editar Grupo</h5>
 
                 <button type="button" class="close" data-dismiss="modal">
                     <span aria-hidden="true">×</span>
@@ -46,27 +44,27 @@
 
             </div>
             <div class="modal-body">
-
-                <div id="dvAlertInclusao" class="alert alert-primary" style="display:none">
-                        <span id="mensagemInclusao"></span>
+                <div id="dvAlertEdicao" class="alert alert-primary" style="display:none">
+                    <span id="spMensagemEdicao"></span>
                 </div>
-
                 @Html.ValidationSummary(true)
 
                 <div class="row">
+
+                    @Html.HiddenFor(model => model.Id)
+
                     <div class="form-group mb-1 col-12">
                         @Html.LabelFor(model => model.Id_Grupo)
-                        @Html.DropDownListFor(model => model.Id_Grupo, (SelectList)ViewBag.ListaGrupos, "--Nenhum--", new { @class = "form-control " })
+                        @Html.DropDownListFor(model => model.Id_Grupo, (SelectList)ViewBag.ListaGrupos, "--Nenhum--", new { @class = "form-control" })
                     </div>
                     <div class="form-group mb-1 col-12">
                         @Html.LabelFor(model => model.Descricao)
-                        @Html.TextBoxFor(model => model.Descricao, new { @class = "form-control ", @placehoder = "Informe a descrição" })
+                        @Html.TextBoxFor(model => model.Descricao, new { @class = "form-control", @placehoder = "Informe a descrição" })
                         <span style="color:red">
                             @Html.ValidationMessageFor(model => model.Descricao)
                         </span>
                     </div>
                 </div>
-
             </div>
             <div class="modal-footer">
                 <input type="submit" value="Salvar" class="btn btn-outline-dark" />

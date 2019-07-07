@@ -2,8 +2,6 @@
 using Project.Repository.Persistence;
 using System.Web.Mvc;
 using Project.Web.Areas.AreaIndex.Models;
-using System.Collections.Generic;
-
 
 namespace Project.Web.Areas.AreaIndex.Controllers
 {
@@ -35,8 +33,30 @@ namespace Project.Web.Areas.AreaIndex.Controllers
             return View();
         }
 
+        public ActionResult Edicao(int id)
+        {
+            GrupoViewModelEdicao grupoModel = new GrupoViewModelEdicao();
+            try
+            {
+                GrupoPersistence gp = new GrupoPersistence();
+                ViewBag.ListaGrupos = new SelectList(gp.ListarGruposNivel_1(), "Id", "Descricao");
+                Grupo g = gp.ObterPorId(id);
+
+                grupoModel.Id = id;
+                grupoModel.Id_Grupo = g.IdGrupo;
+                grupoModel.Descricao = g.Descricao;
+
+            }
+            catch (System.Exception ex)
+            {
+
+                ViewBag.Mensagem = "Erro: " + ex.Message;
+            }
+            return View(grupoModel);
+        }
+
         [HttpPost]
-        public JsonResult IncluirGrupo(GrupoViewModelInclusao grupoModel)
+        public JsonResult Incluir(GrupoViewModel grupoModel)
         {
             if (ModelState.IsValid)
             {
@@ -54,10 +74,39 @@ namespace Project.Web.Areas.AreaIndex.Controllers
                 }
                 catch (System.Exception ex)
                 {
+                    mensagem = "Erro: " + ex.Message;
+                }
+            }
+            return Json(new { msg = mensagem });
+        }
+
+        [HttpPost]
+        public JsonResult Editar(GrupoViewModelEdicao grupoModel)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    GrupoPersistence gp = new GrupoPersistence();
+                    //obtém o grupo para alterá-lo
+                    Grupo g = gp.ObterPorId(grupoModel.Id);
+
+                    //edito as informações
+                    g.IdGrupo = grupoModel.Id_Grupo;
+                    g.Descricao = grupoModel.Descricao;
+
+                    //salvo no mesma variável de persistência
+                    gp.Atualizar(g);
+                    mensagem = "O grupo " + g.Descricao + " foi editado com sucesso";
+                }
+                catch (System.Exception ex)
+                {
+
                     mensagem = "Erro: "+ ex.Message;
                 }
             }
-            return Json( new {msg=mensagem});
+
+            return Json(new { msg = mensagem });
         }
 
         [HttpPost]

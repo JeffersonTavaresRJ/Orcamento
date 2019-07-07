@@ -32,6 +32,13 @@
         });
     }
 
+    //chamando o modal de edição..
+    function edit(id) {
+        $("#modal").load("Edicao?id=" + id, function () {
+            $("#modal").modal({ backdrop: "static" });
+        });
+    };
+
     function exibirAlert(mensagem) {
         $("#mensagem").html(mensagem);
         $("#alert").show().fadeOut(8000);//exibe e depois esconde o alert..
