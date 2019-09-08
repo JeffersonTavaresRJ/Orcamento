@@ -57,6 +57,7 @@
     <Compile Include="Mapping\PerfilMenuMap.cs" />
     <Compile Include="Mapping\UsuarioMap.cs" />
     <Compile Include="Persistence\ContaPersistence.cs" />
+    <Compile Include="Persistence\FormaPagamentoPersistence.cs" />
     <Compile Include="Persistence\GenericRepository.cs" />
     <Compile Include="Persistence\GrupoPersistence.cs" />
     <Compile Include="Persistence\MenuPersistence.cs" />

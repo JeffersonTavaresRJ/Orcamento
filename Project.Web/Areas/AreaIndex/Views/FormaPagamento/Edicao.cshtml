@@ -1,0 +1,94 @@
+﻿<script type="text/javascript">
+    var status = "";
+
+    function exibirAlertEdicao(mensagem, tempo) {
+        $("#spEdicaoMsgFormaPagamento").html(mensagem);
+        $("#alertEdicaoFormaPagamento").show().fadeOut(tempo);//exibe e depois esconde o alert..
+    }
+
+    function editar() {        
+
+        $.ajax({
+            type: "POST",
+            url: "/FormaPagamento/Editar",
+            //passando o objeto deve estar com os nomes iguais aos dos atributos do método json do Controller
+            data: {
+                Id: $("#txtId").val(),
+                Descricao: $("#txtDescricao").val(),
+                Status: $("#cmbStatusEdicao").val()
+            },
+            success: function (result) {
+                //o .msg é identificado como um atributo do retorno da execução..
+                //somente com sucesso repopulará a forma de pagamento..
+                if (result.cod == 1) {
+                    setTimeout(exibirAlertEdicao(result.msg, 10000), 10000);
+                    //pegando a tabela que está na página..
+                    var tabela = $('#tFormasPagamento').DataTable();
+                    //atualizando a tabela na outra página..
+                    tabela.ajax.reload();
+                } else {
+                    exibirAlertEdicao(result.msg, 10000);
+                }
+            },
+            error: function (e) {
+                exibirAlertEdicao("Erro: " + e.status);
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        PopulaSelectList("Lista", "Status", "#cmbStatusEdicao", $("#txtStatus").val());
+
+    });
+</script>
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Editar Forma de Pagamento</h5>
+
+            <button type="button" class="close" data-dismiss="modal">
+                <span aria-hidden="true">×</span>
+                <span class="sr-only">Close</span>
+            </button>
+
+        </div>
+        <div class="modal-body">
+
+            <input type="hidden" id="txtId" value="@ViewBag.Id" />
+
+            <div class="row">
+                <div class="col-12">
+                    <label>Forma de Pagamento:</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <input type="text" id="txtDescricao" value="@ViewBag.Descricao" class="form-control" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <label>Status:</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <select id="cmbStatusEdicao" class="form-control"></select>
+                    <input type="hidden" id="txtStatus" value="@ViewBag.Status" />
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-12">
+                    <div id="alertEdicaoFormaPagamento" class="alert alert-primary" role="alert" style="display:none">
+                        <span id="spEdicaoMsgFormaPagamento"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input type="button" class="btn btn-outline-dark" id="btnSalvar" value="Salvar" onclick="editar()"/>
+            <input type="button" class="btn btn-outline-dark" value="Cancelar" data-dismiss="modal"/>
+        </div>
+    </div>
+</div>

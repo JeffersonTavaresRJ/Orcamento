@@ -170,28 +170,6 @@ namespace Project.Web.Areas.AreaIndex.Controllers
         }
 
         [HttpPost]
-        public JsonResult ListarPerfil()
-        {
-            List<PerfilViewModelConsulta> lista = new List<PerfilViewModelConsulta>();
-            try
-            {
-                PerfilPersistence pp = new PerfilPersistence();
-                foreach (var item in pp.ListarTodos().ToList())
-                {
-                    PerfilViewModelConsulta p = new PerfilViewModelConsulta();
-                    p.Id = item.Id;
-                    p.Descricao = item.Descricao;
-                    lista.Add(p);
-                }
-            }
-            catch (Exception e)
-            {
-                return Json(e.Message, JsonRequestBehavior.AllowGet);
-            }
-            return Json(lista, JsonRequestBehavior.AllowGet);
-        }
-
-        [HttpPost]
         public JsonResult RemoverMenu(int idPerfil, int idMenu)
         {
             try

@@ -197,14 +197,5 @@ namespace Project.Web.Areas.AreaIndex.Controllers
             return Json(new { msg = mensagem });
         }
 
-        [HttpPost]
-        public JsonResult ListaStatus()
-        {
-            return Json(Combobox.Listar(typeof(Status)));
-        }
-
-
-
-
     }
 }

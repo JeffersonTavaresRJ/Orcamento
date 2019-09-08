@@ -60,8 +60,8 @@
         $("#btnPesquisar").show();
 
 
-        PopulaPerfil();
-        PopulaStatus();
+        PopulaSelectList("Lista", "Perfil","#cmbPerfil", "-1");
+        PopulaSelectList("Lista", "Status","#cmbStatus", "-1");
 
         var table = $('#tabela').DataTable({
             "bProcessing": false,

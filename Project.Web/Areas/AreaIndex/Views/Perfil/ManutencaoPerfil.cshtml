@@ -5,213 +5,213 @@
 
 <script type="text/javascript">
 
-    var arrMenus = [];
+        var arrMenus = [];
 
-    function exibirAlert(mensagem, tempo) {
-        $("#spMensagemManutencaoPerfil").html(mensagem);
-        $("#alertManutencaoPerfil").show().fadeOut(tempo);//exibe e depois esconde o alert..
-    }
-
-    function repopularArrayMenu(idMenu, isChecked) {
-        var idx = arrMenus.indexOf(idMenu);
-
-        if (isChecked) {
-            //adicionando..
-            if (idx == -1) {
-                arrMenus.push(idMenu);
-            }
-            
-        } else {
-            //excluindo..
-            if (idx >=0) {
-                arrMenus.splice(idx, 1);
-            }
-            
+        function exibirAlert(mensagem, tempo) {
+            $("#spMensagemManutencaoPerfil").html(mensagem);
+            $("#alertManutencaoPerfil").show().fadeOut(tempo);//exibe e depois esconde o alert..
         }
-    }
 
-    //chamando o modal de exclusão..
-    function ExcluirPerfil() {
+        function repopularArrayMenu(idMenu, isChecked) {
+            var idx = arrMenus.indexOf(idMenu);
 
-        var perfil = $("#cmbPerfil :selected");
-        var id     = perfil.val();
+            if (isChecked) {
+                //adicionando..
+                if (idx == -1) {
+                    arrMenus.push(idMenu);
+                }
 
-        if (id > 0) {
+            } else {
+                //excluindo..
+                if (idx >=0) {
+                    arrMenus.splice(idx, 1);
+                }
 
-            var descricaoPerfil = perfil.text();
+            }
+        }
 
-            $('#spanConfirmMensagem').html("Deseja excluir o perfil <strong>" + descricaoPerfil + "</strong>?");
+        //chamando o modal de exclusão..
+        function ExcluirPerfil() {
 
-            $('#modalConfirmMensagem').modal({
-                backdrop: 'static',
-                keyboard: false
-            }).one('click', '#btnConfirmSim', function (e) {
-                $.ajax({
-                    type: "POST",
-                    url: "/Perfil/Excluir",
-                    //a variável 'idPerfil' deve estar com o nome igual ao do parâmetro do método json do Controller
-                    data: "idPerfil=" + id,
-                    success: function (result) {
-                        //o .msg é identificado como um atributo do retorno da execução..
-                        //somente com sucesso repopulará o perfil e esconde a table carregada..
-                        if (result.cod == 1) {
-                            setTimeout(exibirAlert(result.msg, 10000), 10000);
-                            PopulaPerfil();
-                            $("#dTMenus").hide();
-                        } else {
-                            exibirAlert(result.msg, 10000);
+            var perfil = $("#cmbPerfil :selected");
+            var id     = perfil.val();
+
+            if (id > 0) {
+
+                var descricaoPerfil = perfil.text();
+
+                $('#spanConfirmMensagem').html("Deseja excluir o perfil <strong>" + descricaoPerfil + "</strong>?");
+
+                $('#modalConfirmMensagem').modal({
+                    backdrop: 'static',
+                    keyboard: false
+                }).one('click', '#btnConfirmSim', function (e) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/Perfil/Excluir",
+                        //a variável 'idPerfil' deve estar com o nome igual ao do parâmetro do método json do Controller
+                        data: "idPerfil=" + id,
+                        success: function (result) {
+                            //o .msg é identificado como um atributo do retorno da execução..
+                            //somente com sucesso repopulará o perfil e esconde a table carregada..
+                            if (result.cod == 1) {
+                                setTimeout(exibirAlert(result.msg, 10000), 10000);
+                                PopulaSelectList("Lista", "Perfil", "#cmbPerfil", "-1");
+                                $("#dTMenus").hide();
+                            } else {
+                                exibirAlert(result.msg, 10000);
+                            }
+                         },
+                        error: function (e) {
+                            exibirAlert("Erro: " + e.status);
                         }
-                     },
+                    });
+                 });
+            }
+        };
+
+        $(document).ready(function () {
+            $("#btnNovo").show();
+            $("#btnPesquisar").show();
+            $("#btnExcluir").show();
+
+            PopulaSelectList("Lista", "Perfil", "#cmbPerfil", "-1");
+
+            var tMenus = $('#tMenus').DataTable({
+                "bProcessing": false,
+                "bServerSide": false,
+                "bLengthChange": false, /*tornar invisível combo para visualizar a quantidade de registros */
+                "bFilter": false, /*tornar invisível o campo de busca do resultado da tabela */
+                "ajax": {
+                    type: "POST",
+                    url: "/Perfil/Consultar",
+                    datatype: "json",
+                    data: function (d) {
+                        d.sPerfil = $("#cmbPerfil").val();
+                    },
                     error: function (e) {
                         exibirAlert("Erro: " + e.status);
                     }
-                });
-             });
-        }
-    };
-
-    $(document).ready(function () {
-        $("#btnNovo").show();
-        $("#btnPesquisar").show();
-        $("#btnExcluir").show();
-
-        PopulaPerfil();
-
-        var tMenus = $('#tMenus').DataTable({
-            "bProcessing": false,
-            "bServerSide": false,
-            "bLengthChange": false, /*tornar invisível combo para visualizar a quantidade de registros */
-            "bFilter": false, /*tornar invisível o campo de busca do resultado da tabela */
-            "ajax": {
-                type: "POST",
-                url: "/Perfil/Consultar",
-                datatype: "json",
-                data: function (d) {
-                    d.sPerfil = $("#cmbPerfil").val();
                 },
-                error: function (e) {
-                    exibirAlert("Erro: " + e.status);
-                }
-            },
-            /*colunas que são utilizadas na dataTable*/
-            "aoColumns": [
-                { "mData": "DescricaoMenu", "sName": "DescricaoMenu", "sTitle": "Descrição do Menu" },
-                {
-                    "sTitle": "Status",
-                    "render": function (data, type, row) {
-                        return "<div style='text-align:center'>" + row.Status + "</div>";
-                    }
-                },
-                {
-                    "render": function (data, type, row) {
-                        return "<div style='text-align:center'>" +
-                               "<input name='seleciona' type='checkbox' " + row.Selecionado + " >" +
-                               "<input type = 'hidden' id = 'idPerfil' value = '" + row.IdPerfil + "' >" +
-                               "<input type = 'hidden' id = 'idMenu'   value = '" + row.IdMenu + "' >"+
-                               "</div >";
-                    }
-                }
-            ],
-            "columnDefs":
-                [{
-                    "targets": [0],
-                    "width": "50%",
-                    "visible": true
-                },
-                {
-                    "targets": [1],
-                    "width": "30%",
-                    "visible": true
-                },
-                {
-                    "targets": [2],
-                    "visible": true,
-                    "searchable": false,
-                    "orderable": false,
-                    "width": "20%"
-                }]
-        });
-
-        $("#cmbPerfil").change(function () {
-            $("#dTMenus").hide();
-            arrMenus = [];
-        })
-
-        $("#btnPesquisar").click(function () {
-            tMenus.ajax.reload();
-            $("#dTMenus").show();
-        })
-
-        $("#btnNovo").click(function () {
-            $("#modal").load("@Url.Action("Inclusao", "Perfil")", function () {
-                $("#modal").modal({ backdrop:"static"});
-            })
-        })
-
-        $("#btnExcluir").click(function () {
-            ExcluirPerfil();
-        })
-
-        $("#tMenus tbody").on('click', 'tr', function () {
-            var idMenu = $(this).find("input[id='idMenu']").val();
-            var isChecked = $(this).find("input[name='seleciona']:checked").val();
-
-            $("#btnSalvar").show();
-
-            if (isChecked) {
-                $(this).addClass('selected');
-            } else {
-                $(this).removeClass('selected');
-            }
-            repopularArrayMenu(idMenu, isChecked);
-        });
-
-        $('#tMenus').on('page.dt', function () {
-            //pega imediatamente a linha da table, sem procurar nos outros objetos..
-            $('#tMenus > tbody > tr').each(function () {
-                var isChecked = $(this).find("input[name='seleciona']:checked").val();
-                if (isChecked) {
-                    var idMenu = $(this).find("input[id='idMenu']").val();
-                    repopularArrayMenu(idMenu, isChecked);
-                }
-                
-            })
-        })
-
-        $("#btnSalvar").click(function () {
-
-            var PerfilMenu = {
-              IdPerfil : $("#cmbPerfil").val(),
-              Menus : arrMenus
-            }
-
-            if (arrMenus.length > 0) {
-                $.ajax({
-                    type: "POST",
-                    url: "/Perfil/EditarPerfilMenus",
-                    datatype: "json",
-                    data: PerfilMenu,
-                    success: function (result) {
-                        //o .msg é identificado como um atributo do retorno da execução..
-                        //somente com sucesso repopulará o perfil e esconde a table carregada..
-                        if (result.cod == 1) {
-                            setTimeout(exibirAlert(result.msg, 10000), 10000);
-                            tMenus.ajax.reload();
-                        } else {
-                            setTimeout(exibirAlert(result.msg, 10000), 10000);
+                /*colunas que são utilizadas na dataTable*/
+                "aoColumns": [
+                    { "mData": "DescricaoMenu", "sName": "DescricaoMenu", "sTitle": "Descrição do Menu" },
+                    {
+                        "sTitle": "Status",
+                        "render": function (data, type, row) {
+                            return "<div>" + row.Status + "</div>";
                         }
                     },
-                    error: function (e) {
-                        setTimeout(exibirAlert(e.status, 10000), 10000);
+                    {
+                        "render": function (data, type, row) {
+                            return "<div style='text-align:center'>" +
+                                   "<input name='seleciona' type='checkbox' " + row.Selecionado + " >" +
+                                   "<input type = 'hidden' id = 'idPerfil' value = '" + row.IdPerfil + "' >" +
+                                   "<input type = 'hidden' id = 'idMenu'   value = '" + row.IdMenu + "' >"+
+                                   "</div >";
+                        }
                     }
-                })
-            } else {
-                setTimeout(exibirAlert("Deve-se informar pelo menos um item de menu para o perfil", 10000), 10000);
-            }
-        })
-    });
+                ],
+                "columnDefs":
+                    [{
+                        "targets": [0],
+                        "width": "50%",
+                        "visible": true
+                    },
+                    {
+                        "targets": [1],
+                        "width": "30%",
+                        "visible": true
+                    },
+                    {
+                        "targets": [2],
+                        "visible": true,
+                        "searchable": false,
+                        "orderable": false,
+                        "width": "20%"
+                    }]
+            });
 
-</script>
+            $("#cmbPerfil").change(function () {
+                $("#dTMenus").hide();
+                arrMenus = [];
+            })
+
+            $("#btnPesquisar").click(function () {
+                tMenus.ajax.reload();
+                $("#dTMenus").show();
+            })
+
+            $("#btnNovo").click(function () {
+                $("#modal").load("@Url.Action("Inclusao", "Perfil")", function () {
+                    $("#modal").modal({ backdrop:"static"});
+                })
+            })
+
+            $("#btnExcluir").click(function () {
+                ExcluirPerfil();
+            })
+
+            $("#tMenus tbody").on('click', 'tr', function () {
+                var idMenu = $(this).find("input[id='idMenu']").val();
+                var isChecked = $(this).find("input[name='seleciona']:checked").val();
+
+                $("#btnSalvar").show();
+
+                if (isChecked) {
+                    $(this).addClass('selected');
+                } else {
+                    $(this).removeClass('selected');
+                }
+                repopularArrayMenu(idMenu, isChecked);
+            });
+
+            $('#tMenus').on('page.dt', function () {
+                //pega imediatamente a linha da table, sem procurar nos outros objetos..
+                $('#tMenus > tbody > tr').each(function () {
+                    var isChecked = $(this).find("input[name='seleciona']:checked").val();
+                    if (isChecked) {
+                        var idMenu = $(this).find("input[id='idMenu']").val();
+                        repopularArrayMenu(idMenu, isChecked);
+                    }
+
+                })
+            })
+
+            $("#btnSalvar").click(function () {
+
+                var PerfilMenu = {
+                  IdPerfil : $("#cmbPerfil").val(),
+                  Menus : arrMenus
+                }
+
+                if (arrMenus.length > 0) {
+                    $.ajax({
+                        type: "POST",
+                        url: "/Perfil/EditarPerfilMenus",
+                        datatype: "json",
+                        data: PerfilMenu,
+                        success: function (result) {
+                            //o .msg é identificado como um atributo do retorno da execução..
+                            //somente com sucesso repopulará o perfil e esconde a table carregada..
+                            if (result.cod == 1) {
+                                setTimeout(exibirAlert(result.msg, 10000), 10000);
+                                tMenus.ajax.reload();
+                            } else {
+                                setTimeout(exibirAlert(result.msg, 10000), 10000);
+                            }
+                        },
+                        error: function (e) {
+                            setTimeout(exibirAlert(e.status, 10000), 10000);
+                        }
+                    })
+                } else {
+                    setTimeout(exibirAlert("Deve-se informar pelo menos um item de menu para o perfil", 10000), 10000);
+                }
+            })
+        });
+
+    </script>
 
 <h5>Perfil</h5>
 <hr />
@@ -252,4 +252,3 @@
 
 <div id="modal" class="modal" role="dialog">
 </div>
-

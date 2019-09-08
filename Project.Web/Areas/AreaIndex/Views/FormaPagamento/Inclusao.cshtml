@@ -1,0 +1,74 @@
+﻿<script type="text/javascript">
+
+    function exibirAlertInclusao(mensagem, tempo) {
+        $("#spInclusaoMsgFormaPagamento").html(mensagem);
+        $("#alertInclusaoFormaPagamento").show().fadeOut(tempo);//exibe e depois esconde o alert..
+    }
+
+    function Incluir() {
+        var descricao = document.getElementById("txtDescricao").value;
+        $.ajax({
+            type: "POST",
+            url: "/FormaPagamento/Incluir",
+            //a variável 'descricao' deve estar com o nome igual ao do parâmetro do método json do Controller
+            data: "descricao=" + descricao,
+            success: function (result) {
+                //o .msg é identificado como um atributo do retorno da execução..
+                //somente com sucesso repopulará a forma de pagamento..
+                if (result.cod == 1) {
+                    setTimeout(exibirAlertInclusao(result.msg, 10000), 10000);
+                    //pegando a tabela que está na página..
+                    var tabela = $('#tFormasPagamento').DataTable();
+                    //atualizando a tabela na outra página..
+                    tabela.ajax.reload();
+                } else {
+                    exibirAlertInclusao(result.msg, 10000);
+                }
+            },
+            error: function (e) {
+                exibirAlertInclusao("Erro: " + e.status);
+            }
+        });
+    }
+
+</script>
+
+<div class="modal-dialog">
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <h5 class="modal-title">Incluir Forma de Pagamento</h5>
+
+            <button type="button" class="close" data-dismiss="modal">
+                <span aria-hidden="true">×</span>
+                <span class="sr-only">Close</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-12">
+                    <label>Forma de Pagamento:</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <input type="text" id="txtDescricao" class="form-control" />
+                </div>
+            </div>
+
+            <div id="alertInclusaoFormaPagamento" class="row mt-2" style="display:none">
+                <div class="col-12">
+                    <div class="alert alert-primary" role="alert">
+                        <span id="spInclusaoMsgFormaPagamento"></span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <input type="button" id="btnSalvar" value="Salvar" onclick="Incluir()" class="btn btn-outline-dark" />
+            <input type="button" value="Cancelar" class="btn btn-outline-dark" data-dismiss="modal" />
+        </div>
+    </div>
+</div>

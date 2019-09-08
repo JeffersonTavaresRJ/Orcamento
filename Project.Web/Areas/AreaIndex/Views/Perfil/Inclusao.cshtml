@@ -63,7 +63,7 @@
                     data: model,
                     success: function (msg) {
                         exibirAlertInclusao(msg);
-                        PopulaPerfil();
+                        PopulaSelectList("Lista", "Perfil", "#cmbPerfil", "-1");
                     },
                     error: function (e) {
                         exibirAlertInclusao('Erro: ' + e.status);

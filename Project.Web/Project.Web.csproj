@@ -1163,12 +1163,10 @@
     <Content Include="Global.asax" />
     <Content Include="assets\img\logo-navbar.jpg" />
     <Content Include="assets\img\logo.jpg" />
-    <Content Include="js\Areas\AreaIndex\Table\TablePaged.js" />
     <Content Include="js\bootstrap.bundle.js" />
     <Content Include="js\bootstrap.bundle.min.js" />
     <Content Include="js\bootstrap.js" />
     <Content Include="js\bootstrap.min.js" />
-    <Content Include="js\Areas\AreaIndex\DropDown\componente-dropdown.js" />
     <Content Include="js\esm\popper-utils.js" />
     <Content Include="js\esm\popper-utils.min.js" />
     <Content Include="js\esm\popper.js" />
@@ -1202,7 +1200,6 @@
     <Content Include="Content\datatables.extensions\TableTools\images\psd\collection.psd" />
     <Content Include="Content\datatables.extensions\Responsive\css\dataTables.responsive.scss" />
     <Content Include="Areas\AreaIndex\Views\Usuario\Edicao.cshtml" />
-    <Content Include="Areas\AreaIndex\Views\Transacao\ManutencaoTransacao.cshtml" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -1232,6 +1229,9 @@
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Areas\AreaIndex\Views\Grupo\Inclusao.cshtml" />
     <Content Include="Areas\AreaIndex\Views\Grupo\Edicao.cshtml" />
+    <Content Include="Areas\AreaIndex\Views\FormaPagamento\ManutencaoFormaPagamento.cshtml" />
+    <Content Include="Areas\AreaIndex\Views\FormaPagamento\Inclusao.cshtml" />
+    <Content Include="Areas\AreaIndex\Views\FormaPagamento\Edicao.cshtml" />
     <None Include="js\jquery-3.0.0-vsdoc.js" />
     <Content Include="js\jquery-3.0.0.js" />
     <Content Include="js\jquery-3.0.0.min.js" />
@@ -1294,12 +1294,16 @@
     <Compile Include="Areas\AreaIndex\Controllers\GrupoController.cs" />
     <Compile Include="Areas\AreaIndex\Controllers\IndexController.cs" />
     <Compile Include="Areas\AreaIndex\Controllers\LancamentoController.cs" />
+    <Compile Include="Areas\AreaIndex\Controllers\ListaController.cs" />
     <Compile Include="Areas\AreaIndex\Controllers\MenuController.cs" />
     <Compile Include="Areas\AreaIndex\Controllers\PerfilController.cs" />
     <Compile Include="Areas\AreaIndex\Controllers\TransacaoController.cs" />
     <Compile Include="Areas\AreaIndex\Controllers\UsuarioController.cs" />
+    <Compile Include="Areas\AreaIndex\Models\FormaPagamentoViewModelConsulta.cs" />
+    <Compile Include="Areas\AreaIndex\Models\FormaPagamentoViewModelEdicao.cs" />
     <Compile Include="Areas\AreaIndex\Models\GrupoViewModel.cs" />
     <Compile Include="Areas\AreaIndex\Models\GrupoViewModelEdicao.cs" />
+    <Compile Include="Areas\AreaIndex\Models\ListaViewModel.cs" />
     <Compile Include="Areas\AreaIndex\Models\MenuPerfilViewModelConsulta.cs" />
     <Compile Include="Areas\AreaIndex\Models\PerfilMenuViewModelConsulta.cs" />
     <Compile Include="Areas\AreaIndex\Models\MenuViewModelSelecionaEdicao.cs" />
@@ -1368,9 +1372,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\AreaIndex\Views\FormaPagamento\" />
-    <Folder Include="js\Areas\AreaIndex\Lancamento\" />
-    <Folder Include="js\Areas\AreaIndex\Permissoes\" />
+    <Folder Include="Areas\AreaIndex\Views\Lista\" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="js\index.d.ts" />

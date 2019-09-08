@@ -36,6 +36,7 @@ namespace Project.Repository.Configurations
             modelBuilder.Configurations.Add(new MenuMap());
             modelBuilder.Configurations.Add(new ContaMap());
             modelBuilder.Configurations.Add(new GrupoMap());
+            modelBuilder.Configurations.Add(new FormaPagamentoMap());
             //modelBuilder.Configurations.Add(new PerfilMenuMap());
         }
 
@@ -47,6 +48,7 @@ namespace Project.Repository.Configurations
         public DbSet<Menu> Menu { get; set; }
         public DbSet<Conta> Conta { get; set; }
         public DbSet<Grupo> Grupo { get; set; }
+        public DbSet<FormaPagamento> FormaPagamento { get; set; }
         //public DbSet<PerfilMenu> PerfilMenu { get; set; }
     }
 }

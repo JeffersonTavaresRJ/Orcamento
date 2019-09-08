@@ -1,0 +1,180 @@
+﻿
+@{
+    ViewBag.Title = "ManutencaoFormaPagamento";
+    Layout = "~/Views/_layout.cshtml";
+}
+
+<script type="text/javascript">
+
+    var tFormaPagamento = null;
+
+    //chamando o modal de exclusão..
+    function del(row) {
+
+        $('#spanConfirmMensagem').html("Deseja excluir a Forma de Pagamento <strong>" + row.Descricao + "</strong>?");
+
+        $('#modalConfirmMensagem').modal({
+            backdrop: 'static',
+            keyboard: false
+        }).one('click', '#btnConfirmSim', function (e) {
+            $.ajax({
+                type: "POST",
+                url: "/FormaPagamento/Excluir",
+                data: "id=" + row.Id,
+                success: function (result) {
+                    exibirAlert(result.msg);
+                    $("#btnPesquisar").click();
+
+                },
+                error: function (e) {
+                    exibirAlert("Erro: " + e.status);
+                }
+            });
+
+        });
+    };
+
+    function edit(id) {
+        $("#modal").load("Edicao?id=" + id, function () {
+            $("#modal").modal({ backdrop: "static" });
+        });
+
+    }
+
+    $(document).ready(function () {
+        $("#btnNovo").show();
+        $("#btnPesquisar").show();
+        $("#btnExcluir").show();
+
+        PopulaSelectList("Lista", "Status", "#cmbStatus", "-1");
+
+        tFormaPagamento = $('#tFormasPagamento').DataTable({
+            "bProcessing": false,
+            "bServerSide": false,
+            "bLengthChange": false, /*tornar invisível combo para visualizar a quantidade de registros */
+            "bFilter": false, /*tornar invisível o campo de busca do resultado da tabela */
+            "ajax": {
+                type: "POST",
+                url: "/FormaPagamento/Consultar",
+                datatype: "json",
+                data: function (d) {
+                    d.sBusca = $("#txtBusca").val();
+                    d.sStatus = $("#cmbStatus").val();
+                },
+                error: function (e) {
+                    exibirAlert("Erro: " + e.status);
+                }
+            },
+            /*colunas que são utilizadas na dataTable*/
+            "aoColumns": [
+                { "mData": "Descricao", "sName": "Descricao", "sTitle": "Descrição" },
+                { "mData": "DescricaoStatus", "sName": "DescricaoStatus", "sTitle": "Status" },
+                {
+                    "render": function (data, type, row) {
+                        return "<div style='text-align:center'><a href='#' class='btn btn-dark'  onclick=edit('" + row.Id + "')><i class='fa fa-edit'></i></a></div>";
+                    }
+                },
+                {
+                    "render": function (data, type, row) {
+                        var nome = row.Nome;
+                        return "<div style='text-align:center'><button class='btn btn-dark' id='btnExcluir'><i class='fa fa-trash'></i></button></div>";
+                    }
+                }
+            ],
+            "columnDefs":
+                [{
+                    "targets": [0],
+                    "width": "50%",
+                    "visible": true
+                },
+                {
+                    "targets": [1],
+                    "width": "30%",
+                    "visible": true
+                },
+                {
+                   "targets": [2],
+                   "visible": true,
+                   "searchable": false,
+                   "orderable": false,
+                   "width": "10%"
+                },
+                {
+                    "targets": [3],
+                    "visible": true,
+                    "searchable": false,
+                    "orderable": false,
+                    "width": "10%"
+                }]
+        });
+
+        $("#btnNovo").click(function () {
+                $("#modal").load("@Url.Action("Inclusao", "FormaPagamento")", function () {
+                    $("#modal").modal({ backdrop:"static"});
+                })
+        })
+
+        $("#btnPesquisar").click(function () {
+            tFormaPagamento.ajax.reload();
+            $("#dTFormasPagamento").show();
+        })
+
+        $('#tFormasPagamento tbody').on('click', '#btnExcluir', function () {
+            var tr = $(this).closest('tr');
+            var row = tFormaPagamento.row(tr);
+            del(row.data());
+        });
+    });
+
+    function exibirAlert(mensagem, tempo) {
+        $("#spMensagemManutencaoFormaPagamento").html(mensagem);
+        $("#alertManutencaoFormaPagamento").show().fadeOut(tempo);//exibe e depois esconde o alert..
+    }
+
+
+
+
+
+</script>
+
+<h5>Forma de Pagamento</h5>
+<hr />
+<div class="row">
+    <div class="col-4">
+        <label>Descrição:</label>
+        <input type="text" id="txtBusca" class="form-control" />
+
+    </div>
+
+    <div class="col-4">
+        <label>Status:</label>
+        <select id="cmbStatus" class="form-control"></select>
+    </div>
+</div>
+
+<div id="dTFormasPagamento" class="row" style="display:none">
+    <div class="col-12">
+        <table id="tFormasPagamento" class="display" style="width:100%" data-page-length='5'>
+            <thead>
+                <tr>
+                    <th scope="col">Descrição</th>
+                    <th scope="col">Status</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+<div id="alertManutencaoFormaPagamento" class="row mt-2" style="display:none">
+    <div class="col-12">
+        <div class="alert alert-primary" role="alert">
+            <span id="spMensagemFormaPagamento"></span>
+        </div>
+    </div>
+</div>
+
+<div id="modal" class="modal" role="dialog">
+</div>
