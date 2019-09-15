@@ -10,7 +10,7 @@
 
         $.ajax({
             type: "POST",
-            url: "/FormaPagamento/Editar",
+            url: "/Conta/Editar",
             //passando o objeto deve estar com os nomes iguais aos dos atributos do método json do Controller
             data: {
                 Id: $("#txtId").val(),
@@ -23,7 +23,7 @@
                 if (result.cod == 1) {
                     setTimeout(exibirAlertEdicao(result.msg, 10000), 10000);
                     //pegando a tabela que está na página..
-                    var tabela = $('#tFormasPagamento').DataTable();
+                    var tabela = $('#tContas').DataTable();
                     //atualizando a tabela na outra página..
                     tabela.ajax.reload();
                 } else {
@@ -37,8 +37,8 @@
     }
 
     $(document).ready(function () {
-        $("#spLabel").html("Forma de Pagamento:");
-        $("#spTitle").html("Editar Forma de Pagamento");
+        $("#spLabel").html("Conta:");
+        $("#spTitle").html("Editar Conta");
         PopulaSelectList("Lista", "Status", "#cmbStatusEdicao", $("#txtStatus").val());
     })
 </script>

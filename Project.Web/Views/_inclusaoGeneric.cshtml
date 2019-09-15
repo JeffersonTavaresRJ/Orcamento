@@ -1,0 +1,39 @@
+﻿<div class="modal-dialog">
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <h5 class="modal-title"><span id="spTitle"></span></h5>
+
+            <button type="button" class="close" data-dismiss="modal">
+                <span aria-hidden="true">×</span>
+                <span class="sr-only">Close</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-12">
+                    <label><span id="spLabel"></span></label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <input type="text" id="txtDescricao" class="form-control" />
+                </div>
+            </div>
+
+            <div id="alertInclusao" class="row mt-2" style="display:none">
+                <div class="col-12">
+                    <div class="alert alert-primary" role="alert">
+                        <span id="spInclusaoMsg"></span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <input type="button" id="btnSalvar" value="Salvar" onclick="Incluir()" class="btn btn-outline-dark" />
+            <input type="button" value="Cancelar" class="btn btn-outline-dark" data-dismiss="modal" />
+        </div>
+    </div>
+</div>

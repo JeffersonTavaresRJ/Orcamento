@@ -10,10 +10,10 @@ namespace UnitTestPersistenceOrcamento
         [TestMethod]
         public void Incluir()
         {
-            ContaPersistence cp = new ContaPersistence();
-            Conta c = new Conta();
+            ItemContaPersistence cp = new ItemContaPersistence();
+            ItemConta c = new ItemConta();
             c.Descricao = "Salário";
-            c.TipoConta = "R";
+            c.TipoItemConta = "R";
             c.IdGrupo = 2;
 
             int x = cp.Inserir(c);
@@ -24,8 +24,8 @@ namespace UnitTestPersistenceOrcamento
         [TestMethod]
         public void Alterar()
         {
-            ContaPersistence cp = new ContaPersistence();
-            Conta c = cp.ObterPorId(2);
+            ItemContaPersistence cp = new ItemContaPersistence();
+            ItemConta c = cp.ObterPorId(2);
             c.Descricao = "Água";
 
             int x = cp.Atualizar(c);
@@ -36,7 +36,7 @@ namespace UnitTestPersistenceOrcamento
         [TestMethod]
         public void ListarTodos()
         {
-            ContaPersistence cp = new ContaPersistence();
+            ItemContaPersistence cp = new ItemContaPersistence();
             int x= cp.ListarTodos().Count;
 
             Assert.IsTrue(x > 0);
@@ -45,8 +45,8 @@ namespace UnitTestPersistenceOrcamento
         [TestMethod]
         public void Excluir()
         {
-            ContaPersistence cp = new ContaPersistence();
-            Conta c = cp.ObterPorId(1);
+            ItemContaPersistence cp = new ItemContaPersistence();
+            ItemConta c = cp.ObterPorId(1);
             int x = cp.Excluir(c);
 
             Assert.IsTrue(x > 0);

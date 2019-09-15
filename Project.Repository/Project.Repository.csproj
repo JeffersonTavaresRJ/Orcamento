@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Configurations\DataContext.cs" />
     <Compile Include="Mapping\ContaMap.cs" />
+    <Compile Include="Mapping\ItemContaMap.cs" />
     <Compile Include="Mapping\FormaPagamentoMap.cs" />
     <Compile Include="Mapping\GrupoMap.cs" />
     <Compile Include="Mapping\MenuMap.cs" />
@@ -57,6 +58,7 @@
     <Compile Include="Mapping\PerfilMenuMap.cs" />
     <Compile Include="Mapping\UsuarioMap.cs" />
     <Compile Include="Persistence\ContaPersistence.cs" />
+    <Compile Include="Persistence\ItemContaPersistence.cs" />
     <Compile Include="Persistence\FormaPagamentoPersistence.cs" />
     <Compile Include="Persistence\GenericRepository.cs" />
     <Compile Include="Persistence\GrupoPersistence.cs" />

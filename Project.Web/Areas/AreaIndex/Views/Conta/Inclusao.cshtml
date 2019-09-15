@@ -9,7 +9,7 @@
         var descricao = document.getElementById("txtDescricao").value;
         $.ajax({
             type: "POST",
-            url: "/FormaPagamento/Incluir",
+            url: "/Conta/Incluir",
             //a variável 'descricao' deve estar com o nome igual ao do parâmetro do método json do Controller
             data: "descricao=" + descricao,
             success: function (result) {
@@ -18,7 +18,7 @@
                 if (result.cod == 1) {
                     setTimeout(exibirAlertInclusao(result.msg, 10000), 10000);
                     //pegando a tabela que está na página..
-                    var tabela = $('#tFormasPagamento').DataTable();
+                    var tabela = $('#tContas').DataTable();
                     //atualizando a tabela na outra página..
                     tabela.ajax.reload();
                 } else {
@@ -32,8 +32,8 @@
     }
 
     $(document).ready(function () {
-        $("#spLabel").html("Forma de Pagamento:");
-        $("#spTitle").html("Incluir Forma de Pagamento");
+        $("#spLabel").html("Conta:");
+        $("#spTitle").html("Incluir Conta");
     })
 </script>
 @Html.Partial("~/Views/_inclusaoGeneric.cshtml")

@@ -31,6 +31,6 @@ namespace Project.Entity
         }
 
         public virtual ICollection<Grupo> Grupos { get; set; }
-        public virtual ICollection<Conta> Contas { get; set; }
+        public virtual ICollection<ItemConta> ItemContas { get; set; }
     }
 }
