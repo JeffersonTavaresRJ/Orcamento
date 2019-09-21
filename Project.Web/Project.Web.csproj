@@ -1235,6 +1235,7 @@
     <Content Include="Areas\AreaIndex\Views\Conta\ManutencaoConta.cshtml" />
     <Content Include="Areas\AreaIndex\Views\Conta\Inclusao.cshtml" />
     <Content Include="Areas\AreaIndex\Views\Conta\Edicao.cshtml" />
+    <Content Include="Areas\AreaIndex\Views\ItemConta\ManutencaoItemConta.cshtml" />
     <None Include="js\jquery-3.0.0-vsdoc.js" />
     <Content Include="js\jquery-3.0.0.js" />
     <Content Include="js\jquery-3.0.0.min.js" />
@@ -1297,6 +1298,7 @@
     <Compile Include="Areas\AreaIndex\Controllers\FormaPagamentoController.cs" />
     <Compile Include="Areas\AreaIndex\Controllers\GrupoController.cs" />
     <Compile Include="Areas\AreaIndex\Controllers\IndexController.cs" />
+    <Compile Include="Areas\AreaIndex\Controllers\ItemContaController.cs" />
     <Compile Include="Areas\AreaIndex\Controllers\LancamentoController.cs" />
     <Compile Include="Areas\AreaIndex\Controllers\ListaController.cs" />
     <Compile Include="Areas\AreaIndex\Controllers\MenuController.cs" />
@@ -1372,6 +1374,8 @@
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Views\_inclusaoGeneric.cshtml" />
     <Content Include="Views\_edicaoGeneric.cshtml" />
+    <Content Include="Views\_dropdownGrupo.cshtml" />
+    <Content Include="Views\_dropdownTipoItemConta.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1379,9 +1383,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Areas\AreaIndex\Views\Lista\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <TypeScriptCompile Include="js\index.d.ts" />
     <TypeScriptCompile Include="Scripts\index.d.ts" />

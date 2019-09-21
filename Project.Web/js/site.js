@@ -13,7 +13,7 @@ function AjaxMensagem(result) {
 
 };
 
-function PopulaSelectList(controller, action, cmb, id) {
+function PopulaSelectList(controller, action, cmb, item) {
 
     $.ajax({
         type: "POST",
@@ -28,7 +28,32 @@ function PopulaSelectList(controller, action, cmb, id) {
             $(cmb).html(option).show();
 
             //setando o valor inicial.. 
-            $(cmb).val(id);
+            $(cmb).val(item);
+
+        },
+        error: function (e) {
+            exibirAlert("Erro: " + e.status);
+        }
+    });
+}
+
+function PopulaSelectListId(controller, action, cmb, item, id) {
+
+    $.ajax({
+        type: "POST",
+        url: "/" + controller + "/" + action,
+        data: "id="+ id,
+        success: function (dados) {
+
+            var option = '<option value="-1" >Selecione o item</option>';
+            $.each(dados, function (i, obj) {
+                option += '<option value="' + obj.Key + '">' + obj.Value + '</option>';
+            });
+
+            $(cmb).html(option).show();
+
+            //setando o valor inicial.. 
+            $(cmb).val(item);
 
         },
         error: function (e) {

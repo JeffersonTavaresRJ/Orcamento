@@ -1,0 +1,104 @@
+﻿
+@{
+    ViewBag.Title = "ManutencaoItemConta";
+    Layout = "~/Views/_layout.cshtml";
+}
+
+<script type="text/javascript">
+    tItensConta = $('#tItensConta').DataTable({
+        "bProcessing": false,
+        "bServerSide": false,
+        "bLengthChange": false, /*tornar invisível combo para visualizar a quantidade de registros */
+        "bFilter": false, /*tornar invisível o campo de busca do resultado da tabela */
+        "ajax": {
+            type: "POST",
+            url: "/ItemConta/Consultar",
+            datatype: "json",
+            data: function (d) {
+                d.sBusca = $("#txtBusca").val();
+                d.sGrupo = $("#drpGrupoNivel_2").val();
+                d.sTipo = $("#drpTipoItemConta").val();
+            },
+            error: function (e) {
+                exibirAlert("Erro: " + e.status);
+            }
+        },
+        /*colunas que são utilizadas na dataTable*/
+        "aoColumns": [
+            { "mData": "Descricao", "sName": "Descricao", "sTitle": "Descrição" },
+            { "mData": "DescricaoTipo", "sName": "DescricaoTipo", "sTitle": "Tipo" },
+            { "mData": "DescricaoStatus", "sName": "DescricaoStatus", "sTitle": "Status" },
+            {
+                "render": function (data, type, row) {
+                    return "<div style='text-align:center'><a href='#' class='btn btn-dark'  onclick=edit('" + row.Id + "')><i class='fa fa-edit'></i></a></div>";
+                }
+            },
+            {
+                "render": function (data, type, row) {
+                    var nome = row.Nome;
+                    return "<div style='text-align:center'><button class='btn btn-dark' id='btnExcluir'><i class='fa fa-trash'></i></button></div>";
+                }
+            }
+        ],
+        "columnDefs":
+            [{
+                "targets": [0],
+                "width": "40%",
+                "visible": true
+            },
+            {
+                "targets": [1],
+                "width": "30%",
+                "visible": true
+            },
+            {
+                "targets": [2],
+                "visible": true,
+                "searchable": false,
+                "orderable": false,
+                "width": "10%"
+            },
+            {
+                "targets": [3],
+                "visible": true,
+                "searchable": false,
+                "orderable": false,
+                "width": "10%"
+            },
+            {
+                "targets": [4],
+                "visible": true,
+                "searchable": false,
+                "orderable": false,
+                "width": "10%"
+            }]
+    });
+</script>
+
+<h5>Manutenção Item de Conta</h5>
+<hr />
+<div class=" row">
+    @Html.Partial("~/Views/_dropdownGrupo.cshtml")
+    <div class="col-3">
+        <label>Descrição:</label><br />
+        <input type="text" class="form-control" id="txtBusca" />
+    </div>
+    @Html.Partial("~/Views/_dropdownTipoItemConta.cshtml")
+</div>
+<div id="dTItensConta" class="row" style="display:none">
+    <div class="col-12">
+        <table id="tItensContas" class="display" style="width:100%" data-page-length='5'>
+            <thead>
+                <tr>
+                    <th scope="col">Descrição</th>
+                    <th scope="col">Tipo</th>
+                    <th scope="col">Status</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+

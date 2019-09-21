@@ -1,0 +1,23 @@
+﻿<script type="text/javascript">
+    $(document).ready(function () {
+        PopulaSelectListId("Lista", "Grupo", "#drpGrupoNivel_1", "-1", null);
+        $("#drpGrupoNivel_2").prop("disabled", "disabled");
+
+        $("#drpGrupoNivel_1").change(function () {
+            $("#drpGrupoNivel_2").prop("disabled", "disabled");
+
+            var id = $(this).val();
+            PopulaSelectListId("Lista", "Grupo", "#drpGrupoNivel_2", "-1", id);
+
+            $("#drpGrupoNivel_2").prop("disabled", false);
+        });
+    })
+</script>
+<div class="col-3">
+    <label>Grupo:</label><br />
+    <select id="drpGrupoNivel_1" class="form-control"></select>
+</div>
+<div class="col-3">
+    <label>Sub-Grupo:</label><br />
+    <select id="drpGrupoNivel_2" class="form-control"></select>
+</div>

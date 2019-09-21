@@ -16,11 +16,15 @@ namespace Project.Repository.Persistence
             return _conn.Grupo.Where(g => g.IdGrupo == null).ToList();
         }
 
-        public List<Grupo> ListarGruposNivel_2()
+        public IEnumerable<Grupo> ListarGruposNivel_2(int id)
         {
-            return _conn.Grupo.Where(g => g.IdGrupo > 0 ).ToList();
+            IEnumerable<Grupo> lista;
+            lista = (from g in _conn.Grupo
+                     join sg in _conn.Grupo on g.Id equals sg.IdGrupo
+                     select sg)
+                     .Where(sg => sg.IdGrupo==id).ToList();
+
+            return lista;
         }
-
-
     }
 }
